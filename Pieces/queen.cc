@@ -8,3 +8,13 @@
 #include <vector>
 #include <queen.h>
 using namespace std;
+
+class Queen : public Piece {
+
+
+
+
+
+
+
+};

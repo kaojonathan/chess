@@ -8,3 +8,13 @@
 #include <vector>
 #include <knight.h>
 using namespace std;
+
+class Knight : public Piece {
+
+
+
+
+
+
+
+};

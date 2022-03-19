@@ -8,3 +8,13 @@
 #include <vector>
 #include <rook.h>
 using namespace std;
+
+class Rook : public Piece {
+
+
+
+
+
+
+
+};

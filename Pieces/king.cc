@@ -8,3 +8,13 @@
 #include <vector>
 #include <king.h>
 using namespace std;
+
+class King : public Piece {
+
+
+
+
+
+
+
+};

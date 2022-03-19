@@ -8,3 +8,13 @@
 #include <vector>
 #include <pawn.h>
 using namespace std;
+
+class Pawn : public Piece {
+
+
+
+
+
+
+
+};

@@ -8,3 +8,13 @@
 #include <vector>
 #include <bishop.h>
 using namespace std;
+
+class Bishop : public Piece {
+
+
+
+
+
+
+
+};
