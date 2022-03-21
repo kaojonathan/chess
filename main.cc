@@ -1,4 +1,5 @@
 #include "board.h"
+#include "score.h"
 #include <iostream>
 
 using namespace std;
@@ -72,7 +73,7 @@ bool isValidPiece(string piece) {
 
 int main() {
 
-
+	Score score;
 
 
 
@@ -108,10 +109,15 @@ int main() {
 		if (command == "game")
 		{ // if the command is "game"
 
+			cout << "Started new game!" << endl;
+
+			bool whitemoves = true;
 			string white;
 			string black;
 			int difficulty;
 			linestream >> white >> black;
+
+
 
 			if (isHuman(white)) {
 				// do human thing
@@ -127,7 +133,72 @@ int main() {
 			}
 			else {
 				cout << "Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
+				continue;
 			}
+
+			while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+			{
+				std::stringstream gamestream(line);
+				gamestream >> command;
+
+				if (command == "resign") {
+
+					 // if the command is "resign"
+					// resign(...)
+
+
+
+						/*
+						*
+						*  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
+						*   game.
+						*
+						*/
+
+
+					if (whitemoves) {
+						cout << "Black wins!" << endl;
+						score.blackWin();
+
+					}
+					else {
+						cout << "White wins!" << endl;
+						score.whiteWin();
+					}
+					break; // break
+				}
+				else if (command == "move") {
+					// if the command is "move"
+					string from;
+					string to;
+					linestream >> from >> to;
+
+
+					// move(...)
+
+		/*
+
+		* A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For
+		* example: move e2 e4. Castling would specified by the two-square move for the king: move e1 g1 or move e1
+		* c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7
+		* e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a
+		* move.
+
+		*/
+
+				}
+				else if (command == "setup") {
+					cout << "setup can only be called before a game has started." << endl;
+				}
+				else {
+					cout << "Invalid game command." << endl;
+				}
+
+
+
+
+			}
+
 
 			/*
 			*
@@ -137,42 +208,13 @@ int main() {
 		}
 		else if (command == "resign")
 		{ // if the command is "resign"
-
-		// resign(...)
-
-
-
-			/*
-			*
-			*  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
-			*   game.
-			*
-			*/
+			cout << "resign can only be called after a game has started." << endl;
 		}
 		else if (command == "move")
 		{ // if the command is "move"
 
+			cout << "move can only be called after a game has started." << endl;
 
-			string from;
-			string to;
-			linestream >> from >> to;
-
-
-
-
-
-
-			// move(...)
-
-/*
-
-* A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For
-* example: move e2 e4. Castling would specified by the two-square move for the king: move e1 g1 or move e1
-* c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7
-* e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a
-* move.
-
-*/
 		}
 		else if (command == "setup")
 		{ // if the command is "setup"
@@ -294,7 +336,12 @@ incorporate them into the setup phase
 		}
 	}
 
+	// print winning results
+	score.printScore();
+	cout << endl  << "Thanks for playing!" << endl;
 	// delete and free stuff here
+
+
 
 }
 
