@@ -132,7 +132,7 @@ int main() {
 
 			}
 			else {
-				cout << "Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
+				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
 				continue;
 			}
 
@@ -174,6 +174,25 @@ int main() {
 					linestream >> from >> to;
 
 
+					if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
+
+
+
+
+
+
+
+
+						// do add thing here
+
+
+					}
+					else {
+						cout << "ERROR: invalid position/s." << endl;
+
+					}
+
+
 					// move(...)
 
 		/*
@@ -188,10 +207,10 @@ int main() {
 
 				}
 				else if (command == "setup") {
-					cout << "setup can only be called before a game has started." << endl;
+					cout << "ERROR: setup can only be called before a game has started." << endl;
 				}
 				else {
-					cout << "Invalid game command." << endl;
+					cout << "ERROR: Invalid game command." << endl;
 				}
 
 
@@ -208,12 +227,12 @@ int main() {
 		}
 		else if (command == "resign")
 		{ // if the command is "resign"
-			cout << "resign can only be called after a game has started." << endl;
+			cout << "ERROR: resign can only be called after a game has started." << endl;
 		}
 		else if (command == "move")
 		{ // if the command is "move"
 
-			cout << "move can only be called after a game has started." << endl;
+			cout << "ERROR: move can only be called after a game has started." << endl;
 
 		}
 		else if (command == "setup")
@@ -241,7 +260,7 @@ int main() {
 
 				} else {
 
-					cout << "Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
+					cout << "ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
 
 				}
 
@@ -260,7 +279,7 @@ int main() {
 				else {
 
 
-					cout << "Invalid position. Must be [a-h][1-8]" << endl;
+					cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
 
 				}
 
@@ -332,7 +351,7 @@ incorporate them into the setup phase
 
 		}
 		else {
-			cout << "Invalid command." << endl;
+			cout << "ERROR: Invalid command." << endl;
 		}
 	}
 
