@@ -9,12 +9,12 @@
 #include <bishop.h>
 using namespace std;
 
-class Bishop : public Piece {
+Bishop::Bishop(bool isWhite) : isWhite{ isWhite } {}
 
-
-
-
-
-
-
-};
+void Bishop::print() override {
+	if (isWhite) {
+		cout << 'B';
+	} else {
+		cout << 'b';
+	}
+}

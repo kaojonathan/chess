@@ -9,12 +9,14 @@
 #include <knight.h>
 using namespace std;
 
-class Knight : public Piece {
+Knight::Knight(bool isWhite) : isWhite{ isWhite } {}
 
 
-
-
-
-
-
-};
+void Knight::print() override {
+	if (isWhite) {
+		cout << 'N';
+	}
+	else {
+		cout << 'n';
+	}
+}

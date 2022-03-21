@@ -4,14 +4,15 @@
 class Pawn : Piece {
     int numMoves;
 public:
+    Pawn(bool isWhite);
     void move();
     bool check();
     void prommote();
     void enPassant();
     void capture();
     void castling();
-
-
+    void print() override;
+    
 };
 
 #endif

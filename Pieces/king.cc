@@ -9,12 +9,13 @@
 #include <king.h>
 using namespace std;
 
-class King : public Piece {
+King::King(bool isWhite) : isWhite{ isWhite } {}
 
-
-
-
-
-
-
-};
+void King::print() override {
+	if (isWhite) {
+		cout << 'K';
+	}
+	else {
+		cout << 'k';
+	}
+}

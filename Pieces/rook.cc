@@ -9,12 +9,14 @@
 #include <rook.h>
 using namespace std;
 
-class Rook : public Piece {
+Rook::Rook(bool isWhite) : isWhite{ isWhite } {}
 
 
-
-
-
-
-
-};
+void Rook::print() override {
+	if (isWhite) {
+		cout << 'R'
+	}
+	else {
+		cout << 'r';
+	}
+}

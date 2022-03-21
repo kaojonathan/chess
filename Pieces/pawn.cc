@@ -9,12 +9,14 @@
 #include <pawn.h>
 using namespace std;
 
-class Pawn : public Piece {
+Pawn::Pawn(bool isWhite) : isWhite{ isWhite } {}
 
 
-
-
-
-
-
-};
+void Pawn::print() override {
+	if (isWhite) {
+		cout << 'P'
+	}
+	else {
+		cout << 'p';
+	}
+}

@@ -8,10 +8,9 @@ class Piece {
     bool cap;
     int point;
 public:
-    void move();
-    bool check();
-
-
+    virtual void move() = 0;
+    virtual bool check() = 0;
+    virtual void print() = 0;
 };
 
 #endif

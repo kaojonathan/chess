@@ -3,9 +3,11 @@
 #define ROOK_H_
 class Rook : Piece {
 public:
-    void move();
+    Rook(bool isWhite);
+    bool move(char x, int y);
     bool check();
     void castling();
+    void print() override;
 };
 
 #endif

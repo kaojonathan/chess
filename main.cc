@@ -1,4 +1,4 @@
-#include "assistant.h"
+#include "board.h"
 #include <iostream>
 
 using namespace std;
@@ -75,6 +75,8 @@ int main() {
 
 
 
+
+
 	std::string line;
 
 
@@ -87,11 +89,22 @@ int main() {
 		int i;
 
 
+
+
+
+
+
+
+
 		std::stringstream linestream(line);
 
 		string command;
 
 		linestream >> command;
+
+
+
+
 		if (command == "game")
 		{ // if the command is "game"
 

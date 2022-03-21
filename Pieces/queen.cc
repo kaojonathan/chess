@@ -9,12 +9,14 @@
 #include <queen.h>
 using namespace std;
 
-class Queen : public Piece {
+Queen::Queen(bool isWhite) : isWhite{ isWhite } {}
 
 
-
-
-
-
-
-};
+void Queen::print() override {
+	if (isWhite) {
+		cout << 'Q'
+	}
+	else {
+		cout << 'q';
+	}
+}
