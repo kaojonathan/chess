@@ -67,7 +67,7 @@ bool isValidPiece(string piece) {
 	}
 }
 
-
+// hi
 
 
 int main() {
@@ -256,12 +256,12 @@ int main() {
 
 			 setup enters setup mode, within which you can set up your own initial board configurations. This can only be done
 when a game is not currently running. Within setup mode, the following language is used:
-– + K e1 places the piece K (i.e., white king in this case) on the square e1. If a piece is already on that square, it
+ï¿½ + K e1 places the piece K (i.e., white king in this case) on the square e1. If a piece is already on that square, it
 is replaced. The board should be redisplayed.
-– - e1 removes the piece from the square e1 and then redisplays the board. If there is no piece at that square, take
+ï¿½ - e1 removes the piece from the square e1 and then redisplays the board. If there is no piece at that square, take
 no action.
-– = colour makes it colour’s turn to go next.
-– done leaves setup mode.
+ï¿½ = colour makes it colourï¿½s turn to go next.
+ï¿½ done leaves setup mode.
 
 Upon completion of setup mode, you must verify that the board contains exactly one white king and exactly one black
 king; that no pawns are on the first or last row of the board; and that neither king is in check. The user cannot leave
