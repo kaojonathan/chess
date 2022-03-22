@@ -17,10 +17,10 @@ class twoPlayerBoard : public Board {
 public:
 	twoPlayerBoard();
 	~twoPlayerBoard();
-	void origSetup();
-	void print();	
-	bool end();
-	bool validMove();
+	void origSetup() override;
+	void print() override;	
+	bool end() override;
+	bool validMove() override;
 
 };
 
