@@ -1,4 +1,5 @@
 #include "board.h"
+#include "twoPlayerBoard.h"
 #include "score.h"
 #include <iostream>
 
@@ -68,6 +69,9 @@ bool isValidPiece(string piece) {
 	}
 }
 
+
+
+
 // hi
 
 
@@ -110,6 +114,12 @@ int main() {
 		{ // if the command is "game"
 
 			cout << "Started new game!" << endl;
+
+
+			twoPlayerBoard board;
+
+			board.origSetup();
+
 
 			bool whitemoves = true;
 			string white;
@@ -238,27 +248,42 @@ int main() {
 		else if (command == "setup")
 		{ // if the command is "setup"
 
+		twoPlayerBoard board;
+
+		while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+		{
+
+			cout << "Current Board Configuration:" << endl;
+			board.print();
+			std::stringstream setupstream(line);
+
+
+
+
 			string language;
 
 			string black;
 			int difficulty;
-			linestream >> language;
+			setupstream >> language;
 
 			if (language == "+") {
 
 				string piece;
 				string position;
-				linestream >> piece >> position;
+				setupstream >> piece >> position;
 
 				if (isValidPiece(piece)) {
 					if (isValidPosition(position)) {
+
+						board.insertNewPiece(piece, position);
 
 						// do add thing here
 
 
 					}
 
-				} else {
+				}
+				else {
 
 					cout << "ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
 
@@ -269,15 +294,11 @@ int main() {
 			}
 			else if (language == "-") {
 				string position;
-				linestream >> position;
+				setupstream >> position;
 				if (isValidPosition(position)) {
-
-					// do thing here
-
-
+					board.removePiece(position);
 				}
 				else {
-
 
 					cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
 
@@ -290,7 +311,7 @@ int main() {
 
 				string color;
 
-				linestream >> color;
+				setupstream >> color;
 
 				if (color == "white") {
 
@@ -314,6 +335,16 @@ int main() {
 
 
 				// verify the board
+
+				if (board.verifySetup()) {
+
+					// add thing here
+					break;
+				}
+				else {
+					cout << "ERROR: Setup conditions are not satisfied." << endl;
+
+				}
 
 
 
@@ -345,8 +376,100 @@ after board setup. You are free to simply assume that these are not valid option
 incorporate them into the setup phase
 
 			*/
+		}
 
 
+
+
+		/////////////////////// GAME THAT STARTS AFTER SETUP ////////////////////////
+
+
+		bool whitemoves = true;
+
+		while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+		{
+			std::stringstream gamestream(line);
+			gamestream >> command;
+
+			if (command == "resign") {
+
+				// if the command is "resign"
+			   // resign(...)
+
+
+
+				   /*
+				   *
+				   *  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
+				   *   game.
+				   *
+				   */
+
+
+				if (whitemoves) {
+					cout << "Black wins!" << endl;
+					score.blackWin();
+
+				}
+				else {
+					cout << "White wins!" << endl;
+					score.whiteWin();
+				}
+				break; // break
+			}
+			else if (command == "move") {
+				// if the command is "move"
+				string from;
+				string to;
+				linestream >> from >> to;
+
+
+				if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
+
+
+
+
+
+
+
+
+					// do add thing here
+
+
+				}
+				else {
+					cout << "ERROR: invalid position/s." << endl;
+
+				}
+
+
+				// move(...)
+
+	/*
+
+	* A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For
+	* example: move e2 e4. Castling would specified by the two-square move for the king: move e1 g1 or move e1
+	* c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7
+	* e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a
+	* move.
+
+	*/
+
+			}
+			else if (command == "setup") {
+				cout << "ERROR: setup can only be called before a game has started." << endl;
+			}
+			else {
+				cout << "ERROR: Invalid game command." << endl;
+			}
+
+
+
+
+		}
+
+
+		///////////////////////////////////////////////////////////////////////////////
 
 
 		}

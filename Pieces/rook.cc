@@ -6,10 +6,10 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <rook.h>
+#include "rook.h"
 using namespace std;
 
-Rook::Rook(bool isWhite) : isWhite{ isWhite } {}
+Rook::Rook(bool isWhite) : white{ isWhite } {}
 
 
 void Rook::print() override {

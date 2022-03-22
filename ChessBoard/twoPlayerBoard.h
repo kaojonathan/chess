@@ -8,7 +8,6 @@
 
 // owns-a piece (OWNS A RELATIONSHIP)
 class twoPlayerBoard : public Board {
-
 	Piece* board[8][8]; // array of piece pointers
 	History history;
 	Player p1;
@@ -21,6 +20,9 @@ public:
 	void print() override;	
 	bool end() override;
 	bool validMove() override;
+	void insertNewPiece(string validpiece, string position) override;
+	void removePiece(string position) override;
+	bool verifySetup() override;
 
 };
 

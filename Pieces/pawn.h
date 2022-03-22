@@ -1,6 +1,7 @@
 // DO NOT MODIFY THIS FILE
 #ifndef PAWN_H_
 #define PAWN_H_
+#include "piece.h"
 class Pawn : Piece {
     int numMoves;
 public:

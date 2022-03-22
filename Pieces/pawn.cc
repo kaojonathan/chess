@@ -6,10 +6,10 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <pawn.h>
+#include "pawn.h"
 using namespace std;
 
-Pawn::Pawn(bool isWhite) : isWhite{ isWhite } {}
+Pawn::Pawn(bool isWhite) : white{ isWhite } {}
 
 
 void Pawn::print() override {

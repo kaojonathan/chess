@@ -6,10 +6,10 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <bishop.h>
+#include "bishop.h"
 using namespace std;
 
-Bishop::Bishop(bool isWhite) : isWhite{ isWhite } {}
+Bishop::Bishop(bool isWhite) : white{ isWhite } {}
 
 void Bishop::print() override {
 	if (isWhite) {

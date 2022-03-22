@@ -6,10 +6,10 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <knight.h>
+#include "knight.h"
 using namespace std;
 
-Knight::Knight(bool isWhite) : isWhite{ isWhite } {}
+Knight::Knight(bool isWhite) : white{ isWhite } {}
 
 
 void Knight::print() override {

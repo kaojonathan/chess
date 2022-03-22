@@ -6,5 +6,8 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <piece.h>
+#include "piece.h"
 using namespace std;
+
+int Piece::numBlackKings = 0;
+int Piece::numWhiteKings = 0;

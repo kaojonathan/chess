@@ -4,9 +4,9 @@
 class Piece {
     char x;
     int y;
-    char player;
-    bool cap;
-    int point;
+    bool white;
+    static int numWhiteKings;
+    static int numBlackKings;
 public:
     virtual void move() = 0;
     virtual bool check() = 0;

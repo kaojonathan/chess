@@ -6,10 +6,10 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <queen.h>
+#include "queen.h"
 using namespace std;
 
-Queen::Queen(bool isWhite) : isWhite{ isWhite } {}
+Queen::Queen(bool isWhite) : white{ isWhite } {}
 
 
 void Queen::print() override {

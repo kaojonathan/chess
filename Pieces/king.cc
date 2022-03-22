@@ -6,10 +6,26 @@
 #include <utility>
 #include <stdexcept>
 #include <vector>
-#include <king.h>
+#include "king.h"
 using namespace std;
 
-King::King(bool isWhite) : isWhite{ isWhite } {}
+King::King(bool isWhite) : white{ isWhite } {
+	if (isWhite) {
+		++numWhiteKings;
+	}
+	else {
+		++numBlackKings;
+	}
+}
+
+King::~King() {
+	if (isWhite) {
+		--numWhiteKings;
+	}
+	else {
+		--numBlackKings;
+	}
+}
 
 void King::print() override {
 	if (isWhite) {

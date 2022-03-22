@@ -1,6 +1,7 @@
 // DO NOT MODIFY THIS FILE
 #ifndef ROOK_H_
 #define ROOK_H_
+#include "piece.h"
 class Rook : Piece {
 public:
     Rook(bool isWhite);
