@@ -19,9 +19,6 @@ public:
     King(bool isWhite);
     ~King();
     void move();
-    string getRep() override;
-    void attach(Board* board) override;
-    void print() override;
     void updateMovePossibilities() override;
 };
 

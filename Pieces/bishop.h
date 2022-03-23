@@ -16,12 +16,10 @@ class Bishop : Piece {
 
 public:
     Bishop(bool isWhite);
-    void attach(Board* board) override;
     void move() override;
-    bool check() override;
-    void print() override;
-    string getRep() override;
     void updateMovePossibilities() override;
+    
+    bool kingInCheck(bool isWhite) override;
 
 
 

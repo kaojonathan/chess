@@ -15,15 +15,12 @@ class Pawn : Piece {
 public:
     Pawn(bool isWhite);
     void move();
-    bool check();
     void prommote();
     void enPassant();
     void capture();
     void castling();
-    string getRep() override;
-    void attach(Board* board) override;
-    void print() override;
     void updateMovePossibilities() override; // did not implement yet since it is more complicated than the othersss
+    bool kingInCheck(bool isWhite) override;
 };
 
 #endif

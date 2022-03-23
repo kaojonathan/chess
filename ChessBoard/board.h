@@ -11,7 +11,7 @@ class Board {
 	virtual void insertNewPiece(string validpiece, string position) = 0;
 	virtual void removePiece(string position)= 0;
 	virtual bool verifySetup() = 0;
-	virtual void updateMovePossibilities() = 0; // ? whats this
+	virtual void updateMovePossibilities() = 0; // updates each Piece's possible moves (uses polymorphism)
 	public:
 		Piece* getPiece(int x, int y) = 0;
 };

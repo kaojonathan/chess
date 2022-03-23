@@ -17,17 +17,6 @@ King::King(bool isWhite) : white{ isWhite } {
 King::~King() {
 }
 
-void King::print() override {
-	cout << representation;
-}
-
-string King::getRep() override {
-	return representation;
-}
-
-void King::attach(Board* board) override {
-	gameBoard = board;
-}
 
 void King::updateMovePossibilities() override {
 	if (x + 1 <= 7) {
@@ -68,3 +57,6 @@ void King::updateMovePossibilities() override {
 			upleft.emplace_back(gameBoard->getPiece(x - 1, y - 1));
 		}
 }
+
+// king does not have kingInCheck method since that could never happen
+

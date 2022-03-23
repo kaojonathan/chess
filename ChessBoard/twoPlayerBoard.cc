@@ -191,13 +191,17 @@ void twoPlayerBoard::removePiece(string position) {
 }
 
 
-bool twoPlayerBoard::kingInCheck(bool isWhite) {
+bool twoPlayerBoard::kingInCheck(bool isWhite) { // not checkmate
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
 
-
-
-
-
-
+			if (board[i][j]->kingInCheck(isWhite)) { // if at least one piece has check (isWhite tells us if black king is in check)
+				return true; // then the king is in check
+			}
+		}
+	}
+	// otherwise they all not have check so
+	return false;
 }
 
 
@@ -235,7 +239,6 @@ bool twoPlayerBoard::verifySetup() { // uses the character matrix
 
 			}
 		
-
 			// check if neither king is in check
 
 
@@ -253,7 +256,7 @@ bool twoPlayerBoard::verifySetup() { // uses the character matrix
 		return false;
 
 	}
-	else {
+	else { // if all conditions are satisfied return true
 
 		return true;
 	}

@@ -18,11 +18,8 @@ class Queen : Piece {
 public:
     Queen(bool isWhite);
     void move();
-    bool check();
-    string getRep() override;
-    void print() override;
-    void attach(Board* board) override;
     void updateMovePossibilities() override;
+    bool kingInCheck(bool isWhite) override;
 };
 
 #endif

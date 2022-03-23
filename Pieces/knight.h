@@ -17,11 +17,8 @@ class Knight : Piece {
 public:
     Knight(bool isWhite);
     void move();
-    bool check();
-    string getRep() override;
-    void attach(Board* board) override;
-    void print() override;
     void updateMovePossibilities() override;
+    bool kingInCheck(bool isWhite) override;
 };
 
 #endif

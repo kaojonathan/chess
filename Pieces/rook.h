@@ -14,12 +14,9 @@ class Rook : Piece {
 public:
     Rook(bool isWhite);
     bool move(char x, int y);
-    bool check();
-    string getRep() override;
     void castling();
-    void print() override;
-    void attach(Board* board) override;
     void updateMovePossibilities() override;
+    bool kingInCheck(bool isWhite) override;
 };
 
 #endif

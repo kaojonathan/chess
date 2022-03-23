@@ -15,17 +15,6 @@ Rook::Rook(bool isWhite) : white{ isWhite } {
 }
 
 
-void Rook::print() override {
-	cout << representation;
-}
-
-string Rook::getRep() override {
-	return representation;
-}
-
-void Rook::attach(Board* board) override {
-	gameBoard = board;
-}
 
 void Rook::updateMovePossibilities() override {
 	// get the cross
@@ -65,4 +54,113 @@ void Rook::updateMovePossibilities() override {
 			up.emplace_back(gameBoard->getPiece(x, y - i));
 		}
 	}
+}
+
+
+bool Rook::kingInCheck(bool isWhite) override {
+	for (int i = 0; i < up.size(); ++i) {
+
+		// for rook, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
+		// If it's the opposite color's king, it's in check
+
+		if (up[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (up[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (up[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	// same thing for other three ways
+
+	for (int i = 0; i < down.size(); ++i) {
+
+
+		if (down[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (down[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (down[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	for (int i = 0; i < left.size(); ++i) {
+
+
+		if (left[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (left[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (left[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+
+	for (int i = 0; i < right.size(); ++i) {
+
+
+		if (right[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (right[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (right[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	// since no king has been checked, return false
+
+	return false;
+
 }

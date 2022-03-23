@@ -8,14 +8,14 @@ class Piece {
     int y;
     string representation;
     Board* gameBoard;
-    virtual void attach(Board* board) = 0;
+    void attach(Board* board);
     virtual void move() = 0;
-    virtual bool check() = 0;
-    virtual void print() = 0;
-    virtual string getRep() = 0;
+    void print();
+    string getRep();
 public:
     void setPos(int row, int col);
-    virtual void updateMovePossibilities() = 0; // ? whats this
+    virtual void updateMovePossibilities() = 0; // ? whats this // updates each Piece's possible moves
+    virtual bool kingInCheck(bool isWhite) = 0;
 };
 
 #endif

@@ -14,17 +14,7 @@ Bishop::Bishop(bool isWhite) : white{ isWhite } {
 	}
 }
 
-void Bishop::print() override {
-	cout << representation;
-}
 
-string Bishop::getRep() override {
-	return representation;
-}
-
-void Bishop::attach(Board* board) override {
-	gameBoard = board;
-}
 
 void Bishop::updateMovePossibilities() override {
 	// get the diagonals
@@ -73,5 +63,113 @@ void Bishop::updateMovePossibilities() override {
 
 
 	}
+
+}
+
+bool Bishop::kingInCheck(bool isWhite) override {
+	for (int i = 0; i < upperLeftDiag.size(); ++i) {
+
+		// for bishop, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
+		// If it's the opposite color's king, it's in check
+
+		if (upperLeftDiag[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (upperLeftDiag[i]->getRep() == "k") { // if black king
+
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (upperLeftDiag[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	// same thing for other three diagonals
+
+	for (int i = 0; i < upperRightDiag.size(); ++i) {
+
+
+		if (upperRightDiag[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (upperRightDiag[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (upperRightDiag[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	for (int i = 0; i < lowerLeftDiag.size(); ++i) {
+
+		if (lowerLeftDiag[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (lowerLeftDiag[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (lowerLeftDiag[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+
+	for (int i = 0; i < lowerRightDiag.size(); ++i) {
+
+
+		if (lowerRightDiag[i]) {
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+				if (lowerRightDiag[i]->getRep() == "k") { // if black king
+					if (isWhite) {
+						return true;
+					}
+				}
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+				if (lowerRightDiag[i]->getRep() == "K") { // if white king
+					if (!isWhite) {
+						return true;
+					}
+				}
+			}
+			break;
+		}
+
+
+	}
+
+	// since no king has been checked, return false
+
+	return false;
 
 }
