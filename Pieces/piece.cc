@@ -9,5 +9,7 @@
 #include "piece.h"
 using namespace std;
 
-int Piece::numBlackKings = 0;
-int Piece::numWhiteKings = 0;
+void Piece::setPos(int row, int col) {
+	x = row;
+	y = col;
+}
