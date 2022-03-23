@@ -8,14 +8,14 @@ class Piece {
     int y;
     string representation;
     Board* gameBoard;
-public:
     virtual void attach(Board* board) = 0;
     virtual void move() = 0;
     virtual bool check() = 0;
     virtual void print() = 0;
     virtual string getRep() = 0;
+public:
     void setPos(int row, int col);
-    void updateMovePossibilities() = 0;
+    virtual void updateMovePossibilities() = 0; // ? whats this
 };
 
 #endif
