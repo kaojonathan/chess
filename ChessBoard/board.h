@@ -15,6 +15,7 @@ class Board {
 	virtual bool verifySetup() = 0;
 	virtual void updateMovePossibilities() = 0; // updates each Piece's possible moves (uses polymorphism)
 	virtual Piece* getPiece(int x, int y) = 0;
+	void movePiece(int x, int y, int newx, int newy) = 0; // setter
 		
 };
 

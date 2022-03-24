@@ -13,7 +13,7 @@ class Rook : Piece {
 
 public:
     Rook(bool isWhite);
-    bool move(char x, int y);
+    bool canMove(int x, int y) override;
     void castling();
     void updateMovePossibilities() override;
     bool kingInCheck(bool isWhite) override;

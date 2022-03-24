@@ -173,3 +173,11 @@ bool Bishop::kingInCheck(bool isWhite) override {
 	return false;
 
 }
+
+bool Bishop::canMove(int x, int y) override {
+
+
+
+
+
+}

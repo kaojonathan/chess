@@ -16,7 +16,7 @@ class Bishop : Piece {
 
 public:
     Bishop(bool isWhite);
-    void move() override;
+    bool canMove(int x, int y) override;
     void updateMovePossibilities() override;
     
     bool kingInCheck(bool isWhite) override;

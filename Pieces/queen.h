@@ -17,7 +17,7 @@ class Queen : Piece {
 
 public:
     Queen(bool isWhite);
-    void move();
+    bool canMove(int x, int y) override;
     void updateMovePossibilities() override;
     bool kingInCheck(bool isWhite) override;
 };

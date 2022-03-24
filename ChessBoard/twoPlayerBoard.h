@@ -29,6 +29,7 @@ public:
 
 
 	Piece* getPiece(int x, int y); // getter
+	void movePiece(int x, int y, int newx, int newy); // setter
 
 
 

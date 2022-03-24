@@ -21,6 +21,69 @@ Piece* twoPlayerBoard::getPiece(int x, int y) {
 }
 
 
+void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
+	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N")) {
+		if (board[y][x]->canMove(newx, newy)) {
+
+			if ((board[y][x]->getRep() == "n") && ((65 <= board[newy, newx]->getRep()) && (board[newy, newx]->getRep() <= 90))) {
+
+
+
+				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
+
+				board[newy][newx] = board[y][x];
+				board[y][x] = nullptr;
+				board[newy][newx]->setPos(newy, newx);
+
+			}
+			else if ((board[y][x]->getRep() == "N") && ((97 <= board[newy, newx]->getRep()) && (board[newy, newx]->getRep() <= 122))) {
+
+
+				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
+
+				board[newy][newx] = board[y][x];
+				board[y][x] = nullptr;
+				board[newy][newx]->setPos(newy, newx);
+
+
+
+			}
+			else { // if blank cell
+
+				board[newy][newx] = board[y][x];
+				board[y][x] = nullptr;
+				board[newy][newx]->setPos(newy, newx);
+
+			}
+
+
+			updateMovePossibilities();
+
+
+
+
+
+		}
+
+
+
+	}
+	else if ((board[y][x]->getRep() == "b") || (board[y][x]->getRep() == "B")) {
+
+
+		/// rest of the cases for different pieces (not done)
+
+
+
+
+	}
+	///...///
+
+
+
+}
+
+
 void twoPlayerBoard::updateMovePossibilities() override {
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {

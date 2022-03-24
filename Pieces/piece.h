@@ -9,7 +9,7 @@ class Piece {
     string representation;
     Board* gameBoard;
     void attach(Board* board);
-    virtual void move() = 0;
+    virtual bool canMove(int x, int y) = 0;
     void print();
     std::string getRep();
 public:

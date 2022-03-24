@@ -248,3 +248,701 @@ bool Knight::kingInCheck(bool isWhite) override {
 	return false;
 
 }
+
+bool Knight::canMove(int x, int y) override {
+	// first check if the move is valid for any knight to make
+
+	if ((this.x + 2 == x) && (this.y + 1 == y)) { // if we performed a right 2 down 1 move
+		if (downonerighttwo.size() == 0) { // if out of bounds do nothing
+
+			return false;
+
+		}
+		else { // otherwise there is either a blank cell or a piece
+
+			if (downonerighttwo[0]) { // not blank cell
+
+				// if opposite color capture the piece
+				
+				if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+					if ((97 <= downonerighttwo[0]->getRep()) && (downonerighttwo[0]->getRep() <= 122)) { // if black piece
+
+
+						// capture the piece and move
+
+						return true;
+
+
+
+					}
+					else { // otherwise the piece is white and so dont move!
+
+
+						return false;
+
+
+
+					}
+
+
+
+				}
+				else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+					if ((65 <= downonerighttwo[0]->getRep()) && (downonerighttwo[0]->getRep() <= 90)) { // if white piece
+
+	// capture the piece and move
+
+
+						return true;
+
+
+					}
+					else { // otherwise the piece is black and so dont move!
+
+						return false;
+
+
+
+					}
+
+
+
+
+
+				}
+
+
+
+
+
+			}
+			else { // blank cell, move the piece
+
+
+				return true;
+
+
+
+			}
+
+
+
+
+
+
+		}
+
+
+
+
+
+
+	}
+	else if ((this.x + 2 == x) && (this.y - 1 == y) { // if we performed a right 2 up 1 move
+
+
+		if (uponerighttwo.size() == 0) { // if out of bounds do nothing
+
+			return false;
+
+		}
+		else { // otherwise there is either a blank cell or a piece
+
+			if (uponerighttwo[0]) { // not blank cell
+
+				// if opposite color capture the piece
+
+				if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+					if ((97 <= uponerighttwo[0]->getRep()) && (uponerighttwo[0]->getRep() <= 122)) { // if black piece
+
+
+						// capture the piece and move
+
+						return true;
+
+
+
+					}
+					else { // otherwise the piece is white and so dont move!
+
+
+						return false;
+
+
+
+					}
+
+
+
+				}
+				else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+					if ((65 <= uponerighttwo[0]->getRep()) && (uponerighttwo[0]->getRep() <= 90)) { // if white piece
+
+	// capture the piece and move
+
+
+						return true;
+
+
+					}
+					else { // otherwise the piece is black and so dont move!
+
+						return false;
+
+
+
+					}
+
+
+
+
+
+				}
+
+
+
+
+
+			}
+			else { // blank cell, move the piece
+
+
+				return true;
+
+
+
+			}
+
+
+
+
+
+
+		}
+
+
+	}
+	else if ((this.x - 2 == x) && (this.y + 1 == y) { // if we performed a left 2 down 1 move
+
+
+	if (downonelefttwo.size() == 0) { // if out of bounds do nothing
+
+		return false;
+
+	}
+	else { // otherwise there is either a blank cell or a piece
+
+		if (downonelefttwo[0]) { // not blank cell
+
+			// if opposite color capture the piece
+
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+				if ((97 <= downonelefttwo[0]->getRep()) && (downonelefttwo[0]->getRep() <= 122)) { // if black piece
+
+
+					// capture the piece and move
+
+					return true;
+
+
+
+				}
+				else { // otherwise the piece is white and so dont move!
+
+
+					return false;
+
+
+
+				}
+
+
+
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+				if ((65 <= downonelefttwo[0]->getRep()) && (downonelefttwo[0]->getRep() <= 90)) { // if white piece
+
+// capture the piece and move
+
+
+					return true;
+
+
+				}
+				else { // otherwise the piece is black and so dont move!
+
+					return false;
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+		}
+		else { // blank cell, move the piece
+
+
+			return true;
+
+
+
+		}
+
+
+
+
+
+
+	}
+
+
+
+	}
+	else if ((this.x - 2 == x) && (this.y - 1 == y) { // if we performed a left 2 up 1 move
+
+
+	if (uponelefttwo.size() == 0) { // if out of bounds do nothing
+
+		return false;
+
+	}
+	else { // otherwise there is either a blank cell or a piece
+
+		if (uponelefttwo[0]) { // not blank cell
+
+			// if opposite color capture the piece
+
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+				if ((97 <= uponelefttwo[0]->getRep()) && (uponelefttwo[0]->getRep() <= 122)) { // if black piece
+
+
+					// capture the piece and move
+
+					return true;
+
+
+
+				}
+				else { // otherwise the piece is white and so dont move!
+
+
+					return false;
+
+
+
+				}
+
+
+
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+				if ((65 <= uponelefttwo[0]->getRep()) && (uponelefttwo[0]->getRep() <= 90)) { // if white piece
+
+// capture the piece and move
+
+
+					return true;
+
+
+				}
+				else { // otherwise the piece is black and so dont move!
+
+					return false;
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+		}
+		else { // blank cell, move the piece
+
+
+			return true;
+
+
+
+		}
+
+
+
+
+
+
+	}
+
+
+	} else if ((this.x + 1 == x) && (this.y + 2 == y)) { // if we performed a right 1 down 2 move
+
+
+		if (rightonedowntwo.size() == 0) { // if out of bounds do nothing
+
+			return false;
+
+		}
+		else { // otherwise there is either a blank cell or a piece
+
+			if (rightonedowntwo[0]) { // not blank cell
+
+				// if opposite color capture the piece
+
+				if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+					if ((97 <= rightonedowntwo[0]->getRep()) && (rightonedowntwo[0]->getRep() <= 122)) { // if black piece
+
+
+						// capture the piece and move
+
+						return true;
+
+
+
+					}
+					else { // otherwise the piece is white and so dont move!
+
+
+						return false;
+
+
+
+					}
+
+
+
+				}
+				else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+					if ((65 <= rightonedowntwo[0]->getRep()) && (rightonedowntwo[0]->getRep() <= 90)) { // if white piece
+
+	// capture the piece and move
+
+
+						return true;
+
+
+					}
+					else { // otherwise the piece is black and so dont move!
+
+						return false;
+
+
+
+					}
+
+
+
+
+
+				}
+
+
+
+
+
+			}
+			else { // blank cell, move the piece
+
+
+				return true;
+
+
+
+			}
+
+
+
+
+
+
+		}
+
+	}
+	else if ((this.x + 1 == x) && (this.y - 2 == y) { // if we performed a right 1 up 2 move
+
+	if (rightoneuptwo.size() == 0) { // if out of bounds do nothing
+
+		return false;
+
+	}
+	else { // otherwise there is either a blank cell or a piece
+
+		if (rightoneuptwo[0]) { // not blank cell
+
+			// if opposite color capture the piece
+
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+				if ((97 <= rightoneuptwo[0]->getRep()) && (rightoneuptwo[0]->getRep() <= 122)) { // if black piece
+
+
+					// capture the piece and move
+
+					return true;
+
+
+
+				}
+				else { // otherwise the piece is white and so dont move!
+
+
+					return false;
+
+
+
+				}
+
+
+
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+				if ((65 <= rightoneuptwo[0]->getRep()) && (rightoneuptwo[0]->getRep() <= 90)) { // if white piece
+
+// capture the piece and move
+
+
+					return true;
+
+
+				}
+				else { // otherwise the piece is black and so dont move!
+
+					return false;
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+		}
+		else { // blank cell, move the piece
+
+
+			return true;
+
+
+
+		}
+
+
+
+
+
+
+	}
+
+	}
+	else if ((this.x - 1 == x) && (this.y + 2 == y) { // if we performed a left 1 down 2 move
+
+	if (leftonedowntwo.size() == 0) { // if out of bounds do nothing
+
+		return false;
+
+	}
+	else { // otherwise there is either a blank cell or a piece
+
+		if (leftonedowntwo[0]) { // not blank cell
+
+			// if opposite color capture the piece
+
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+				if ((97 <= leftonedowntwo[0]->getRep()) && (leftonedowntwo[0]->getRep() <= 122)) { // if black piece
+
+
+					// capture the piece and move
+
+					return true;
+
+
+
+				}
+				else { // otherwise the piece is white and so dont move!
+
+
+					return false;
+
+
+
+				}
+
+
+
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+				if ((65 <= leftonedowntwo[0]->getRep()) && (leftonedowntwo[0]->getRep() <= 90)) { // if white piece
+
+// capture the piece and move
+
+
+					return true;
+
+
+				}
+				else { // otherwise the piece is black and so dont move!
+
+					return false;
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+		}
+		else { // blank cell, move the piece
+
+
+			return true;
+
+
+
+		}
+
+
+
+
+
+
+	}
+
+	}
+	else if ((this.x - 1 == x) && (this.y - 2 == y) { // if we performed a left 1 up 2 move
+
+	if (leftoneuptwo.size() == 0) { // if out of bounds do nothing
+
+		return false;
+
+	}
+	else { // otherwise there is either a blank cell or a piece
+
+		if (leftoneuptwo[0]) { // not blank cell
+
+			// if opposite color capture the piece
+
+			if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
+
+				if ((97 <= leftoneuptwo[0]->getRep()) && (leftoneuptwo[0]->getRep() <= 122)) { // if black piece
+
+
+					// capture the piece and move
+
+					return true;
+
+
+
+				}
+				else { // otherwise the piece is white and so dont move!
+
+
+					return false;
+
+
+
+				}
+
+
+
+			}
+			else if ((97 <= representation[0]) && (representation[0] <= 122)) { // lower case letter (black)
+
+				if ((65 <= leftoneuptwo[0]->getRep()) && (leftoneuptwo[0]->getRep() <= 90)) { // if white piece
+
+// capture the piece and move
+
+
+					return true;
+
+
+				}
+				else { // otherwise the piece is black and so dont move!
+
+					return false;
+
+
+
+				}
+
+
+
+
+
+			}
+
+
+
+
+
+		}
+		else { // blank cell, move the piece
+
+
+			return true;
+
+
+
+		}
+
+
+
+
+	}
+
+
+	}
+	else { // invalid moves for any Knight to make (do nothing?)
+
+		cout << "Invalid move for a Knight..." << endl; // remove this later
+		return false;
+
+
+
+	}
+	
+	
+
+}
