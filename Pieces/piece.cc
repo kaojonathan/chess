@@ -10,15 +10,15 @@ void Piece::setPos(int row, int col) {
 }
 
 
-string getRep() {
+string Piece::getRep() {
 	return representation;
 }
 
 
-void print() {
+void Piece::print() {
 	cout << representation;
 }
 
-void attach(Board* board) {
+void Piece::attach(Board* board) {
 	gameBoard = board;
 }

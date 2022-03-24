@@ -1,8 +1,8 @@
-// DO NOT MODIFY THIS FILE
 #ifndef PIECE_H_
 #define PIECE_H_
-using namespace std;
 #include "board.h"
+#include <string>
+
 class Piece {
     int x; // use regular matrix coordinates (easier)
     int y;
@@ -11,7 +11,7 @@ class Piece {
     void attach(Board* board);
     virtual void move() = 0;
     void print();
-    string getRep();
+    std::string getRep();
 public:
     void setPos(int row, int col);
     virtual void updateMovePossibilities() = 0; // ? whats this // updates each Piece's possible moves
