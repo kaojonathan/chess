@@ -946,3 +946,557 @@ bool Knight::canMove(int x, int y) override {
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// helper function that determines of the knight in position (x, y) checks the king
+bool Knight::posInCheck(int x, int y) override {
+
+	if ((x + 2 > 7) || (y + 1 > 7)) { // down 1 right 2
+
+	}
+	else if (gameBoard[y + 1][x + 2]) {
+
+		if ((gameBoard[y + 1][x + 2]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y + 1][x + 2]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x + 2 > 7) || (y - 1 < 0)) { // up 1 right 2
+
+	}
+	else if (gameBoard[y - 1][x + 2]) {
+
+		if ((gameBoard[y - 1][x + 2]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y - 1][x + 2]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x - 2 < 0) || (y + 1 > 7)) { // down 1 left 2
+
+	}
+	else if (gameBoard[y + 1][x - 2]) {
+
+		if ((gameBoard[y + 1][x - 2]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y + 1][x - 2]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x - 2 < 0) || (y - 1 < 0)) { // up 1 left 2
+
+	}
+	else if (gameBoard[y - 1][x - 2]) {
+
+		if ((gameBoard[y - 1][x - 2]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y - 1][x - 2]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+
+
+	if ((x + 1 > 7) || (y + 2 > 7)) { // down 2 right 1
+
+	}
+	else if (gameBoard[y + 2][x + 1]) {
+
+		if ((gameBoard[y + 2][x + 1]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y + 2][x + 1]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x + 1 > 7) || (y - 2 < 0)) { // up 2 right 1
+
+	}
+	else if (gameBoard[y - 2][x + 1]) {
+
+		if ((gameBoard[y - 2][x + 1]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y - 2][x + 1]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x - 1 < 0) || (y + 2 > 7)) { // down 2 left 1
+
+	}
+	else if (gameBoard[y + 2][x - 1]) {
+
+		if ((gameBoard[y + 2][x - 1]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y + 2][x - 1]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+	if ((x - 1 < 0) || (y - 2 < 0)) { // up 2 left 1
+
+	}
+	else if (gameBoard[y - 2][x - 1]) {
+
+		if ((gameBoard[y - 2][x - 1]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+
+			return true;
+
+
+		}
+		else if ((gameBoard[y - 2][x - 1]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+
+			return true;
+		}
+
+	}
+
+
+	// since no king has been checked, return false
+
+	return false;
+
+}
+
+
+
+pair<int, int> Knight::getCheckCoords() {
+
+	if (rightuponetwo.size() == 1) {
+		if (rightoneuptwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (rightoneuptwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x + 1, y - 2)) { // if the bishop in position (x + 1, y - 2) checks the king
+
+						pair<int, int> coords = { x + 1, y - 2 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (rightoneuptwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x + 1, y - 2)) { // if the bishop in position (x + 1, y - 2) checks the king
+
+						pair<int, int> coords = { x + 1, y - 2 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x + 1, y - 2)) { // if the bishop in position (x + 1, y - 2) checks the king
+
+				pair<int, int> coords = { x + 1, y - 2 };
+				return coords;
+			}
+
+
+		}
+
+
+	}
+
+	if (leftoneuptwo.size() == 1) {
+		if (leftoneuptwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (leftoneuptwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x - 1, y - 2)) { // if the bishop in position (x - 1, y - 2) checks the king
+
+						pair<int, int> coords = { x - 1, y - 2 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (leftoneuptwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x - 1, y - 2)) { // if the bishop in position (x - 1, y - 2) checks the king
+
+						pair<int, int> coords = { x - 1, y - 2 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x - 1, y - 2)) { // if the bishop in position (x - 1, y - 2) checks the king
+
+				pair<int, int> coords = { x - 1, y - 2 };
+				return coords;
+			}
+
+		
+		}
+	}
+
+	if (rightonedowntwo.size() == 1) {
+
+		if (rightonedowntwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (rightonedowntwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x + 1, y + 2)) { // if the bishop in position (x + 1, y + 2) checks the king
+
+						pair<int, int> coords = { x + 1, y + 2 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (rightonedowntwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x + 1, y + 2)) { // if the bishop in position (x + 1, y + 2) checks the king
+
+						pair<int, int> coords = { x + 1, y + 2 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x + 1, y + 2)) { // if the bishop in position (x + 1, y + 2) checks the king
+
+				pair<int, int> coords = { x + 1, y + 2 };
+				return coords;
+			}
+
+
+		}
+
+	}
+
+	if (leftonedowntwo.size() == 1) {
+
+
+		if (leftonedowntwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (leftonedowntwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x - 1, y + 2)) { // if the bishop in position (x - 1, y + 2) checks the king
+
+						pair<int, int> coords = { x - 1, y + 2 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (leftonedowntwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x - 1, y + 2)) { // if the bishop in position (x - 1, y + 2) checks the king
+
+						pair<int, int> coords = { x - 1, y + 2 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x - 1, y + 2)) { // if the bishop in position (x - 1, y + 2) checks the king
+
+				pair<int, int> coords = { x - 1, y + 2 };
+				return coords;
+			}
+
+
+		}
+
+	}
+
+	if (uponerighttwo.size() == 1) {
+
+		if (uponerighttwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (uponerighttwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x + 2, y - 1)) { // if the bishop in position (x + 2, y - 1) checks the king
+
+						pair<int, int> coords = { x + 2, y - 1 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (uponerighttwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x + 2, y - 1)) { // if the bishop in position (x + 2, y - 1) checks the king
+
+						pair<int, int> coords = { x + 2, y - 1 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x + 2, y - 1)) { // if the bishop in position (x + 2, y - 1) checks the king
+
+				pair<int, int> coords = { x + 2, y - 1 };
+				return coords;
+			}
+
+
+		}
+
+	}
+
+
+	if (uponelefttwo.size() == 1) {
+
+
+		if (uponelefttwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (uponelefttwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x - 2, y - 1)) { // if the bishop in position (x - 2, y - 1) checks the king
+
+						pair<int, int> coords = { x - 2, y - 1 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (uponelefttwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x - 2, y - 1)) { // if the bishop in position (x - 2, y - 1) checks the king
+
+						pair<int, int> coords = { x - 2, y - 1 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x - 2, y - 1)) { // if the bishop in position (x - 2, y - 1) checks the king
+
+				pair<int, int> coords = { x - 2, y - 1 };
+				return coords;
+			}
+
+
+		}
+
+	}
+
+	if (downonerighttwo.size() == 1) {
+		if (downonerighttwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (downonerighttwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x + 2, y + 1)) { // if the bishop in position (x + 2, y + 1) checks the king
+
+						pair<int, int> coords = { x + 2, y + 1 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (downonerighttwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x + 2, y + 1)) { // if the bishop in position (x + 2, y + 1) checks the king
+
+						pair<int, int> coords = { x + 2, y + 1 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x + 2, y + 1)) { // if the bishop in position (x + 2, y + 1) checks the king
+
+				pair<int, int> coords = { x + 2, y + 1 };
+				return coords;
+			}
+
+
+		}
+
+	}
+	if (downonelefttwo.size() == 1) {
+
+		if (downonelefttwo[0]) { // not blank cell
+			if (side == 0) { // capital letter (white)
+				if (downonelefttwo[0]->getSide() == 1) { // if black piece
+
+
+					if (posInCheck(x - 2, y + 1)) { // if the bishop in position (x - 2, y + 1) checks the king
+
+						pair<int, int> coords = { x - 2, y + 1 };
+						return coords;
+					}
+
+
+				}
+			}
+			else { // lower case letter (black)
+				if (downonelefttwo[0]->getSide() == 0) { // if white piece
+
+					if (posInCheck(x - 2, y + 1)) { // if the bishop in position (x - 2, y + 1) checks the king
+
+						pair<int, int> coords = { x - 2, y + 1 };
+						return coords;
+					}
+
+
+				}
+			}
+		}
+		else { // open square
+
+			if (posInCheck(x - 2, y + 1)) { // if the bishop in position (x - 2, y + 1) checks the king
+
+				pair<int, int> coords = { x - 2, y + 1 };
+				return coords;
+			}
+
+
+		}
+
+	}
+
+	// if there are no possible move positions that check the king
+
+	pair<int, int> coords = { -1, -1 };
+	return coords;
+
+}

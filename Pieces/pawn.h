@@ -21,6 +21,12 @@ public:
     void castling();
     void updateMovePossibilities() override; // did not implement yet since it is more complicated than the othersss
     bool kingInCheck(bool isWhite) override;
+
+
+
+    // for the computer level 2 and 3 class
+    pair<int, int> getCheckCoords() override;
+    bool posInCheck(int x, int y) override;
 };
 
 #endif

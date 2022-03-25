@@ -16,10 +16,21 @@ class Bishop : public Piece {
 
 public:
     Bishop(bool isWhite);
+
     int canMove(int x, int y) override;
+
     void updateMovePossibilities() override;
     std::string representation() override;
     bool kingInCheck(bool isWhite) override;
+
+
+
+
+
+
+    // for the computer level 2 and 3 class
+    pair<int, int> getCheckCoords() override;
+    bool posInCheck(int x, int y) override;
 
 
 

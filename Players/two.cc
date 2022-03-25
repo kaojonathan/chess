@@ -36,7 +36,7 @@ void Two::move() {
 		if (canCapture(pieces[i])) { // if the piece can capture (need to implement this)
 
 			gameBoard->movePiece(pieces[i]->getX(), pieces[i]->getY(), canCapture(pieces[i])->getX(), canCapture(pieces[i])->getY());
-
+		
 
 
 

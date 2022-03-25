@@ -20,6 +20,13 @@ public:
     ~King();
     bool canMove(int x, int y) override;
     void updateMovePossibilities() override;
+
+
+
+
+
+
+
 };
 
 #endif
