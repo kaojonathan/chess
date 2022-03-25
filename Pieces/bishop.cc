@@ -1,16 +1,20 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "bishop.h"
 #include "board.h"
 using namespace std;
 
-Bishop::Bishop(bool isWhite) : Piece{isWhite} {}
+Bishop::Bishop(bool isWhite) : Piece{isWhite} {
+	if (isWhite) {
+		representation = "B";
+	}
+	else {
 
-// returns the representation of Bishop based on its side
-string Bishop::representation() {
-	return (side == 0) ? "B" : "b"; 
+		representation = "b";
+	}
 }
+
+
 
 void Bishop::updateMovePossibilities() {
 	// get the diagonals

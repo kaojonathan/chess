@@ -10,7 +10,7 @@ void Piece::setPos(int row, int col) {
 }
 
 string Piece::getRep() {
-	return representation();
+	return representation;
 }
 
 bool Piece::move(int x, int y) {
@@ -25,7 +25,6 @@ void Piece::attach(Board* board) {
 int Piece::getSide() {
 	return side;
 }
-}
 
 int Piece::getX() {
 	return x;
@@ -33,4 +32,8 @@ int Piece::getX() {
 
 int Piece::getY() {
 	return y;
+}
+
+void Piece::updateMoves() {
+	this->updateMovePossibilities();
 }

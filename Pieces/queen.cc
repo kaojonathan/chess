@@ -1,21 +1,21 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "queen.h"
+#include "board.h"
 using namespace std;
 
-Queen::Queen(bool isWhite) : white{ isWhite } {
+Queen::Queen(bool isWhite) : Piece{ isWhite } {
 	if (isWhite) {
-		representation = "Q"
+		representation = "Q";
 	}
 	else {
 
-		representation = "q"
+		representation = "q";
 	}
 }
 
 
-void Queen::updateMovePossibilities() override {
+void Queen::updateMovePossibilities()  {
 	// get the cross
 	for (int i = 1; i < 8; ++i) { // right
 		if (x + i > 7) {
@@ -104,7 +104,7 @@ void Queen::updateMovePossibilities() override {
 	}
 }
 
-bool Queen::kingInCheck(bool isWhite) override {
+bool Queen::kingInCheck(bool isWhite)  {
 
 	for (int i = 0; i < upperLeftDiag.size(); ++i) {
 

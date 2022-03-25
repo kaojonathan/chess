@@ -8,7 +8,7 @@ class Pawn : public Piece {
 
     // vectors extend from center of the piece
     // means down for black, up for white
-    vector<Piece*> forward; // positions that the piece can move to (null means empty square!)
+    std::vector<Piece*> forward; // positions that the piece can move to (null means empty square!)
     // will always be size 1 after we move once!!! (b/c we can't move two squares after)
 
 

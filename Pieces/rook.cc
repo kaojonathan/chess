@@ -1,22 +1,22 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "rook.h"
+#include "board.h"
 using namespace std;
 
-Rook::Rook(bool isWhite) : white{ isWhite } {
+Rook::Rook(bool isWhite) : Piece{isWhite} {
 	if (isWhite) {
-		representation = "R"
+		representation = "R";
 	}
 	else {
 
-		representation = "r"
+		representation = "r";
 	}
 }
 
 
 
-void Rook::updateMovePossibilities() override {
+void Rook::updateMovePossibilities() {
 	// get the cross
 	for (int i = 1; i < 8; ++i) { // right
 		if (x + i > 7) {
@@ -57,7 +57,7 @@ void Rook::updateMovePossibilities() override {
 }
 
 
-bool Rook::kingInCheck(bool isWhite) override {
+bool Rook::kingInCheck(bool isWhite) {
 	for (int i = 0; i < up.size(); ++i) {
 
 		// for rook, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
