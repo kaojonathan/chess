@@ -1,7 +1,5 @@
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <vector>
 #include "twoPlayerBoard.h"
 #include "rook.h"
 #include "bishop.h"

@@ -13,7 +13,7 @@ class twoPlayerBoard : public Board {
 
 public:
 	twoPlayerBoard();
-	~twoPlayerBoard();
+	~twoPlayerBoard(); // needs implementation
 	void origSetup() override;
 	void print() override;	
 	bool end() override;
