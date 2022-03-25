@@ -9,6 +9,9 @@
 #include <vector>
 using namespace std;
 
+
+Two::Two(int side) : side{ side } {}
+
 void Two::move() {
 
 	// shuffle the array first (using some way)

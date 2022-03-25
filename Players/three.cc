@@ -9,10 +9,65 @@
 #include <vector>
 using namespace std;
 
+Three::Three(int side) : side{ side } {}
+
+
 void Three::move() {
 
 
 	// shuffle the array first (using some way)
+
+	for (int i = 0; i < pieces.size(); ++i) {
+
+		for (int j = 0; j < enemypieces.size(); ++j) {
+
+			if (canCapture(pieces[j])) {
+				if (canCapture(pieces[j]) == pieces[i]) { // if some enemy piece can capture one of your piece,
+
+
+					//// work in progress
+
+
+
+
+
+
+				}
+
+			}
+
+
+
+
+
+		}
+
+
+
+
+
+	}
+
+
+
+
+	for (int i = 0; i < pieces.size(); ++i) {
+		pair<int, int> checkCoords = getCheckCoords(pieces[i]);
+		// potential check x and y position (-1, -1) if there is none (need to implement this)
+
+		if (checkCoords.first != -1) { // if the piece can check
+
+			gameBoard->movePiece(pieces[i]->getX(), pieces[i]->getY(), checkCoords.first, checkCoords.second); // move it
+
+
+		}
+
+
+	}
+
+
+	// if no piece can check, check for a capture
+
 
 	for (int i = 0; i < pieces.size(); ++i) {
 		if (canCapture(pieces[i])) { // if the piece can capture (need to implement this)
@@ -26,10 +81,7 @@ void Three::move() {
 
 	}
 
-
-
-
-	// if no piece can capture randomize the move
+	// otherwise randomize the move
 
 	bool madeMove = false;
 
@@ -58,6 +110,5 @@ void Three::move() {
 
 		// otherwise keep looping (might be inefficient)
 	}
-
 
 }

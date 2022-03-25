@@ -14,7 +14,7 @@ class Pawn : public Piece {
 
 public:
     Pawn(bool isWhite);
-    bool canMove(int x, int y) override;
+    int canMove(int x, int y) override;
     void prommote();
     void enPassant();
     void capture();

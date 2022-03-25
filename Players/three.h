@@ -5,6 +5,8 @@
 class Three : public Computer {
 
 	void move();
+	Three();
+	~Three();
 
 };
 

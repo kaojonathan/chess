@@ -5,6 +5,8 @@
 class Two : public Computer {
 
 	void move();
+	Two(int side);
+	~Two();
 
 };
 

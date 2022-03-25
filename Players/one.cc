@@ -9,8 +9,14 @@
 #include <vector>
 using namespace std;
 
+
+One::One(int side) : side{ side } {}
+
 void One::move() {
 	bool madeMove = false;
+
+
+
 
 	while (!madeMove) { // keep looping if we haven't made a move
 

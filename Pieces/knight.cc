@@ -249,13 +249,13 @@ bool Knight::kingInCheck(bool isWhite) override {
 
 }
 
-bool Knight::canMove(int x, int y) override {
+int Knight::canMove(int x, int y) override {
 	// first check if the move is valid for any knight to make
 
 	if ((this.x + 2 == x) && (this.y + 1 == y)) { // if we performed a right 2 down 1 move
 		if (downonerighttwo.size() == 0) { // if out of bounds do nothing
 
-			return false;
+			return 0;
 
 		}
 		else { // otherwise there is either a blank cell or a piece
@@ -271,7 +271,7 @@ bool Knight::canMove(int x, int y) override {
 
 						// capture the piece and move
 
-						return true;
+						return 2;
 
 
 
@@ -279,7 +279,7 @@ bool Knight::canMove(int x, int y) override {
 					else { // otherwise the piece is white and so dont move!
 
 
-						return false;
+						return 0;
 
 
 
@@ -295,13 +295,13 @@ bool Knight::canMove(int x, int y) override {
 	// capture the piece and move
 
 
-						return true;
+						return 2;
 
 
 					}
 					else { // otherwise the piece is black and so dont move!
 
-						return false;
+						return 0;
 
 
 
@@ -321,7 +321,7 @@ bool Knight::canMove(int x, int y) override {
 			else { // blank cell, move the piece
 
 
-				return true;
+				return 1;
 
 
 
@@ -345,7 +345,7 @@ bool Knight::canMove(int x, int y) override {
 
 		if (uponerighttwo.size() == 0) { // if out of bounds do nothing
 
-			return false;
+			return 0;
 
 		}
 		else { // otherwise there is either a blank cell or a piece
@@ -361,7 +361,7 @@ bool Knight::canMove(int x, int y) override {
 
 						// capture the piece and move
 
-						return true;
+						return 2;
 
 
 
@@ -369,7 +369,7 @@ bool Knight::canMove(int x, int y) override {
 					else { // otherwise the piece is white and so dont move!
 
 
-						return false;
+						return 0;
 
 
 
@@ -385,13 +385,13 @@ bool Knight::canMove(int x, int y) override {
 	// capture the piece and move
 
 
-						return true;
+						return 2;
 
 
 					}
 					else { // otherwise the piece is black and so dont move!
 
-						return false;
+						return 0;
 
 
 
@@ -411,7 +411,7 @@ bool Knight::canMove(int x, int y) override {
 			else { // blank cell, move the piece
 
 
-				return true;
+				return 1;
 
 
 
@@ -431,7 +431,7 @@ bool Knight::canMove(int x, int y) override {
 
 	if (downonelefttwo.size() == 0) { // if out of bounds do nothing
 
-		return false;
+		return 0;
 
 	}
 	else { // otherwise there is either a blank cell or a piece
@@ -447,7 +447,7 @@ bool Knight::canMove(int x, int y) override {
 
 					// capture the piece and move
 
-					return true;
+					return 2;
 
 
 
@@ -455,7 +455,7 @@ bool Knight::canMove(int x, int y) override {
 				else { // otherwise the piece is white and so dont move!
 
 
-					return false;
+					return 0;
 
 
 
@@ -471,13 +471,13 @@ bool Knight::canMove(int x, int y) override {
 // capture the piece and move
 
 
-					return true;
+					return 2;
 
 
 				}
 				else { // otherwise the piece is black and so dont move!
 
-					return false;
+					return 0;
 
 
 
@@ -497,7 +497,7 @@ bool Knight::canMove(int x, int y) override {
 		else { // blank cell, move the piece
 
 
-			return true;
+			return 1;
 
 
 
@@ -518,7 +518,7 @@ bool Knight::canMove(int x, int y) override {
 
 	if (uponelefttwo.size() == 0) { // if out of bounds do nothing
 
-		return false;
+		return 0;
 
 	}
 	else { // otherwise there is either a blank cell or a piece
@@ -534,7 +534,7 @@ bool Knight::canMove(int x, int y) override {
 
 					// capture the piece and move
 
-					return true;
+					return 2;
 
 
 
@@ -542,7 +542,7 @@ bool Knight::canMove(int x, int y) override {
 				else { // otherwise the piece is white and so dont move!
 
 
-					return false;
+					return 0;
 
 
 
@@ -558,13 +558,13 @@ bool Knight::canMove(int x, int y) override {
 // capture the piece and move
 
 
-					return true;
+					return 2;
 
 
 				}
 				else { // otherwise the piece is black and so dont move!
 
-					return false;
+					return 0;
 
 
 
@@ -584,7 +584,7 @@ bool Knight::canMove(int x, int y) override {
 		else { // blank cell, move the piece
 
 
-			return true;
+			return 1;
 
 
 
@@ -603,7 +603,7 @@ bool Knight::canMove(int x, int y) override {
 
 		if (rightonedowntwo.size() == 0) { // if out of bounds do nothing
 
-			return false;
+			return 0;
 
 		}
 		else { // otherwise there is either a blank cell or a piece
@@ -619,7 +619,7 @@ bool Knight::canMove(int x, int y) override {
 
 						// capture the piece and move
 
-						return true;
+						return 2;
 
 
 
@@ -627,7 +627,7 @@ bool Knight::canMove(int x, int y) override {
 					else { // otherwise the piece is white and so dont move!
 
 
-						return false;
+						return 0;
 
 
 
@@ -643,13 +643,13 @@ bool Knight::canMove(int x, int y) override {
 	// capture the piece and move
 
 
-						return true;
+						return 2;
 
 
 					}
 					else { // otherwise the piece is black and so dont move!
 
-						return false;
+						return 0;
 
 
 
@@ -669,7 +669,7 @@ bool Knight::canMove(int x, int y) override {
 			else { // blank cell, move the piece
 
 
-				return true;
+				return 1;
 
 
 
@@ -687,7 +687,7 @@ bool Knight::canMove(int x, int y) override {
 
 	if (rightoneuptwo.size() == 0) { // if out of bounds do nothing
 
-		return false;
+		return 0;
 
 	}
 	else { // otherwise there is either a blank cell or a piece
@@ -703,7 +703,7 @@ bool Knight::canMove(int x, int y) override {
 
 					// capture the piece and move
 
-					return true;
+					return 2;
 
 
 
@@ -711,7 +711,7 @@ bool Knight::canMove(int x, int y) override {
 				else { // otherwise the piece is white and so dont move!
 
 
-					return false;
+					return 0;
 
 
 
@@ -727,13 +727,13 @@ bool Knight::canMove(int x, int y) override {
 // capture the piece and move
 
 
-					return true;
+					return 2;
 
 
 				}
 				else { // otherwise the piece is black and so dont move!
 
-					return false;
+					return 0;
 
 
 
@@ -753,7 +753,7 @@ bool Knight::canMove(int x, int y) override {
 		else { // blank cell, move the piece
 
 
-			return true;
+			return 1;
 
 
 
@@ -771,7 +771,7 @@ bool Knight::canMove(int x, int y) override {
 
 	if (leftonedowntwo.size() == 0) { // if out of bounds do nothing
 
-		return false;
+		return 0;
 
 	}
 	else { // otherwise there is either a blank cell or a piece
@@ -787,7 +787,7 @@ bool Knight::canMove(int x, int y) override {
 
 					// capture the piece and move
 
-					return true;
+					return 2;
 
 
 
@@ -795,7 +795,7 @@ bool Knight::canMove(int x, int y) override {
 				else { // otherwise the piece is white and so dont move!
 
 
-					return false;
+					return 0;
 
 
 
@@ -811,13 +811,13 @@ bool Knight::canMove(int x, int y) override {
 // capture the piece and move
 
 
-					return true;
+					return 2;
 
 
 				}
 				else { // otherwise the piece is black and so dont move!
 
-					return false;
+					return 0;
 
 
 
@@ -837,7 +837,7 @@ bool Knight::canMove(int x, int y) override {
 		else { // blank cell, move the piece
 
 
-			return true;
+			return 1;
 
 
 
@@ -855,7 +855,7 @@ bool Knight::canMove(int x, int y) override {
 
 	if (leftoneuptwo.size() == 0) { // if out of bounds do nothing
 
-		return false;
+		return 0;
 
 	}
 	else { // otherwise there is either a blank cell or a piece
@@ -871,7 +871,7 @@ bool Knight::canMove(int x, int y) override {
 
 					// capture the piece and move
 
-					return true;
+					return 2;
 
 
 
@@ -879,7 +879,7 @@ bool Knight::canMove(int x, int y) override {
 				else { // otherwise the piece is white and so dont move!
 
 
-					return false;
+					return 0;
 
 
 
@@ -895,13 +895,13 @@ bool Knight::canMove(int x, int y) override {
 // capture the piece and move
 
 
-					return true;
+					return 2;
 
 
 				}
 				else { // otherwise the piece is black and so dont move!
 
-					return false;
+					return 0;
 
 
 
@@ -921,7 +921,7 @@ bool Knight::canMove(int x, int y) override {
 		else { // blank cell, move the piece
 
 
-			return true;
+			return 1;
 
 
 
@@ -937,7 +937,7 @@ bool Knight::canMove(int x, int y) override {
 	else { // invalid moves for any Knight to make (do nothing?)
 
 		cout << "Invalid move for a Knight..." << endl; // remove this later
-		return false;
+		return 0;
 
 
 
