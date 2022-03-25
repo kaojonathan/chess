@@ -14,7 +14,7 @@ class Piece {
     std::string getRep();
 public:
     void setPos(int row, int col);
-    virtual void updateMovePossibilities() = 0; // ? whats this // updates each Piece's possible moves
+    virtual void updateMovePossibilities() = 0; 
     virtual bool kingInCheck(bool isWhite) = 0;
 };
 
