@@ -89,7 +89,7 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 
 // updates the move possiblities for the pieces on the board
 // should be called after each move
-void twoPlayerBoard::updateMovePossibilities() {
+void twoPlayerBoard::updateBoardMoves() {
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
 
@@ -164,13 +164,6 @@ for (int i = 0; i < 8; ++i) {
 }
 
 
-// we now need to update all their move possibilities...
-
-updateMovePossibilities();
-
-
-
-}
 
 void twoPlayerBoard::print() {
 	for (int i = 0; i < 8; ++i) {
