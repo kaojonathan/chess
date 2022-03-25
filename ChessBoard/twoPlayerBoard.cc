@@ -23,9 +23,11 @@ bool twoPlayerBoard::validPos(int x, int y) {
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N")) {
-		if (board[y][x]->canMove(newx, newy)) {
+		if (board[y][x]->checkPos(newx, newy)) {
 
-			if ((board[y][x]->getRep() == "n") && ((65 <= board[newy, newx]->getRep()) && (board[newy, newx]->getRep() <= 90))) {
+			if ((board[y][x]->getRep() == "n") && 
+				((65 <= board[newy, newx]->getRep()) && 
+				(board[newy, newx]->getRep() <= 90))) {
 
 
 
@@ -36,7 +38,9 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 				board[newy][newx]->setPos(newy, newx);
 
 			}
-			else if ((board[y][x]->getRep() == "N") && ((97 <= board[newy, newx]->getRep()) && (board[newy, newx]->getRep() <= 122))) {
+			else if ((board[y][x]->getRep() == "N") && 
+			((97 <= board[newy, newx]->getRep()) && 
+			(board[newy, newx]->getRep() <= 122))) {
 
 
 				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
@@ -84,7 +88,7 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 }
 
 
-void twoPlayerBoard::updateMovePossibilities() override {
+void twoPlayerBoard::updateMovePossibilities() {
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
 
@@ -94,7 +98,7 @@ void twoPlayerBoard::updateMovePossibilities() override {
 	}
 }
 
-void twoPlayerBoard::origSetup {
+void twoPlayerBoard::origSetup() {
 
 	board[0][0] = new Rook(false);
 board[0][0]->setPos(0, 0);

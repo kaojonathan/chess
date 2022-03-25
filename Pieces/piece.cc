@@ -25,7 +25,6 @@ void Piece::attach(Board* board) {
 int Piece::getSide() {
 	return side;
 }
-}
 
 int Piece::getX() {
 	return x;

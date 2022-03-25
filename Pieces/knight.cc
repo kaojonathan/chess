@@ -1,10 +1,9 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "knight.h"
 using namespace std;
 
-Knight::Knight(bool isWhite) : white{ isWhite } {
+Knight::Knight(bool isWhite) : Piece{ isWhite } {
 	if (isWhite) {
 		representation = "N";
 	}

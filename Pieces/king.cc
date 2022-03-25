@@ -1,16 +1,15 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "king.h"
 using namespace std;
 
-King::King(bool isWhite) : white{ isWhite } {
+King::King(bool isWhite) : Piece{ isWhite } {
 	if (isWhite) {
-		representation = "K"
+		representation = "K";
 	}
 	else {
 
-		representation = "k"
+		representation = "k";
 	}
 }
 

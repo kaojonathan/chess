@@ -19,8 +19,8 @@ class Board {
 	virtual bool validPos (int x, int y) = 0;
 
 	public:
-	virtual ~Board();
-	bool checkPos(int, int);
+		virtual ~Board();
+		bool checkPos(int, int);
 };
 
 #endif

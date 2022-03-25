@@ -1,16 +1,15 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "rook.h"
 using namespace std;
 
-Rook::Rook(bool isWhite) : white{ isWhite } {
+Rook::Rook(bool isWhite) : Piece{isWhite} {
 	if (isWhite) {
-		representation = "R"
+		representation = "R";
 	}
 	else {
 
-		representation = "r"
+		representation = "r";
 	}
 }
 

@@ -1,16 +1,15 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "pawn.h"
 using namespace std;
 
-Pawn::Pawn(bool isWhite) : white{ isWhite } {
+Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
 	if (isWhite) {
-		representation = "P"
+		representation = "P";
 	}
 	else {
 
-		representation = "p"
+		representation = "p";
 	}
 }
 

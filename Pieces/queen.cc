@@ -1,16 +1,15 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "queen.h"
 using namespace std;
 
-Queen::Queen(bool isWhite) : white{ isWhite } {
+Queen::Queen(bool isWhite) : Piece{ isWhite } {
 	if (isWhite) {
-		representation = "Q"
+		representation = "Q";
 	}
 	else {
 
-		representation = "q"
+		representation = "q";
 	}
 }
 
