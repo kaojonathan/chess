@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include "knight.h"
+#include "board.h"
 using namespace std;
 
 Knight::Knight(bool isWhite) : Piece{ isWhite } {
@@ -15,7 +16,7 @@ Knight::Knight(bool isWhite) : Piece{ isWhite } {
 
 
 
-void Knight::updateMovePossibilities() override {
+void Knight::updateMovePossibilities()  {
 	// knight's availible moves
 
 	if ((x - 1 >= 0) && (y + 2 <= 7) {
@@ -57,7 +58,7 @@ void Knight::updateMovePossibilities() override {
 
 }
 
-bool Knight::kingInCheck(bool isWhite) override {
+bool Knight::kingInCheck(bool isWhite)  {
 	for (int i = 0; i < leftoneuptwo.size(); ++i) {
 
 		// for knight, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
@@ -248,7 +249,7 @@ bool Knight::kingInCheck(bool isWhite) override {
 
 }
 
-bool Knight::canMove(int x, int y) override {
+bool Knight::canMove(int x, int y)  {
 	// first check if the move is valid for any knight to make
 
 	if ((this.x + 2 == x) && (this.y + 1 == y)) { // if we performed a right 2 down 1 move

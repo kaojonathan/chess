@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include "pawn.h"
+#include "board.h"
 using namespace std;
 
 Pawn::Pawn(bool isWhite) : Piece{ isWhite } {

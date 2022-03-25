@@ -24,9 +24,6 @@ public:
 
 
 
-
-
-
     // for the computer level 2 and 3 class
     pair<int, int> getCheckCoords() override;
     bool posInCheck(int x, int y) override;

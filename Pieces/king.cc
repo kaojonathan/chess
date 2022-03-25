@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include "king.h"
+#include "board.h"
 using namespace std;
 
 King::King(bool isWhite) : Piece{ isWhite } {
