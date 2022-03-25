@@ -4,17 +4,20 @@
 #include <string>
 
 class Piece {
-    int x; // use regular matrix coordinates (easier)
+    int x;
     int y;
     string representation;
     Board* gameBoard;
-    void attach(Board* board);
+
     virtual bool canMove(int x, int y) = 0;
-    std::string getRep();
+    // updates possible moves
+    virtual void updateMovePossibilities() = 0; 
+    // if the piece is checking the king
+    virtual bool kingInCheck(bool isWhite) = 0; 
 public:
     void setPos(int row, int col);
-    virtual void updateMovePossibilities() = 0; 
-    virtual bool kingInCheck(bool isWhite) = 0;
+    std::string getRep();
+    void attach(Board* board);
 };
 
 #endif
