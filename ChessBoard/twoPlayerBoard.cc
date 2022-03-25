@@ -15,6 +15,11 @@ Piece* twoPlayerBoard::getPiece(int x, int y) {
 	return board[y][x];
 }
 
+// returns true of the (x, y) position is in the board
+bool twoPlayerBoard::validPos(int x, int y) {
+	return 0 <= x &&  0 <= y && x <=8 && y <= 8; 
+}
+
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N")) {

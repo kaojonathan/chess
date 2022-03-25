@@ -16,9 +16,9 @@ class Bishop : public Piece {
 
 public:
     Bishop(bool isWhite);
-    bool canMove(int x, int y) override;
+    int canMove(int x, int y) override;
     void updateMovePossibilities() override;
-    
+    std::string representation() override;
     bool kingInCheck(bool isWhite) override;
 
 
