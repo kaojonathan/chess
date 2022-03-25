@@ -21,15 +21,13 @@ public:
 	void insertNewPiece(string validpiece, string position) override;
 	void removePiece(string position) override;
 	bool verifySetup() override;
-
-
-	Piece* getPiece(int x, int y); // getter
+	Piece* getPiece(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy); // setter
-
-
-
 	void updateMovePossibilities() override; // every time the board changes, call this
 
+	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
+
+	friend class Piece;
 };
 
 #endif
