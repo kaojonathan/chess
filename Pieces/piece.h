@@ -20,6 +20,8 @@ public:
     std::string getRep();
     void attach(Board* board);
     bool move(int x, int y);
+    int getX();
+    int getY();
 };
 
 #endif

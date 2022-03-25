@@ -18,3 +18,11 @@ bool Piece::move(int x, int y) {
 void Piece::attach(Board* board) {
 	gameBoard = board;
 }
+
+int Piece::getX() {
+	return x;
+}
+
+int Piece::getY() {
+	return y;
+}

@@ -18,7 +18,7 @@ Piece* twoPlayerBoard::getPiece(int x, int y) {
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N")) {
-		if (board[y][x]->move(newx, newy)) {
+		if (board[y][x]->canMove(newx, newy)) {
 
 			if ((board[y][x]->getRep() == "n") && ((65 <= board[newy, newx]->getRep()) && (board[newy, newx]->getRep() <= 90))) {
 
