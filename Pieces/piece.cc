@@ -15,9 +15,6 @@ string Piece::getRep() {
 }
 
 
-void Piece::print() {
-	cout << representation;
-}
 
 void Piece::attach(Board* board) {
 	gameBoard = board;

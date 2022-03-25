@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Bishop : Piece {
+class Bishop : public Piece {
 
 
     // vectors extend from center of the piece

@@ -2,8 +2,8 @@
 #ifndef PAWN_H_
 #define PAWN_H_
 #include "piece.h"
-using namespace std;
-class Pawn : Piece {
+
+class Pawn : public Piece {
     int numMoves;
 
     // vectors extend from center of the piece

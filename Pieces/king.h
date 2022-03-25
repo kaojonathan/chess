@@ -1,7 +1,7 @@
 #include "piece.h"
 #ifndef KING_H_
 #define KING_H_
-class King : Piece {
+class King : public Piece {
     bool cancastle;
 
 

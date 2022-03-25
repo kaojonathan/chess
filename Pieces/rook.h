@@ -2,7 +2,7 @@
 #ifndef ROOK_H_
 #define ROOK_H_
 #include "piece.h"
-class Rook : Piece {
+class Rook : public Piece {
 
 // vectors extend from center of the piece
     vector<Piece*> up; // positions that the piece can move to (null means empty square!)

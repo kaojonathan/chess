@@ -10,7 +10,6 @@ class Piece {
     Board* gameBoard;
     void attach(Board* board);
     virtual bool canMove(int x, int y) = 0;
-    void print();
     std::string getRep();
 public:
     void setPos(int row, int col);

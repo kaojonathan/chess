@@ -2,7 +2,7 @@
 #ifndef QUEEN_H_
 #define QUEEN_H_
 #include "piece.h"
-class Queen : Piece {
+class Queen : public Piece {
 
     // vectors extend from center of the piece
     vector<Piece*> upperLeftDiag; // positions that the piece can move to (null means empty square!)

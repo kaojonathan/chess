@@ -2,7 +2,7 @@
 #ifndef KNIGHT_H_
 #define KNIGHT_H_
 #include "piece.h"
-class Knight : Piece {
+class Knight : public Piece {
 
     // EITHER SIZE 0 or 1 (0 means no piece nor cell, null means empty square!)
     vector<Piece*> leftoneuptwo; // positions that the piece can move to (null means empty square!)
