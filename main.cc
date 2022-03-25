@@ -2,8 +2,12 @@
 #include "twoPlayerBoard.h"
 #include "score.h"
 #include <iostream>
+#include <sstream>
+#include <string>
 
 using namespace std;
+
+// This program is the command interpreter for the chess game.
 
 
 // isHuman checks if the 'player' is a "human"
@@ -72,9 +76,6 @@ bool isValidPiece(string piece) {
 
 
 
-// hi
-
-
 int main() {
 
 	Score score;
@@ -82,32 +83,23 @@ int main() {
 
 
 
-	std::string line;
+	string line;
 
 
 
-	while (getline(std::cin, line)) // reads each line (command followed by parameter values)
+	while (getline(cin, line)) // reads each line (command followed by parameter values)
 	{
 		char c;
-		std::string name;
-		std::string number;
+		string name;
+		string number;
 		int i;
 
 
-
-
-
-
-
-
-
-		std::stringstream linestream(line);
+		stringstream linestream(line);
 
 		string command;
 
 		linestream >> command;
-
-
 
 
 		if (command == "game")
@@ -146,9 +138,9 @@ int main() {
 				continue;
 			}
 
-			while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+			while (getline(cin, line)) // reads each line (we are now in the game loop)
 			{
-				std::stringstream gamestream(line);
+				stringstream gamestream(line);
 				gamestream >> command;
 
 				if (command == "resign") {
@@ -250,12 +242,12 @@ int main() {
 
 		twoPlayerBoard board;
 
-		while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+		while (getline(cin, line)) // reads each line (we are now in the game loop)
 		{
 
 			cout << "Current Board Configuration:" << endl;
 			board.print();
-			std::stringstream setupstream(line);
+			stringstream setupstream(line);
 
 
 
@@ -386,9 +378,9 @@ incorporate them into the setup phase
 
 		bool whitemoves = true;
 
-		while (getline(std::cin, line)) // reads each line (we are now in the game loop)
+		while (getline(cin, line)) // reads each line (we are now in the game loop)
 		{
-			std::stringstream gamestream(line);
+			stringstream gamestream(line);
 			gamestream >> command;
 
 			if (command == "resign") {

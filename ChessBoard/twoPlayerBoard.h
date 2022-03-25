@@ -1,10 +1,8 @@
-// DO NOT MODIFY THIS FILE
 #ifndef TWOBOARD_H_
 #define TWOBOARD_H_
-#include <vector>
-#include <iostream>
-#include "piece.h"
 #include "board.h"
+
+class Piece;
 
 // owns-a piece (OWNS A RELATIONSHIP)
 class twoPlayerBoard : public Board {
@@ -19,13 +17,10 @@ public:
 	void origSetup() override;
 	void print() override;	
 	bool end() override;
-	bool validMove() override;
 	bool kingInCheck(bool isWhite) override;
 	void insertNewPiece(string validpiece, string position) override;
 	void removePiece(string position) override;
 	bool verifySetup() override;
-
-
 
 
 	Piece* getPiece(int x, int y); // getter
