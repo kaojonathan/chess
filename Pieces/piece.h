@@ -1,7 +1,8 @@
 #ifndef PIECE_H_
 #define PIECE_H_
-#include "board.h"
 #include <string>
+
+class Board;
 
 class Piece {
     int x;
