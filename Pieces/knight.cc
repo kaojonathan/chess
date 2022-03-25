@@ -6,11 +6,11 @@ using namespace std;
 
 Knight::Knight(bool isWhite) : white{ isWhite } {
 	if (isWhite) {
-		representation = "N"
+		representation = "N";
 	}
 	else {
 
-		representation = "n"
+		representation = "n";
 	}
 }
 

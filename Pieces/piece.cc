@@ -11,7 +11,9 @@ string Piece::getRep() {
 	return representation;
 }
 
-
+bool Piece::move(int x, int y) {
+	return this->canMove(x,y);
+}
 
 void Piece::attach(Board* board) {
 	gameBoard = board;

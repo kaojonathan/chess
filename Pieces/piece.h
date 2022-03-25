@@ -19,6 +19,7 @@ public:
     void setPos(int row, int col);
     std::string getRep();
     void attach(Board* board);
+    bool move(int x, int y);
 };
 
 #endif
