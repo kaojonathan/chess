@@ -165,7 +165,8 @@ bool Bishop::kingInCheck(bool isWhite) {
 int Bishop::canMove(int col, int row) {
 	if (!gameBoard->checkPos(row, col)) return 0;
 	// if the position is not in the board
-
+	if (x == col && y == row) return 0;
+	// if move to the same position
 	if (col - x != row - y && x - col != row - y) 
 		return 0; // if the position is in neither of the 4 directions
 
@@ -205,15 +206,15 @@ bool Bishop::posInCheck(int x, int y) {
 		if ((x + i > 7) || (y + i > 7)) {
 			break;
 		}
-		else if (gameBoard[y + i][x + i]) {
+		else if (gameBoard->getPiece(x + i, y + i)) {
 
-			if ((gameBoard[y + i][x + i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x + i, y + i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y + i][x + i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x + i, y + i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -228,15 +229,15 @@ bool Bishop::posInCheck(int x, int y) {
 		if ((x + i > 7) || (y - i < 0)) {
 			break;
 		}
-		else if (gameBoard[y - i][x + i]) {
+		else if (gameBoard->getPiece(x + i, y - i)) {
 
-			if ((gameBoard[y - i][x + i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x + i, y - i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y - i][x + i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x + i, y - i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -250,15 +251,15 @@ bool Bishop::posInCheck(int x, int y) {
 		if ((x - i < 0) || (y + i > 7)) {
 			break;
 		}
-		else if (gameBoard[y + i][x - i]) {
+		else if (gameBoard->getPiece(x - i, y + i)) {
 
-			if ((gameBoard[y + i][x - i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x - i, y + i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y + i][x - i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x - i, y + i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -273,15 +274,15 @@ bool Bishop::posInCheck(int x, int y) {
 		if ((x - i < 0) || (y - i < 0)) {
 			break;
 		}
-		else if (gameBoard[y - i][x - i]) {
+		else if (gameBoard->getPiece(x - i, y - i)) {
 
-			if ((gameBoard[y - i][x - i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x - i, y - i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y - i][x - i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x - i, y - i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 			}

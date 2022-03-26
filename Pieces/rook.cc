@@ -167,7 +167,36 @@ bool Rook::kingInCheck(bool isWhite) {
 
 
 
+int Rook::canMove(int col, int row) {
+	if (!gameBoard->checkPos(row, col)) return 0;
+	// if the position is not in the board
+	if (x == col && y == row) return 0;
+	// if move to the same position
+	if ( x != col && y != row) 
+		return 0; // if the position is in neither of the 4 directions
 
+	vector<Piece*> way; 	// direction
+	int xShift = col - x;
+	int yShift = row - y;
+	int shiftUnit = 0;
+	if (xShift == 0) {
+		way = (yShift < 0) ? down : up;
+		shiftUnit = (yShift < 0) ? -yShift : yShift;
+	}
+	else if (yShift == 0) {
+		way = (xShift < 0) ? left : right;
+		shiftUnit = (xShift < 0) ? -xShift : xShift;
+	}
+	for (int i = 0; i < shiftUnit-1; i += 1) {
+		if (way.at(i)) return 0; // blocked
+	}
+	Piece * target = way.at(shiftUnit);
+	if (target) {
+		if (target->getSide() == side) return 0;
+		else return 2;
+	}
+	return 1;
+}
 
 
 
@@ -206,22 +235,22 @@ bool Rook::kingInCheck(bool isWhite) {
 
 
 // helper function that determines of the bishop in position (x, y) checks the king
-bool Rook::posInCheck(int x, int y) override {
+bool Rook::posInCheck(int x, int y) {
 
 	// get the cross
 	for (int i = 1; i < 8; ++i) { // right
 		if (x + i > 7) {
 			break;
 		}
-		else if (gameBoard[y][x + i]) {
+		else if (gameBoard->getPiece(x + i, y)) {
 
-			if ((gameBoard[y][x + i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x + i, y)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y][x + i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x + i, y)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -236,15 +265,13 @@ bool Rook::posInCheck(int x, int y) override {
 		if (x - 1 < 0) {
 			break;
 		}
-		else if (gameBoard[y][x - i]) {
+		else if (gameBoard->getPiece(x - i, y)) {
 
-			if ((gameBoard[y][x - i]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x - i, y)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
-
-
 			}
-			else if ((gameBoard[y][x - i]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x - i, y)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -258,15 +285,15 @@ bool Rook::posInCheck(int x, int y) override {
 		if (y + i > 7) {
 			break;
 		}
-		else if (gameBoard[y + i][x]) {
+		else if (gameBoard->getPiece(x, y + i)) {
 
-			if ((gameBoard[y + i][x]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x, y + i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y + i][x]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x, y + i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 
@@ -281,15 +308,15 @@ bool Rook::posInCheck(int x, int y) override {
 		if (y - i < 0) {
 			break;
 		}
-		else if (gameBoard[y - i][x]) {
+		else if (gameBoard->getPiece(x, y - i)) {
 
-			if ((gameBoard[y - i][x]->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
+			if ((gameBoard->getPiece(x, y - i)->getRep() == "K") && (this->getSide() == 1)) { // can check the king (black takes white)
 
 				return true;
 
 
 			}
-			else if ((gameBoard[y - i][x]->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
+			else if ((gameBoard->getPiece(x, y - i)->getRep() == "k") && (this->getSide() == 0)) { // can check the king (white takes black)
 
 				return true;
 			}

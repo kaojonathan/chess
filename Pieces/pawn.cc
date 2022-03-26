@@ -15,7 +15,7 @@ Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
 }
 
 
-void Pawn::updateMovePossibilities() override {
+void Pawn::updateMovePossibilities() {
 
 	if (representation == "P") { // white
 
@@ -82,7 +82,7 @@ void Pawn::updateMovePossibilities() override {
 
 
 
-bool Pawn::kingInCheck(bool isWhite) override {
+bool Pawn::kingInCheck(bool isWhite) {
 
 	// just check forward one square diagonals i think
 
@@ -139,43 +139,35 @@ bool Pawn::kingInCheck(bool isWhite) override {
 
 
 
+int Pawn::canMove(int col, int row) {
+	if (!gameBoard->checkPos(row, col)) return 0;
+	// if the position is not in the board
+	if (x == col && y == row) return 0;
+	// if move to the same position
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	int direction = (side == 0) ? 1 : -1;
+	Piece * target = gameBoard->getPiece(col, row);
+	if (target){
+		if (x + 1 != col || x - 1 != col || row != y + direction || target->getSide() == side) return 0;
+		return 2;
+	}
+	if (x != col) return 0;
+	if (row - y == direction) return 1;
+	if (numMoves == 0 && row - y == 2 * direction && !gameBoard->getPiece(x, y + direction)) return 1; // need to check correctness
+	return 0;
+}
 
 
 // helper function that determines of the pawn in position (x, y) checks the king
-bool Pawn::posInCheck(int x, int y) override {
+bool Pawn::posInCheck(int x, int y)  {
 
 	if (getSide() == 0) { // white case
 
 
 
 		if ((x + 1 <= 7) && (y - 1 >= 0)) {
-			if (gameBoard[y - 1][x + 1]) {
-				if (gameBoard[y - 1][x + 1]->getRep() == "k") { // can check the king (white takes black)
+			if (gameBoard->getPiece(x + 1, y - 1)) {
+				if (gameBoard->getPiece(x + 1, y - 1)->getRep() == "k") { // can check the king (white takes black)
 
 					return true;
 				}
@@ -184,8 +176,8 @@ bool Pawn::posInCheck(int x, int y) override {
 		}
 
 		if ((x - 1 >= 0) && (y - 1 >= 0)) {
-			if (gameBoard[y - 1][x - 1]) {
-				if (gameBoard[y - 1][x - 1]->getRep() == "k") { // can check the king (white takes black)
+			if (gameBoard->getPiece(x - 1, y - 1)) {
+				if (gameBoard->getPiece(x - 1, y - 1)->getRep() == "k") { // can check the king (white takes black)
 
 					return true;
 				}
@@ -204,8 +196,8 @@ bool Pawn::posInCheck(int x, int y) override {
 
 
 		if ((x + 1 <= 7) && (y + 1 <= 7)) {
-			if (gameBoard[y + 1][x + 1]) {
-				if (gameBoard[y + 1][x + 1]->getRep() == "K") { // can check the king (black takes white)
+			if (gameBoard->getPiece(x + 1, y + 1)) {
+				if (gameBoard->getPiece(x + 1, y + 1)->getRep() == "K") { // can check the king (black takes white)
 
 					return true;
 				}
@@ -214,8 +206,8 @@ bool Pawn::posInCheck(int x, int y) override {
 		}
 
 		if ((x - 1 >= 0) && (y + 1 <= 7)) {
-			if (gameBoard[y + 1][x - 1]) {
-				if (gameBoard[y + 1][x - 1]->getRep() == "K") { // can check the king (black takes white)
+			if (gameBoard->getPiece(x- 1, y + 1)) {
+				if (gameBoard->getPiece(x- 1, y + 1)->getRep() == "K") { // can check the king (black takes white)
 
 					return true;
 				}
@@ -263,7 +255,7 @@ pair<int, int> Pawn::getCheckCoords() {
 		if ((x + 1 <= 7) && (y - 1 >= 0)) {
 			if (gameBoard->getPiece(x + 1, y - 1)) { // if pawn right diagonal has an opposite color piece
 
-				if gameBoard->getPiece(x + 1, y - 1)->getSide() == 1) {
+				if (gameBoard->getPiece(x + 1, y - 1)->getSide() == 1) {
 
 				if (posInCheck(x + 1, y - 1)) { // if the pawn in position (x + 1, y - 1) checks the king
 
@@ -279,7 +271,7 @@ pair<int, int> Pawn::getCheckCoords() {
 		if ((x - 1 >= 0) && (y - 1 >= 0)) {
 			if (gameBoard->getPiece(x - 1, y - 1)) { // if pawn left diagonal has an opposite color piece
 
-				if gameBoard->getPiece(x - 1, y - 1)->getSide() == 1) {
+				if (gameBoard->getPiece(x - 1, y - 1)->getSide() == 1) {
 
 				if (posInCheck(x - 1, y - 1)) { // if the pawn in position (x - 1, y - 1) checks the king
 
@@ -324,7 +316,7 @@ pair<int, int> Pawn::getCheckCoords() {
 		if ((x + 1 <= 7) && (y + 1 <= 7)) {
 			if (gameBoard->getPiece(x + 1, y + 1)) { // if pawn right diagonal has an opposite color piece
 
-				if gameBoard->getPiece(x + 1, y + 1)->getSide() == 0) {
+				if (gameBoard->getPiece(x + 1, y + 1)->getSide() == 0) {
 
 				if (posInCheck(x + 1, y + 1)) { // if the pawn in position (x + 1, y + 1) checks the king
 
@@ -340,7 +332,7 @@ pair<int, int> Pawn::getCheckCoords() {
 		if ((x - 1 >= 0) && (y + 1 <= 7)) {
 			if (gameBoard->getPiece(x - 1, y + 1)) { // if pawn left diagonal has an opposite color piece
 
-				if gameBoard->getPiece(x - 1, y + 1)->getSide() == 0) {
+				if (gameBoard->getPiece(x - 1, y + 1)->getSide() == 0) {
 
 				if (posInCheck(x - 1, y + 1)) { // if the pawn in position (x - 1, y + 1) checks the king
 

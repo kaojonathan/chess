@@ -20,11 +20,8 @@ class King : public Piece {
 public:
     King(bool isWhite);
     ~King();
-
     void updateMovePossibilities() override;
-
-
-
+    int canMove(int, int) override;
 };
 
 #endif

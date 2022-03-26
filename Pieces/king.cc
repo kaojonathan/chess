@@ -18,10 +18,9 @@ King::~King() {
 }
 
 
-void King::updateMovePossibilities() override {
+void King::updateMovePossibilities() {
 	if (x + 1 <= 7) {
 		right.emplace_back(gameBoard->getPiece(x + 1, y));
-
 	}
 
 	if (x - 1 >= 0) {
@@ -60,3 +59,18 @@ void King::updateMovePossibilities() override {
 
 // king does not have kingInCheck method since that could never happen
 
+int King::canMove(int col, int row){
+	if (!gameBoard->checkPos(row, col)) return 0;
+	// if the position is not in the board
+	
+		if (x == col && y == row) return 0;
+	// if move to the same position
+
+	if ((col - x >= 1 || col - x <= -1 || row - y >=  1 ||  row - y <= -1) && !cancastle) 
+		return 0; // if the position is in neither of the 4 directions
+	Piece *target =  gameBoard->getPiece(col, row);
+	if (target && target->getSide() == side) return 0;
+	return 1;
+	// determine if the move make the king in check, and if a castling is valid not implemented yet
+
+}
