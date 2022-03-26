@@ -20,6 +20,8 @@ public:
     Queen(bool isWhite);
     
     void updateMovePossibilities() override;
+
+
     bool kingInCheck(bool isWhite) override;
 
 

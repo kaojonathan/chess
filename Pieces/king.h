@@ -5,7 +5,6 @@
 class King : public Piece {
     bool cancastle;
 
-
     // EITHER SIZE 0 or 1 (0 means no piece nor cell, null means empty square!)
     std::vector<Piece*> up; // positions that the piece can move to (null means empty square!)
     std::vector<Piece*> upright; // positions that the piece can move to

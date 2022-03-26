@@ -22,12 +22,23 @@ bool twoPlayerBoard::validPos(int x, int y) {
 
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
-	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N")) {
-		if (board[y][x]->checkPos(newx, newy)) {
 
-			if ((board[y][x]->getRep() == "n") && 
-				((65 <= board[newy, newx]->getRep()) && 
-				(board[newy, newx]->getRep() <= 90))) {
+	if ((board[y][x]->getRep() == "n") || (board[y][x]->getRep() == "N") ||
+		(board[y][x]->getRep() == "b") || (board[y][x]->getRep() == "B") ||
+		(board[y][x]->getRep() == "r") || (board[y][x]->getRep() == "R") ||
+		(board[y][x]->getRep() == "q") || (board[y][x]->getRep() == "Q") ||
+		(board[y][x]->getRep() == "p") || (board[y][x]->getRep() == "P") ||
+		(board[y][x]->getRep() == "k") || (board[y][x]->getRep() == "K")) {
+
+		int result = board[y][x]->move(newx, newy);
+
+
+		if (result == 2) {
+
+			if (((97 <= board[y, x]->getRep()) &&
+				(board[y, x]->getRep() <= 122)) &&
+				((65 <= board[newy, newx]->getRep()) &&
+					(board[newy, newx]->getRep() <= 90))) {
 
 
 
@@ -38,9 +49,10 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 				board[newy][newx]->setPos(newy, newx);
 
 			}
-			else if ((board[y][x]->getRep() == "N") && 
-			((97 <= board[newy, newx]->getRep()) && 
-			(board[newy, newx]->getRep() <= 122))) {
+			else if (((65 <= board[y, x]->getRep()) &&
+				(board[y, x]->getRep() <= 90)) &&
+				((97 <= board[newy, newx]->getRep()) &&
+					(board[newy, newx]->getRep() <= 122))) {
 
 
 				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
@@ -52,16 +64,27 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 
 
 			}
-			else { // if blank cell
 
-				board[newy][newx] = board[y][x];
-				board[y][x] = nullptr;
-				board[newy][newx]->setPos(newy, newx);
+			updateBoardMoves();
 
-			}
+
+		}
+		else if (result == 1) {
+
+
+			board[newy][newx] = board[y][x];
+			board[y][x] = nullptr;
+			board[newy][newx]->setPos(newy, newx);
 
 
 			updateBoardMoves();
+
+		}
+		else if (result == 0) {
+
+
+			// do nothing
+
 
 
 		}
@@ -69,16 +92,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy) { // setter
 
 
 	}
-	else if ((board[y][x]->getRep() == "b") || (board[y][x]->getRep() == "B")) {
-
-
-		/// rest of the cases for different pieces (not done)
-
-
-
-
-	}
-	///...///
 
 
 
