@@ -4,7 +4,7 @@
 
 class Two : public Computer {
 
-	void move();
+	void move() override;
 	Two(int side);
 	~Two();
 

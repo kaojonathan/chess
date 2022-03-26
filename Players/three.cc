@@ -1,15 +1,8 @@
 #include "three.h"
-#include <iostream>
-#include <fstream> 
-#include <sstream>
-#include <iomanip>
-#include <string>
 #include <utility>
-#include <stdexcept>
-#include <vector>
 using namespace std;
 
-Three::Three(int side) : side{ side } {}
+Three::Three(int side) : Computer{ side } {}
 
 
 void Three::move() {

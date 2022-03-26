@@ -1,21 +1,12 @@
 #include "one.h"
-#include <iostream>
-#include <fstream> 
-#include <sstream>
-#include <iomanip>
-#include <string>
-#include <utility>
-#include <stdexcept>
-#include <vector>
+#include "board.h"
 using namespace std;
 
 
-One::One(int side) : side{ side } {}
+One::One(int side) : Computer{ side } {}
 
 void One::move() {
 	bool madeMove = false;
-
-
 
 
 	while (!madeMove) { // keep looping if we haven't made a move
