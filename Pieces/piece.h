@@ -33,7 +33,7 @@ class Piece {
         void setPos(int row, int col);
         void attach(Board* board);
         // attempts to move a piece
-        bool move(int x, int y) {
+        int move(int x, int y) {
             return canMove(x,y);
         }
         int getX();
