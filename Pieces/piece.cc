@@ -13,9 +13,6 @@ string Piece::getRep() {
 	return representation;
 }
 
-bool Piece::move(int x, int y) {
-	return this->canMove(x,y);
-}
 
 void Piece::attach(Board* board) {
 	gameBoard = board;
@@ -32,8 +29,4 @@ int Piece::getX() {
 
 int Piece::getY() {
 	return y;
-}
-
-void Piece::updateMoves() {
-	this->updateMovePossibilities();
 }

@@ -1,7 +1,7 @@
 #ifndef QUEEN_H_
 #define QUEEN_H_
 #include "piece.h"
-
+#include <vector>
 class Queen : public Piece {
 
     // vectors extend from center of the piece
@@ -14,10 +14,11 @@ class Queen : public Piece {
     std::vector<Piece*> right; // positions that the piece can move to
     std::vector<Piece*> down; // positions that the piece can move to
     std::vector<Piece*> left; // positions that the piece can move to
-
+    int canMove(int x, int y) override;
+    
 public:
     Queen(bool isWhite);
-    int canMove(int x, int y) override;
+    
     void updateMovePossibilities() override;
     bool kingInCheck(bool isWhite) override;
 

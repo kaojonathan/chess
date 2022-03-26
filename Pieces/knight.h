@@ -1,7 +1,7 @@
 #ifndef KNIGHT_H_
 #define KNIGHT_H_
 #include "piece.h"
-
+#include <vector>
 class Knight : public Piece {
 
     // EITHER SIZE 0 or 1 (0 means no piece nor cell, null means empty square!)
@@ -13,10 +13,10 @@ class Knight : public Piece {
     std::vector<Piece*> leftonedowntwo; // positions that the piece can move to
     std::vector<Piece*> downonelefttwo; // positions that the piece can move to
     std::vector<Piece*> uponelefttwo; // positions that the piece can move to
+    int canMove(int x, int y) override;
 
 public:
     Knight(bool isWhite);
-    int canMove(int x, int y) override;
     void updateMovePossibilities() override;
     bool kingInCheck(bool isWhite) override;
 

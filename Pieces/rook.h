@@ -15,7 +15,6 @@ class Rook : public Piece {
 
 public:
     Rook(bool isWhite);
-    int canMove(int x, int y) override;
     void castling();
     bool kingInCheck(bool isWhite) override;
 
