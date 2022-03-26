@@ -36,6 +36,9 @@ class Piece {
         int move(int x, int y) {
             return canMove(x,y);
         }
+        bool kingCheck(bool isWhite) {
+            return kingInCheck(isWhite);
+        }
         int getX();
         int getY();
         int getSide();

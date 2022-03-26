@@ -1,19 +1,29 @@
 // DO NOT MODIFY THIS FILE
 #ifndef HUMAN_H_
 #define HUMAN_H_
-class Human : Piece {
+#include <vector>
+// abstract class for the different AI levels
 
-    int side; // 0 for white and 1 for black
-    Board* gameBoard;
-    vector<Piece*> pieces; // the computer's pieces
-    vector<Piece*> enemypieces; // the opponent's pieces
+class Piece;
+class Board;
+class Player; // we need this?
 
-    void move() = 0;
-    Computer(int side) = 0;
-    ~Computer() = 0; // needs implementation
+class Human {
+    protected:
+        int side; // 0 for white and 1 for black
+        Board* gameBoard;
+        std::vector<Piece*> pieces; // the human's pieces
+        std::vector<Piece*> enemypieces; // the opponent's pieces
 
-public:
-  
+        virtual void move() = 0;
+        
+    public:
+        Human(int);
+        virtual ~Human(); // needs implementation
+        // asks computer player to make a move
+        void humanMove() { 
+            move();
+        }
 };
 
 #endif

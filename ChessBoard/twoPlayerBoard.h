@@ -1,15 +1,11 @@
 #ifndef TWOBOARD_H_
 #define TWOBOARD_H_
 #include "board.h"
-
 class Piece;
 
 // owns-a piece (OWNS A RELATIONSHIP)
 class twoPlayerBoard : public Board {
 	Piece* board[8][8]; // array of piece pointers
-	History history;
-	Player white;
-	Player black;
 	
 	void origSetup() override;
 	void print() override;	
@@ -21,6 +17,7 @@ class twoPlayerBoard : public Board {
 	Piece* getP(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy); // setter
 	void updateBoardMoves() override; // every time the board changes, call this
+
 
 public:
 	twoPlayerBoard();
