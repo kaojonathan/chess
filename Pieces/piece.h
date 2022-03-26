@@ -22,7 +22,7 @@ class Piece {
 
         // returns the coordinate (x, y) that the piece can move to, 
         // to check the king, or (-1, -1) if no move is found
-        virtual pair<int, int> getCheckCoords() = 0; 
+        virtual std::pair<int, int> getCheckCoords() = 0; 
         // determines of the piece in position (x, y) checks the king
         virtual bool posInCheck(int x, int y) = 0; 
 

@@ -15,12 +15,16 @@ class King : public Piece {
     std::vector<Piece*> left; // positions that the piece can move to
     std::vector<Piece*> upleft; // positions that the piece can move to
     int canMove(int x, int y) override;
+    void updateMovePossibilities() override;
+
+    // does nothing for the king
+    bool kingInCheck(bool) override {}
+    std::pair<int, int> getCheckCoords() override {}
+    bool posInCheck(int,int) override {}
 
 public:
     King(bool isWhite);
     ~King();
-    void updateMovePossibilities() override;
-    int canMove(int, int) override;
 };
 
 #endif
