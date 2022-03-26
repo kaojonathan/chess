@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <utility>
 #include "pawn.h"
 #include "board.h"
 using namespace std;

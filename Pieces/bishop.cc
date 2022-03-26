@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <utility>
 #include "bishop.h"
 #include "board.h"
 using namespace std;

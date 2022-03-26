@@ -11,7 +11,7 @@ using namespace std;
 
 twoPlayerBoard::twoPlayerBoard() {}
 
-Piece* twoPlayerBoard::getPiece(int x, int y) {
+Piece* twoPlayerBoard::getP(int x, int y) {
 	return board[y][x];
 }
 
