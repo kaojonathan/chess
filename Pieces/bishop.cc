@@ -160,6 +160,8 @@ bool Bishop::kingInCheck(bool isWhite) {
 
 }
 
+// attempts to move the bishop
+// if successful, will update the position
 int Bishop::canMove(int col, int row) {
 	if (!gameBoard->checkPos(row, col)) return 0;
 	// if the position is not in the board
@@ -195,34 +197,8 @@ int Bishop::canMove(int col, int row) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // helper function that determines of the bishop in position (x, y) checks the king
-bool Bishop::posInCheck(int x, int y) override {
+bool Bishop::posInCheck(int x, int y) {
 
 	// get the diagonals
 	for (int i = 1; i < 8; ++i) { // lower right

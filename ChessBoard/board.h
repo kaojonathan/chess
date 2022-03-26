@@ -14,14 +14,21 @@ class Board {
 		virtual void removePiece(std::string position)= 0;
 		virtual bool verifySetup() = 0;
 		// will NVI UMP
-		virtual void updateBoardMoves() = 0; // updates each Piece's possible moves (uses polymorphism)
-		virtual Piece* getPiece(int x, int y) = 0;
+		virtual void updateBoardMoves() = 0; 
+		virtual Piece* getP(int, int) = 0;
 		virtual void movePiece(int x, int y, int newx, int newy) = 0; // setter
-		virtual bool validPos (int x, int y) = 0;
+		virtual bool validPos (int, int) = 0;
 
 	public:
 		virtual ~Board();
 		bool checkPos(int, int);
+		// updates each Piece's possible moves (uses polymorphism)
+		void updateBoard() {
+			updateBoardMoves();
+		}
+		Piece* getPiece(int x , int y) {
+			getP(x, y);
+		}
 };
 
 #endif

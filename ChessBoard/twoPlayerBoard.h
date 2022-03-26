@@ -10,6 +10,7 @@ class twoPlayerBoard : public Board {
 	History history;
 	Player white;
 	Player black;
+	
 
 public:
 	twoPlayerBoard();
@@ -27,7 +28,6 @@ public:
 
 	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
 
-	friend class Piece;
 };
 
 #endif
