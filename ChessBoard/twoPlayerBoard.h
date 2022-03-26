@@ -11,10 +11,6 @@ class twoPlayerBoard : public Board {
 	Player white;
 	Player black;
 	
-
-public:
-	twoPlayerBoard();
-	~twoPlayerBoard(); // needs implementation
 	void origSetup() override;
 	void print() override;	
 	bool end() override;
@@ -22,10 +18,13 @@ public:
 	void insertNewPiece(string validpiece, string position) override;
 	void removePiece(string position) override;
 	bool verifySetup() override;
-	Piece* getPiece(int x, int y) override; // getter
+	Piece* getP(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy); // setter
 	void updateBoardMoves() override; // every time the board changes, call this
 
+public:
+	twoPlayerBoard();
+	~twoPlayerBoard(); // needs implementation
 	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
 
 };

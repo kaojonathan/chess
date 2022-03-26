@@ -161,7 +161,7 @@ for (int i = 0; i < 8; ++i) {
 }
 
 
-
+// move to interface
 void twoPlayerBoard::print() {
 	for (int i = 0; i < 8; ++i) {
 		cout << 8 - i << ' ';
@@ -194,7 +194,7 @@ void twoPlayerBoard::insertNewPiece(string validpiece, string position) {
 	if (board[8 - (position[1] - '0')][position[0] - 'a']) {
 		delete board[8 - (position[1] - '0')][position[0] - 'a'];
 	}
-	switch validpiece
+	switch (validpiece)
 	{
 	case K:
 			board[8 - (position[1] - '0')][position[0] - 'a'] = new King{true};
@@ -300,7 +300,7 @@ bool twoPlayerBoard::verifySetup() { // uses the character matrix
 			// check if neither king is in check
 
 
-			if (kingInCheck{true} || kingInCheck{false}) { // if either king is in check (white or black)
+			if (kingInCheck(true) || kingInCheck(false)) { // if either king is in check (white or black)
 				return false; // return false
 			}
 
