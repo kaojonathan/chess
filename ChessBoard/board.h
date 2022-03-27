@@ -13,7 +13,6 @@ class Board {
 		virtual void insertNewPiece(std::string validpiece, std::string position) = 0;
 		virtual void removePiece(std::string position)= 0;
 		virtual bool verifySetup() = 0;
-		// will NVI UMP
 		virtual void updateBoardMoves() = 0; 
 		virtual Piece* getP(int, int) = 0;
 		virtual void movePiece(int x, int y, int newx, int newy) = 0; // setter
