@@ -50,16 +50,16 @@ int Piece::getVal(){
 vector<pair<int, int>> getPos(int col, int row, int i, int type){
 	vector<pair<int, int>> pos;
 	if (type == 1 || type == 3){
-		pos.emplace_back(pair{col+i, row+i});	//tr
-		pos.emplace_back(pair{col-i, row+i});	//tl			
-		pos.emplace_back(pair{col+i, row-i});	//br
-		pos.emplace_back(pair{col-i, row-i});	//bl
+		pos.emplace_back(pair<int,int>{col+i, row+i});	//tr
+		pos.emplace_back(pair<int,int>{col-i, row+i});	//tl			
+		pos.emplace_back(pair<int,int>{col+i, row-i});	//br
+		pos.emplace_back(pair<int,int>{col-i, row-i});	//bl
 	}
 	if (type == 2 || type == 3){
-		pos.emplace_back(pair{col, row+i});		//t	
-		pos.emplace_back(pair{col, row-i});		//b
-		pos.emplace_back(pair{col+i, row});		//r
-		pos.emplace_back(pair{col-i, row});		//l
+		pos.emplace_back(pair<int,int>{col, row+i});		//t	
+		pos.emplace_back(pair<int,int>{col, row-i});		//b
+		pos.emplace_back(pair<int,int>{col+i, row});		//r
+		pos.emplace_back(pair<int,int>{col-i, row});		//l
 	}
 	return pos;
 }

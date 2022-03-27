@@ -105,7 +105,8 @@ void Queen::updateMovePossibilities()  {
 	}
 }
 
-bool Queen::kingInCheck(bool isWhite)  {
+/* Use dscan?
+bool Queen::kingInCheck()  {
 
 	for (int i = 0; i < upperLeftDiag.size(); ++i) {
 
@@ -317,11 +318,12 @@ bool Queen::kingInCheck(bool isWhite)  {
 	return false;
 
 }
+*/
 
 
 
-
-
+// need fix
+/*
 int Queen::canMove(int col, int row) {
 	for (auto pos : moves) {
 		if (pos[0] == col && pos[1] == row) return 1;
@@ -330,7 +332,7 @@ int Queen::canMove(int col, int row) {
 		if (pos[0] == col && pos[1] == row) return 2;
 	}
 	return 0;
-}
+}*/
 
 // helper function that determines of the queen in position (x, y) checks the king
 bool Queen::posInCheck(int x, int y) {

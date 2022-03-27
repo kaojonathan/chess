@@ -21,7 +21,7 @@ public:
     bool kingInCheck() override;
 
     // for the computer level 2 and 3 class
-    pair<int, int> getCheckCoords() override;
+    std::pair<int, int> getCheckCoords() override;
     bool posInCheck(int x, int y) override;
 
 };

@@ -50,6 +50,7 @@ void Knight::updateMovePossibilities()  {
 	}
 }
 
+/* dscan?
 bool Knight::kingInCheck(bool isWhite)  {
 	for (int i = 0; i < leftoneuptwo.size(); ++i) {
 
@@ -236,6 +237,8 @@ bool Knight::kingInCheck(bool isWhite)  {
 	// since no king has been checked, return false
 	return false;
 }
+*/
+
 
 int Knight::canMove(int x, int y) {
 	// first check if the move is valid for any knight to make

@@ -17,10 +17,6 @@ class King : public Piece {
     int canMove(int x, int y) override;
     void updateMovePossibilities() override;
 
-    // does nothing for the king
-    std::pair<int, int> getCheckCoords() override {}
-    bool posInCheck(int,int) override {}
-
 public:
     King(bool isWhite);
     ~King();

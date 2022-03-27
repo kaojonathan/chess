@@ -82,7 +82,7 @@ void Pawn::updateMovePossibilities() {
 }
 
 
-
+/*dscan?
 bool Pawn::kingInCheck(bool isWhite) {
 
 	// just check forward one square diagonals i think
@@ -137,7 +137,7 @@ bool Pawn::kingInCheck(bool isWhite) {
 	return false;
 
 }
-
+*/
 
 
 int Pawn::canMove(int col, int row) {

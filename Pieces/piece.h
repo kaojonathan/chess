@@ -29,9 +29,9 @@ class Piece {
 
         // returns the coordinate (x, y) that the piece can move to, 
         // to check the king, or (-1, -1) if no move is found
-        virtual std::pair<int, int> getCheckCoords() = 0; 
+        virtual std::pair<int, int> getCheckCoords(); 
         // determines if the piece in position (x, y) checks the king,
-        virtual bool posInCheck(int x, int y) = 0;
+        virtual bool posInCheck(int x, int y);
         virtual void forcedBy(Piece *);
 
     public:

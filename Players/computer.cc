@@ -1,4 +1,4 @@
-#include <computer.h>
+#include "computer.h"
 using namespace std;
 
 Computer::Computer(int side): side {side} {}
