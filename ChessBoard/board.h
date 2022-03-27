@@ -26,7 +26,7 @@ class Board {
 			updateBoardMoves();
 		}
 		Piece* getPiece(int x , int y) {
-			getP(x, y);
+			return getP(x, y);
 		}
 };
 

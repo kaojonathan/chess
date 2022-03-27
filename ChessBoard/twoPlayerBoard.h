@@ -11,8 +11,8 @@ class twoPlayerBoard : public Board {
 	void print() override;	
 	bool end() override;
 	bool kingInCheck(bool isWhite) override;
-	void insertNewPiece(string validpiece, string position) override;
-	void removePiece(string position) override;
+	void insertNewPiece(std::string validpiece, std::string position) override;
+	void removePiece(std::string position) override;
 	bool verifySetup() override;
 	Piece* getP(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy); // setter

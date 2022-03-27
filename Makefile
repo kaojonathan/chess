@@ -1,9 +1,10 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall -Werror=vla
 OBJECTS = main.o board.o twoPlayerBoard.o bishop.o queen.o king.o \
-knight.o rook.o pawn.o piece.o computer.o human.o one.o two.o three.o
-# history, player classes?
+knight.o rook.o pawn.o piece.o computer.o human.o
+# history
 # need to figure out how to compile the GUI within make file
+# need to fix computer classes one two three computer
 DEPENDS = ${OBJECTS:.o=.d}
 EXEC = chess
 
