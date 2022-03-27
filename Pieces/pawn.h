@@ -20,7 +20,7 @@ public:
     void capture();
     void castling();
     void updateMovePossibilities() override; // did not implement yet since it is more complicated than the othersss
-    bool kingInCheck(bool isWhite) override;
+    bool kingInCheck() override;
 
 
 
@@ -28,7 +28,6 @@ public:
     pair<int, int> getCheckCoords() override;
     bool posInCheck(int x, int y) override;
 
-    bool isKing() override;
 };
 
 #endif

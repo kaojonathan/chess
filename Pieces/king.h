@@ -18,13 +18,11 @@ class King : public Piece {
     void updateMovePossibilities() override;
 
     // does nothing for the king
-    bool kingInCheck(bool) override {}
     std::pair<int, int> getCheckCoords() override {}
     bool posInCheck(int,int) override {}
 
 public:
     King(bool isWhite);
-    bool isKing() override;
     ~King();
 };
 

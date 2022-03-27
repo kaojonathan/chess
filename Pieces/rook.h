@@ -16,12 +16,12 @@ class Rook : public Piece {
 public:
     Rook(bool isWhite);
     void castling();
-    bool kingInCheck(bool isWhite) override;
+    bool kingInCheck() override;
 
     // for the computer level 2 and 3 class
     pair<int, int> getCheckCoords() override;
     bool posInCheck(int x, int y) override;
-    bool isKing() override;
+
 
 };
 

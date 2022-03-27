@@ -30,10 +30,8 @@ class Piece {
         // returns the coordinate (x, y) that the piece can move to, 
         // to check the king, or (-1, -1) if no move is found
         virtual std::pair<int, int> getCheckCoords() = 0; 
-        // determines of the piece in position (x, y) checks the king,
+        // determines if the piece in position (x, y) checks the king,
         virtual bool posInCheck(int x, int y) = 0;
-
-        virtual bool isKing(); // true if is king
         virtual void forcedBy(Piece *);
 
     public:
@@ -47,6 +45,7 @@ class Piece {
         bool kingCheck(bool isWhite) {
             return kingInCheck();
         }
+        bool isKing(); // true if is king
         int getX();
         int getY();
         int getSide();

@@ -15,12 +15,11 @@ class Bishop : public Piece {
     std::vector<Piece*> lowerRightDiag; // positions that the piece can move to
 public:
     void updateMovePossibilities() override;
-    bool kingInCheck(bool isWhite) override;
+    bool kingInCheck() override;
     Bishop(bool isWhite);
     // for the computer level 2 and 3 class
     pair<int, int> getCheckCoords() override;
-    int posInCheck(int x, int y) override;
-    bool isKing() override;
+    bool posInCheck(int x, int y) override;
 };
 
 #endif

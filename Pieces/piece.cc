@@ -15,6 +15,9 @@ string Piece::getRep() {
 	return representation;
 }
 
+bool Piece::isKing() {
+	return (representation == "K" || representation == "k");
+}
 
 void Piece::attach(Board* board) {
 	gameBoard = board;
