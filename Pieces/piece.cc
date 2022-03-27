@@ -79,7 +79,7 @@ Piece* Piece::dScan(int col, int row, int type){
 			// check if out of board
 			if (pos.at(j).first > 8 || pos.at(j).second > 8 || pos.at(j).first < 0 || pos.at(j).second < 0) dir.at(j) = 0;
 			if (dir.at(j) > 0) {
-				Piece * target = gameBoard->getP(pos.at(j).first, pos.at(j).second); // piece on the next position
+				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (target) {
 					if (target->getSide() != side) // pick the most valuable enemy piece that the target can capture
 						res = (!res || res->getVal() < target->getVal()) ? target : res;
@@ -123,7 +123,7 @@ void Piece::updateStatus(int type) {
 			// check if out of board
 			if (pos.at(j).first > 8 || pos.at(j).second > 8 || pos.at(j).first < 0 || pos.at(j).second < 0) dir[j] = 0;
 			if (dir[j] > 0) {
-				Piece * target = gameBoard->getP(pos.at(j).first, pos.at(j).second); // piece on the next position
+				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (dir[j] == 2){
 					if(target) {	// if there is a piece on the position
 						if (target->isKing() && target->getSide() != side) {
