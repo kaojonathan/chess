@@ -33,3 +33,7 @@ int Piece::getY() {
 
 
 vector<int[2]> Piece::getCheckRoute() { return checkRoute; }
+
+void Piece::forcedBy(Piece * enemyPiece) {
+	forced = enemyPiece;
+}

@@ -32,6 +32,8 @@ class Piece {
         virtual bool posInCheck(int x, int y) = 0;
 
         virtual bool isKing(); // true if is king
+        virtual void forcedBy(Piece *);
+
     public:
         Piece(bool isWhite);
         void setPos(int row, int col);
