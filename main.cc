@@ -13,14 +13,7 @@ using namespace std;
 // isHuman checks if the 'player' is a "human"
 bool isHuman(string player)
 {
-	if (player == "human")
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (player == "human");
 }
 
 // isComputer checks if the 'player' is a "computer". if it is, also updates level to give the difficulty of the computer
@@ -29,7 +22,7 @@ bool isComputer(string player, int& level)
 	if (player.substr(0, 8) == "computer")
 	{
 		if ((player[8] = '[') && (player[10] = ']')) {
-			if ('1' <= player[9] <= 4) {
+			if ('1' <= player[9] && player[9] <= 4) {
 				level = player[9];
 				return true;
 			}
@@ -41,14 +34,7 @@ bool isComputer(string player, int& level)
 	}
 }
 
-bool isValidMove(string from, string to) {
 
-
-	// can't implement right now
-
-
-
-}
 
 bool isValidPosition(string position) {
 	if (position.length() == 2) {
@@ -61,15 +47,13 @@ bool isValidPosition(string position) {
 	}
 }
 
+// used for set up to check if a piece has been specified correctly
 bool isValidPiece(string piece) {
 	if (piece.length() == 1) {
-		if ((piece[0] == "r") || (piece[0] == "n") || (piece[0] == "b") || (piece[0] == "q") || (piece[0] == "k") || (piece[0] == "p")
-			|| (piece[0] == "R") || (piece[0] == "N") || (piece[0] == "B") || (piece[0] == "Q") || (piece[0] == "K") || (piece[0] == "P")) {
-			return true;
-		}
-	}
-	else {
-		return false;
+		return ((piece[0] == 'r') || (piece[0] == 'n') || (piece[0] == 'b') || 
+				(piece[0] == 'q') || (piece[0] == 'k') || (piece[0] == 'p')	|| 
+				(piece[0] == 'R') || (piece[0] == 'N') || (piece[0] == 'B') || 
+				(piece[0] == 'Q') || (piece[0] == 'K') || (piece[0] == 'P'));
 	}
 }
 
@@ -79,13 +63,7 @@ bool isValidPiece(string piece) {
 int main() {
 
 	Score score;
-
-
-
-
 	string line;
-
-
 
 	while (getline(cin, line)) // reads each line (command followed by parameter values)
 	{
@@ -93,7 +71,7 @@ int main() {
 		string name;
 		string number;
 		int i;
-
+		twoPlayerBoard board;
 
 		stringstream linestream(line);
 
@@ -107,19 +85,11 @@ int main() {
 
 			cout << "Started new game!" << endl;
 
-
-			twoPlayerBoard board;
-
-			board.origSetup();
-
-
 			bool whitemoves = true;
 			string white;
 			string black;
 			int difficulty;
 			linestream >> white >> black;
-
-
 
 			if (isHuman(white)) {
 				// do human thing
@@ -148,15 +118,12 @@ int main() {
 					 // if the command is "resign"
 					// resign(...)
 
-
-
 						/*
 						*
 						*  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
 						*   game.
 						*
 						*/
-
 
 					if (whitemoves) {
 						cout << "Black wins!" << endl;
@@ -178,15 +145,7 @@ int main() {
 
 					if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
 
-
-
-
-
-
-
-
 						// do add thing here
-
 
 					}
 					else {
@@ -214,10 +173,6 @@ int main() {
 				else {
 					cout << "ERROR: Invalid game command." << endl;
 				}
-
-
-
-
 			}
 
 
@@ -240,230 +195,142 @@ int main() {
 		else if (command == "setup")
 		{ // if the command is "setup"
 
-		twoPlayerBoard board;
 
-		while (getline(cin, line)) // reads each line (we are now in the game loop)
-		{
+		
 
-			cout << "Current Board Configuration:" << endl;
-			board.print();
-			stringstream setupstream(line);
+			while (getline(cin, line)) // reads each line (we are now in the game loop)
+			{
 
+				cout << "Current Board Configuration:" << endl;
+				board.print();
+				stringstream setupstream(line);
 
+				string language;
 
+				string black;
+				int difficulty;
+				setupstream >> language;
 
-			string language;
+				if (language == "+") {
 
-			string black;
-			int difficulty;
-			setupstream >> language;
+					string piece;
+					string position;
+					setupstream >> piece >> position;
 
-			if (language == "+") {
+					if (isValidPiece(piece)) {
+						if (isValidPosition(position)) {
 
-				string piece;
-				string position;
-				setupstream >> piece >> position;
+							board.insertNewPiece(piece, position);
 
-				if (isValidPiece(piece)) {
+							// do add thing here
+
+						}
+
+					}
+					else {
+
+						cout << "ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
+					}
+				}
+				else if (language == "-") {
+					string position;
+					setupstream >> position;
 					if (isValidPosition(position)) {
+						board.removePiece(position);
+					}
+					else {
 
-						board.insertNewPiece(piece, position);
+						cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
+					}
+				}
+				else if (language == "=") {
+
+					string color;
+
+					setupstream >> color;
+
+					if (color == "white") {
+
+						// white's turn to go next
+
+					}
+					else if (color == "black") {
+
+						// black's turn to go next
+
+					}
+				}
+				else if (language == "done") {
+					// verify the board
+
+					if (board.verifySetup()) {
+
+						// add thing here
+						break;
+					}
+					else {
+						cout << "ERROR: Setup conditions are not satisfied." << endl;
+
+					}
+				}
+			}
+
+			/////////////////////// GAME THAT STARTS AFTER SETUP ////////////////////////
+
+			bool whitemoves = true;
+
+			while (getline(cin, line)) // reads each line (we are now in the game loop)
+			{
+				stringstream gamestream(line);
+				gamestream >> command;
+
+				if (command == "resign") {
+
+					// if the command is "resign"
+					// resign(...)
+
+					/*
+					*
+					*  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
+					*   game.
+					*
+					*/
+
+					if (whitemoves) {
+						cout << "Black wins!" << endl;
+						score.blackWin();
+
+					}
+					else {
+						cout << "White wins!" << endl;
+						score.whiteWin();
+					}
+					break; // break
+				}
+				else if (command == "move") {
+					// if the command is "move"
+					string from;
+					string to;
+					linestream >> from >> to;
+
+
+					if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
 
 						// do add thing here
 
-
 					}
-
+					else {
+						cout << "ERROR: invalid position/s." << endl;
+					}
+				}
+				else if (command == "setup") {
+					cout << "ERROR: setup can only be called before a game has started." << endl;
 				}
 				else {
-
-					cout << "ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
-
+					cout << "ERROR: Invalid game command." << endl;
 				}
-
-
-
 			}
-			else if (language == "-") {
-				string position;
-				setupstream >> position;
-				if (isValidPosition(position)) {
-					board.removePiece(position);
-				}
-				else {
-
-					cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
-
-				}
-
-
-
-			}
-			else if (language == "=") {
-
-				string color;
-
-				setupstream >> color;
-
-				if (color == "white") {
-
-					// white's turn to go next
-
-
-
-				}
-				else if (color == "black") {
-
-					// black's turn to go next
-
-
-				}
-
-
-
-
-			}
-			else if (language == "done") {
-
-
-				// verify the board
-
-				if (board.verifySetup()) {
-
-					// add thing here
-					break;
-				}
-				else {
-					cout << "ERROR: Setup conditions are not satisfied." << endl;
-
-				}
-
-
-
-			}
-
-
-
-			// setup(...)
-
-
-
-			/*
-
-
-			 setup enters setup mode, within which you can set up your own initial board configurations. This can only be done
-when a game is not currently running. Within setup mode, the following language is used:
-� + K e1 places the piece K (i.e., white king in this case) on the square e1. If a piece is already on that square, it
-is replaced. The board should be redisplayed.
-� - e1 removes the piece from the square e1 and then redisplays the board. If there is no piece at that square, take
-no action.
-� = colour makes it colour�s turn to go next.
-� done leaves setup mode.
-
-Upon completion of setup mode, you must verify that the board contains exactly one white king and exactly one black
-king; that no pawns are on the first or last row of the board; and that neither king is in check. The user cannot leave
-setup mode until these conditions are satisfied. We recommend doing setup mode early, as it may facilitate testing.
-You are not required to handle the question of whether a player has the right to castle or make an en passant capture
-after board setup. You are free to simply assume that these are not valid options, or if you choose, you can find a way to
-incorporate them into the setup phase
-
-			*/
-		}
-
-
-
-
-		/////////////////////// GAME THAT STARTS AFTER SETUP ////////////////////////
-
-
-		bool whitemoves = true;
-
-		while (getline(cin, line)) // reads each line (we are now in the game loop)
-		{
-			stringstream gamestream(line);
-			gamestream >> command;
-
-			if (command == "resign") {
-
-				// if the command is "resign"
-			   // resign(...)
-
-
-
-				   /*
-				   *
-				   *  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
-				   *   game.
-				   *
-				   */
-
-
-				if (whitemoves) {
-					cout << "Black wins!" << endl;
-					score.blackWin();
-
-				}
-				else {
-					cout << "White wins!" << endl;
-					score.whiteWin();
-				}
-				break; // break
-			}
-			else if (command == "move") {
-				// if the command is "move"
-				string from;
-				string to;
-				linestream >> from >> to;
-
-
-				if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
-
-
-
-
-
-
-
-
-					// do add thing here
-
-
-				}
-				else {
-					cout << "ERROR: invalid position/s." << endl;
-
-				}
-
-
-				// move(...)
-
-	/*
-
-	* A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For
-	* example: move e2 e4. Castling would specified by the two-square move for the king: move e1 g1 or move e1
-	* c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7
-	* e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a
-	* move.
-
-	*/
-
-			}
-			else if (command == "setup") {
-				cout << "ERROR: setup can only be called before a game has started." << endl;
-			}
-			else {
-				cout << "ERROR: Invalid game command." << endl;
-			}
-
-
-
-
-		}
-
-
-		///////////////////////////////////////////////////////////////////////////////
-
-
+			///////////////////////////////////////////////////////////////////////////////
 		}
 		else {
 			cout << "ERROR: Invalid command." << endl;
@@ -475,23 +342,4 @@ incorporate them into the setup phase
 	cout << endl  << "Thanks for playing!" << endl;
 	// delete and free stuff here
 
-
-
 }
-
-/*
-Board Display can look like this
-
-8 rnbqkbnr
-7 pppppppp
-6 _ _ _ _
-5 _ _ _ _
-4 _ _ _ _
-3 _ _ _ _
-2 PPPPPPPP
-1 RNBQKBNR
-
-  abcdefgh
-
-
-*/
