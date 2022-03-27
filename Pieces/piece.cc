@@ -30,3 +30,6 @@ int Piece::getX() {
 int Piece::getY() {
 	return y;
 }
+
+
+vector<int[2]> Piece::getCheckRoute() { return checkRoute; }

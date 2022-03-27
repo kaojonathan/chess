@@ -24,6 +24,7 @@ class King : public Piece {
 
 public:
     King(bool isWhite);
+    bool isKing() override;
     ~King();
 };
 

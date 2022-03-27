@@ -3,6 +3,7 @@
 #include <utility>
 #include "bishop.h"
 #include "board.h"
+#include "piece.h"
 using namespace std;
 
 Bishop::Bishop(bool isWhite) : Piece{isWhite} {
@@ -10,48 +11,204 @@ Bishop::Bishop(bool isWhite) : Piece{isWhite} {
 		representation = "B";
 	}
 	else {
-
 		representation = "b";
 	}
 }
 
 
-
+// NEW! update fields moves, attacks, checkRoute
 void Bishop::updateMovePossibilities() {
-	// get the diagonals
-	for (int i = 1; i < 8; ++i) { // lower right
-		if ((x + i > 7) || (y + i > 7)) {
-			break;
-		}
-		else {
-			lowerRightDiag.emplace_back(gameBoard->getPiece(x + i, y + i)); // need a public getPiece() method
-		}
+	// check if the piece cannot move because of the opposite piece threatening
+	Piece * threat = forced;
+	if (threat) {
+		vector<int[2]> newMoves{};
+		vector<int[2]> newAttacks{};
+		for (int i = 0; i < threat->getCheckRoute().size(); i += 1) {
+			int * possibleMove {threat->getCheckRoute().at(i)};
+			int c = canMove(possibleMove[0], possibleMove[1]);
+			if (c == 1) newMoves.emplace_back(possibleMove);
+			else if (c == 2) newAttacks.emplace_back(possibleMove);
+		}	// the piece can move only if the move still block the opposite piece from checking.
+		moves = newMoves;
+		attacks = newAttacks;
 	}
+	else {
+		moves = vector<int[2]>{};
+		attacks = vector<int[2]>{};
+	} 	// clean
 
-	for (int i = 1; i < 8; ++i) {
-		if ((x + i > 7) || (y - i < 0)) { // upper right
-			break;
-		}
-		else {
-			upperRightDiag.emplace_back(gameBoard->getPiece(x + i, y - i));
-		}
-	}
+	// scan the 4 directions {tr, tl, br, bl}, false if goes out of bound or enounters at lease 2 pieces (opposite) or enounters at lease 1 piece (mate), record each path
+	int dir[4] = {2,2,2,2};	
+	vector<int[2]> paths[4];
+	for (int i = 1; dir[0] || dir[2] || dir[3] || dir[4]; i += 1){
+		// check if out of board
+		if (x+i > 8 || y+i > 8) dir[0] = 0;
+		if (x-i < 0 || y+i > 8) dir[2] = 0;
+		if (x+i > 8 || y+i > 8) dir[3] = 0;
+		if (x-i < 0 || y+i > 8) dir[4] = 0;
+		// tr
+		if (dir[0] > 0) {
+			int pos[2] = {x+i, y+i};
+			Piece * target = gameBoard->getP(pos[1], pos[2]);
+			if (dir[0] == 2){
+				if(target) {
+					if (target->isKing() && target->side != side) {
+						dir[0] = 0;
+						attack.emplace_back(pos);
+						checkRoute = path[0] ;
+						//notify the other player the king is checked (incompleted)
 
-	for (int i = 1; i < 8; ++i) {
-		if ((x - i < 0) || (y + i > 7)) { // lower left
-			break;
-		}
-		else {
-			lowerLeftDiag.emplace_back(gameBoard->getPiece(x - i, y + i));
-		}
-	}
 
-	for (int i = 1; i < 8; ++i) {
-		if ((x - i < 0) || (y - i < 0)) { // upper left
-			break;
+					}
+					else if (target->side != side){
+						if (!threat) attacks.emplace_back(pos);
+						dir[0] -= 1;
+						path[0] .emplace_back(pos);
+					}	// encounter opponent's piece (not king)
+					else {
+						dir[0] = 0;
+					}	// blocked by mate
+				}
+				else {
+						if (!threat) moves.emplace_back(pos);
+						path[0] .emplace_back(pos);
+				} 	// no block
+			}
+			else if (dir[0] == 1) {
+				if (target) {
+					if (target->getSide() != side && target->isKing()) {
+						checkRoute = path[0] ;
+					} // indirect check
+					dir[0] == 0;
+				}
+				else {
+					if (!threat) moves.emplace_back(pos);
+						path[0] .emplace_back(pos);
+				}
+			}
 		}
-		else {
-			upperLeftDiag.emplace_back(gameBoard->getPiece(x - i, y - i));
+		// tl
+		if (dir[1] > 0) {
+			int pos[2] = {x-i, y+i};
+			Piece * target = gameBoard->getP(pos[1], pos[2]);
+			if (dir[1] == 2){
+				if(target) {
+					if (target->isKing() && target->side != side) {
+						dir[1] = 0;
+						attack.emplace_back(pos);
+						checkRoute = path[1] ;
+						//notify the other player the king is checked (incompleted)
+
+
+					}
+					else if (target->side != side){
+						if (!threat) attacks.emplace_back(pos);
+						dir[1] -= 1;
+						path[1] .emplace_back(pos);
+					}	// encounter opponent's piece (not king)
+					else {
+						dir[1] = 0;
+					}	// blocked by mate
+				}
+				else {
+						if (!threat) moves.emplace_back(pos);
+						path[1] .emplace_back(pos);
+				} 	// no block
+			}
+			else if (dir[1] == 1) {
+				if (target) {
+					if (target->getSide() != side && target->isKing()) {
+						checkRoute = path[1] ;
+					} // indirect check
+					dir[1] == 0;
+				}
+				else {
+					if (!threat) moves.emplace_back(pos);
+						path[1] .emplace_back(pos);
+				}
+			}
+		}
+		// br
+		if (dir[2] > 0) {
+			int pos[2] = {x+i, y-i};
+			Piece * target = gameBoard->getP(pos[1], pos[2]);
+			if (dir[2] == 2){
+				if(target) {
+					if (target->isKing() && target->side != side) {
+						dir[2] = 0;
+						attack.emplace_back(pos);
+						checkRoute = path[2] ;
+						//notify the other player the king is checked (incompleted)
+
+
+					}
+					else if (target->side != side){
+						if (!threat) attacks.emplace_back(pos);
+						dir[2] -= 1;
+						path[2] .emplace_back(pos);
+					}	// encounter opponent's piece (not king)
+					else {
+						dir[2] = 0;
+					}	// blocked by mate
+				}
+				else {
+						if (!threat) moves.emplace_back(pos);
+						path[2] .emplace_back(pos);
+				} 	// no block
+			}
+			else if (dir[2] == 1) {
+				if (target) {
+					if (target->getSide() != side && target->isKing()) {
+						checkRoute = path[2] ;
+					} // indirect check
+					dir[2] == 0;
+				}
+				else {
+					if (!threat) moves.emplace_back(pos);
+						path[2] .emplace_back(pos);
+				}
+			}
+		}
+		// bl
+		if (dir[3] > 0) {
+			int pos[2] = {x+i, y+i};
+			Piece * target = gameBoard->getP(pos[1], pos[2]);
+			if (dir[3] == 2){
+				if(target) {
+					if (target->isKing() && target->side != side) {
+						dir[3] = 0;
+						attack.emplace_back(pos);
+						checkRoute = path[3] ;
+						//notify the other player the king is checked (incompleted)
+
+
+					}
+					else if (target->side != side){
+						if (!threat) attacks.emplace_back(pos);
+						dir[3] -= 1;
+						path[3] .emplace_back(pos);
+					}	// encounter opponent's piece (not king)
+					else {
+						dir[3] = 0;
+					}	// blocked by mate
+				}
+				else {
+						if (!threat) moves.emplace_back(pos);
+						path[3] .emplace_back(pos);
+				} 	// no block
+			}
+			else if (dir[3] == 1) {
+				if (target) {
+					if (target->getSide() != side && target->isKing()) {
+						checkRoute = path[0] ;
+					} // indirect check
+					dir[3] == 0;
+				}
+				else {
+					if (!threat) moves.emplace_back(pos);
+						path[3] .emplace_back(pos);
+				}
+			}
 		}
 	}
 }

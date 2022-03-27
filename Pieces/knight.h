@@ -26,6 +26,7 @@ public:
     pair<int, int> getCheckCoords() override;
     bool posInCheck(int x, int y) override;
 
+    bool isKing() override;
 
 };
 

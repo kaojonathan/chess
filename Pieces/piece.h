@@ -1,6 +1,7 @@
 #ifndef PIECE_H_
 #define PIECE_H_
 #include <string>
+#include <vector>
 
 class Board;
 
@@ -9,6 +10,10 @@ class Piece {
         int x;
         int y;
         int side; // 0 for white and 1 for black
+        vector<int[2]> moves;            // contains possible move, update after a Player::move
+        vector<int[2]> attacks;           // contains a list of pos that the piece can capture pieces on such location.
+        Piece * forced;                  // the piece that cause this cannot move
+        vector<int[2]> checkRoute;       // the path that can be block
         std::string representation;
         Board* gameBoard;
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
@@ -23,11 +28,10 @@ class Piece {
         // returns the coordinate (x, y) that the piece can move to, 
         // to check the king, or (-1, -1) if no move is found
         virtual std::pair<int, int> getCheckCoords() = 0; 
-        // determines of the piece in position (x, y) checks the king
-        virtual bool posInCheck(int x, int y) = 0; 
+        // determines of the piece in position (x, y) checks the king,
+        virtual bool posInCheck(int x, int y) = 0;
 
-
-
+        virtual bool isKing(); // true if is king
     public:
         Piece(bool isWhite);
         void setPos(int row, int col);
@@ -46,6 +50,7 @@ class Piece {
         void updateMoves() {
             updateMovePossibilities();
         }
+        vector<int[2]> getCheckRoute();
 };
 
 #endif
