@@ -67,9 +67,4 @@ class Piece {
    
 
 
-std::vector<std::pair<int, int>> getPos(int row, int col, int i, int type);
-
-
-
-bool checkEnd(std::vector<int>);
 #endif

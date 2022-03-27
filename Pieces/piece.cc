@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 #include "piece.h"
-//#include "board.h"
+#include "board.h"
 using namespace std;
 
 Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1} {}
