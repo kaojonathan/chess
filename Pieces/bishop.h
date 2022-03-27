@@ -14,7 +14,6 @@ class Bishop : public Piece {
     std::vector<Piece*> lowerLeftDiag; // positions that the piece can move to
     std::vector<Piece*> lowerRightDiag; // positions that the piece can move to
 public:
-    int canMove(int x, int y) override;
     void updateMovePossibilities() override;
     bool kingInCheck(bool isWhite) override;
     Bishop(bool isWhite);
