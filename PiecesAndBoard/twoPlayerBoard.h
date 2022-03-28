@@ -8,7 +8,7 @@ class twoPlayerBoard : public Board {
 	Piece* board[8][8]; // array of piece pointers
 	
 	void origSetup() override;
-	void print() override;	
+	void print() override;	// move to game
 	bool end() override; // implementation required? // need to move to game class
 	bool kingInCheck(bool isWhite) override;
 	void insertNewPiece(std::string validpiece, std::string position) override;
