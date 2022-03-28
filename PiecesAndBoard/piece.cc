@@ -194,6 +194,6 @@ int Piece::move(int col, int row){
 }
 
 
-bool Piece::kingInCheck() {
+bool Piece::kingCheck() {
 	return checkRoute.size() != 0;
 }

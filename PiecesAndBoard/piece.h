@@ -19,9 +19,7 @@ class Piece {
         std::string representation;
         Board* gameBoard;
         // updates possible moves
-        virtual void updateMovePossibilities() = 0; 
-        // if the piece is checking the king
-        virtual bool kingInCheck();
+        virtual void updateMovePossibilities() = 0;
 
         // added this (vincent) /// for computer level 2/3 class
 
@@ -30,22 +28,21 @@ class Piece {
         virtual std::pair<int, int> getCheckCoords() = 0; 
         // determines if the piece in position (x, y) checks the king,
         virtual bool posInCheck(int x, int y) = 0;
+        // make this piece forced by a piece
         virtual void forcedBy(Piece *);
 
     public:
         Piece(bool isWhite);
-        void setPos(int row, int col);
+        void setPos(int row, int col);  // make sure row first or column first
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
-        int move(int x, int y);
-        bool kingCheck(bool isWhite) {
-            return kingInCheck();
-        }
+        int move(int col, int row);
+        bool kingCheck();
         bool isKing(); // true if is king
         int getX();
         int getY();
         int getSide();
-        std::string getRep();
+        std::string getRep();   // print the representation
         void updateMoves() {
             updateMovePossibilities();
         }
