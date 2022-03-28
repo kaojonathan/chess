@@ -6,17 +6,13 @@ using namespace std;
 
 Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1} {}
 
-void Piece::setPos(int row, int col) {
-	x = row;
-	y = col;
+void Piece::setPos(int col, int row) {
+	x = col;
+	y = row;
 }
 
 string Piece::getRep() {
 	return representation;
-}
-
-bool Piece::isKing() {
-	return (representation == "K" || representation == "k");
 }
 
 void Piece::attach(Board* board) {
@@ -39,12 +35,20 @@ int Piece::getY() {
 
 vector<pair<int,int>> Piece::getCheckRoute() { return checkRoute; }
 
+int Piece::getVal(){
+	return value;
+}
+
 void Piece::forcedBy(Piece * enemyPiece) {
 	forced = enemyPiece;
 }
 
-int Piece::getVal(){
-	return value;
+bool Piece::isKing(){
+	return representation == "k" || representation == "K";
+}
+
+bool Piece::EnemyKing(Piece * target) {
+	return target->getSide() != side && target->isKing();
 }
 
 // generate the paths with direction based on type: 
@@ -135,7 +139,7 @@ void Piece::updateStatus(int type) {
 				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (dir.at(j) == 2){
 					if(target) {	// if there is a piece on the position
-						if (target->isKing() && target->getSide() != side) {
+						if (EnemyKing(target)) {
 							// if the piece is the king of the enemy
 							dir.at(j) = 0;
 							attacks.emplace_back(pos.at(j));
@@ -162,7 +166,7 @@ void Piece::updateStatus(int type) {
 				else if (dir.at(j) == 1) {	// has past a enemy piece
 					if (target) {
 						// meet the second piece
-						if (target->getSide() != side && target->isKing()) {
+						if (EnemyKing(target)) {
 							// the piece will check the king if there is no block, but there is 
 							checkRoute = paths.at(j);
 							firstEncounter[j]->forcedBy(this);
@@ -193,7 +197,17 @@ int Piece::move(int col, int row){
 	return 0;
 }
 
+// update moves
+void Piece::updateMoves() {
+    updateMovePossibilities();	
+}
 
+// return true if this piece is checking the enemy king
 bool Piece::kingCheck() {
 	return checkRoute.size() != 0;
+}
+
+// return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece), used by queen, rooo, bishop, knight, and king.
+bool Piece::canAttack(int col, int row){
+	return move(col, row) > 0;
 }

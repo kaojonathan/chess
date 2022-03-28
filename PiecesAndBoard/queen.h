@@ -19,14 +19,9 @@ class Queen : public Piece {
     
 public:
     Queen(bool isWhite);
-    
     void updateMovePossibilities() override;
-
-
-
-    // for the computer level 2 and 3 class
-    std::pair<int, int> getCheckCoords() override;
-    bool posInCheck(int x, int y) override;
+    bool posInCheck(int col, int row) override;
+    bool canAttack(int col, int row) override;
 };
 
 #endif
