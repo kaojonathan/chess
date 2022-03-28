@@ -326,15 +326,13 @@ bool Queen::kingInCheck()  {
 // need fix
 
 int Queen::canMove(int col, int row) {
-	/*
 	for (auto pos : moves) {
-		if (pos[0] == col && pos[1] == row) return 1;
+		if (pos.first == col && pos.second == row) return 1;
 	}
 	for (auto pos : attacks){
-		if (pos[0] == col && pos[1] == row) return 2;
+		if (pos.first == col && pos.second == row) return 2;
 	}
 	return 0;
-	*/
 }
 
 // helper function that determines of the queen in position (x, y) checks the king

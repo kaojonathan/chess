@@ -12,18 +12,16 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        std::vector<std::pair<int,int>> moves;            // contains possible move, update after a Player::move
-        std::vector<std::pair<int,int>> attacks;           // contains a list of pos that the piece can capture pieces on such location.
-        Piece * forced;                  // the piece that cause this cannot move
-        std::vector<std::pair<int,int>> checkRoute;       // the path that can be block
+        std::vector<std::pair<int,int>> moves;              // contains possible move, update after a Player::move
+        std::vector<std::pair<int,int>> attacks;            // contains a list of pos that the piece can capture pieces on such location.
+        Piece * forced;                                     // the piece that cause this cannot move
+        std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
         Board* gameBoard;
-        // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
-        virtual int canMove(int x, int y);
         // updates possible moves
         virtual void updateMovePossibilities() = 0; 
         // if the piece is checking the king
-        virtual bool kingInCheck() = 0;
+        virtual bool kingInCheck();
 
         // added this (vincent) /// for computer level 2/3 class
 
@@ -38,10 +36,8 @@ class Piece {
         Piece(bool isWhite);
         void setPos(int row, int col);
         void attach(Board* board);
-        // attempts to move a piece
-        int move(int x, int y) {
-            return canMove(x,y);
-        }
+        // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
+        int move(int x, int y);
         bool kingCheck(bool isWhite) {
             return kingInCheck();
         }
@@ -53,6 +49,8 @@ class Piece {
         void updateMoves() {
             updateMovePossibilities();
         }
+
+        // return the checkRoute field
         std::vector<std::pair<int, int>> getCheckRoute();
 
         int getVal();                   // return the value of a piece
@@ -61,7 +59,7 @@ class Piece {
         //  Scan the each direction, return the most valuable emeny piece, if any
         Piece * dScan(int x, int y, int type);
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
-        void updateStatus(int type);    
+        void updateStatus(int type);
 };
    
 
