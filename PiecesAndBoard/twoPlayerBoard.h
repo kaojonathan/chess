@@ -11,7 +11,7 @@ class twoPlayerBoard : public Board {
 
 	void origSetup() override;
 	void print() override;	
-	bool end() override; // implementation required?
+	bool end() override; // implementation required? // need to move to game class
 	bool kingInCheck(bool isWhite) override;
 	void insertNewPiece(std::string validpiece, std::string position) override;
 	void removePiece(std::string position) override;

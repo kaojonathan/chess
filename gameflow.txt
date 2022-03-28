@@ -1,0 +1,87 @@
+game player1 player2
+    origSetup
+    startGame()
+
+setup
+    ... setup commands ...
+    ... done ...
+    verify setup
+    if valid -> leave setup
+
+// pieces are all in position when called
+startGame() 
+    while (game not ended <- checks status)
+        black.checkStatus()
+        white.checkStatus()
+        end()
+        status = player1.move() <- asks for pos1, pos2
+            act upon status {
+                if HUMAN
+                    board.move(pos1,pos2) # moves the piece from pos1 to pos2
+                    # moves piece from pos1 to pos2 and captures pos2 piece
+                    board.capture(pos1, pos2) 
+            }
+        white.checkStatus()
+        black.checkStatus()
+        end()
+        status = player2.move()
+            act upon status {
+                if HUMAN
+                    board.move() # moves the piece from pos1 to pos2
+                    # moves piece from pos1 to pos2 and captures pos2 piece
+                    board.capture() 
+            }
+
+
+# return 0 if ask for different move (move failed)
+# return 1 if move was successful (ask for next move)
+# return 2 if game is over
+player.move(pos1, pos2)
+    if player = human
+        let p be the piece pointer at pos1
+        status = p.move(pos1)
+        if status = 0
+            return 0
+        elif status = 1
+            return 1
+        elif status = 2
+            
+            return 1
+    elif computer
+        status = computer.move()
+        return 1
+    if (end()) # check if game is over
+        return 2
+
+
+# returns status code
+move() [for piece]
+    check if at pos1, the player owns the piece there
+    Let P := piece at pos1
+    int status = P->move() #status 0,1,2
+    return status
+
+
+checkStatus()
+    calls updateMovePossibilities on all the player's pieces in play
+
+Text UML:
+
+Game class
+    window
+    2 players
+    board
+
+Player class
+    pieces in play (owns the pieces)
+    pieces captured
+    enemyPlayer
+
+Board class
+    pieces
+
+Pieces
+    position
+    value
+    white/black
+    board
