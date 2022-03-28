@@ -6,6 +6,7 @@
 using namespace std;
 
 Rook::Rook(bool isWhite) : Piece{isWhite} {
+	value = 6;
 	if (isWhite) {
 		representation = "R";
 	}
@@ -21,7 +22,7 @@ void Rook::updateMovePossibilities() {
 
 // helper function that determines of the bishop in position (x, y) checks the king
 bool Rook::posInCheck(int col, int row) {
-	dScan(col, row, 2)->isKing();
+	enemyKing(mostVal(dScan(col, row, 2)));
 }
 
 

@@ -7,7 +7,7 @@
 using namespace std;
 
 Bishop::Bishop(bool isWhite) : Piece{isWhite} {
-	value = 5;
+	value = 6;
 	if (isWhite) {
 		representation = "B";
 	}
@@ -32,7 +32,7 @@ void Bishop::updateMovePossibilities() {
 
 // helper function that determines of the bishop in position (x, y) checks the king
 bool Bishop::posInCheck(int col, int row) {
-	return dScan(col, row, 1)->isKing();
+	return enemyKing(mostVal(dScan(col, row, 1)));
 }
 
 /*

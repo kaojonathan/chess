@@ -23,7 +23,7 @@ void Queen::updateMovePossibilities()  {
 
 // helper function that determines of the queen in position (col, row) checks the king
 bool Queen::posInCheck(int col, int row) {
-	return EnemyKing(dScan(col, row, 3));
+	return enemyKing(mostVal(dScan(col, row, 3)));
 }
 
 /*

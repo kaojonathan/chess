@@ -6,11 +6,11 @@
 using namespace std;
 
 King::King(bool isWhite) : Piece{ isWhite } {
+	value = 10;
 	if (isWhite) {
 		representation = "K";
 	}
 	else {
-
 		representation = "k";
 	}
 }
@@ -18,66 +18,50 @@ King::King(bool isWhite) : Piece{ isWhite } {
 King::~King() {
 }
 
+// return a vector of Piece that can be attacked by King if king is at position at
+vector<Piece *> King::canAttack(pair<int, int> at){
+	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);
+	vector<pair<int, int>> res {};
+	for (auto pos : possibleMoves){
+		// basic valid position
+		if (pos.second > 3 || pos.second < 0 || pos.first < 0 || pos.second > 8){
+			continue;
+		}
+		Piece *target = gameBoard->getPiece(pos.first, pos.second);
+		if (target && side != target->getSide()) {
+			res.emplace_back(target);
+		}
+	}
+}
+
 
 void King::updateMovePossibilities() {
-	if (x + 1 <= 7) {
-		right.emplace_back(gameBoard->getPiece(x + 1, y));
-	}
-
-	if (x - 1 >= 0) {
-		left.emplace_back(gameBoard->getPiece(x - 1, y));
-
-	}
-
-	if (y + 1 <= 7) {
-		down.emplace_back(gameBoard->getPiece(x, y + 1));
-
-	}
-
-	if (y - 1 >= 0) {
-		up.emplace_back(gameBoard->getPiece(x, y - 1));
-
-	}
-
-
-		if ((x + 1 <= 7) && (y + 1 <= 7)) {
-			downright.emplace_back(gameBoard->getPiece(x + 1, y + 1));
+	vector<pair<int, int>> possibleMoves = getPos(x, y, 1, 3);
+	for (auto pos : possibleMoves){
+		// basic valid position
+		if (pos.second > 3 || pos.second < 0 || pos.first < 0 || pos.second > 8){
+			continue;
 		}
+		// if pos not in the attack range of the enemy (not implemented)
+		Piece *target = gameBoard->getPiece(pos.first, pos.second);
+		if (false){ 
+			// not implemented, if this position can be attacked by an enemy
 
-		if ((x + 1 <= 7) && (y - 1 >= 0)) {
-			upright.emplace_back(gameBoard->getPiece(x + 1, y - 1));
 		}
-
-
-		if ((x - 1 >= 0) && (y + 1 <= 7)) {
-			downleft.emplace_back(gameBoard->getPiece(x - 1, y + 1));
+		else if (target){
+			if (side != target->getSide()) {
+				attacks.emplace_back(target); 
+			}
 		}
-
-		if ((x - 1 >= 0) && (y - 1 >= 0)) {
-			upleft.emplace_back(gameBoard->getPiece(x - 1, y - 1));
-		}
+		else moves.emplace_back(pair{pos, canAttack(pos)}); 
+	}
 }
 
 // king does not have kingInCheck method since that could never happen
 
-int King::canMove(int col, int row){
-	if (!gameBoard->checkPos(row, col)) return 0;
-	// if the position is not in the board
-	
-		if (x == col && y == row) return 0;
-	// if move to the same position
-
-	if ((col - x >= 1 || col - x <= -1 || row - y >=  1 ||  row - y <= -1) && !cancastle) 
-		return 0; // if the position is in neither of the 4 directions
-	Piece *target =  gameBoard->getPiece(col, row);
-	if (target && target->getSide() == side) return 0;
-	return 1;
-	// determine if the move make the king in check, and if a castling is valid not implemented yet
-
-}
 
 
 //empty functions
 bool King::posInCheck(int x, int y) { return 0; }
-pair<int, int> King::getCheckCoords() { return pair<int,int>{};} 
-bool King::kingInCheck() {return 0;}
+
+/* pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */

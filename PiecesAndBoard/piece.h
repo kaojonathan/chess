@@ -14,8 +14,9 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        std::vector<std::pair<int,int>> moves;              // contains possible move, update after a Player::move
+        std::vector<std::pair<std::pair<int,int>, vector<Piece *>>> moves; // moves contains vector of pair(valid move position, vectors of attackable emeny pieces)
         std::vector<std::pair<int,int>> attacks;            // contains a list of position that the piece can capture pieces on such location.
+        std::vector<Piece *> guarded;                        // protected by these pieces (not implemented yet)
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
@@ -37,8 +38,14 @@ class Piece {
         virtual bool posInCheck(int col, int row) = 0;
         // make this piece forced by a piece
         virtual void forcedBy(Piece *);
+
+
         // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
+        // note that this can be use to determine a position is controled by the enemy
         virtual bool canAttack(int col, int row);
+        // return true if this piece can attack the enemy piece in position (col, row) if it is at pos
+        // may be useful
+        // virtual bool canAttack(int col, int row, std::pair<int,int> pos) = 0;
 
     public:
         Piece(bool isWhite);
@@ -59,15 +66,24 @@ class Piece {
 
         int getVal();                   // return the value of a piece
         
-        // the following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
-        //  Scan the each direction, return the most valuable emeny piece, if any
-        Piece * dScan(int x, int y, int type);
+        // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
+        //  Scan the each direction, return a list of attackable enemies, if any
+        vector<Piece *> dScan(int x, int y, int type);
+
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
         void updateStatus(int type);
-        bool isKing();
-        bool EnemyKing(Piece * target);   // the piece is the true if the target is the enemy king
+
+        bool isKing();                      //  true if the target is a king
+        bool enemyKing(Piece * target);     //  true if the target is the enemy king
 };
    
+// get the most valuable Piece
+Piece * mostVal(vector<Piece *>);
 
+// generate the paths with direction based on type: 
+//	1: diagonal directions only
+//	2: cross directions only
+//	3: both diagonal and cross directions
+vector<pair<int, int>> getPos(int col, int row, int i, int type);
 
 #endif
