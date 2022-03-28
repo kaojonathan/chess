@@ -3,6 +3,7 @@
 #include <utility>
 #include "queen.h"
 #include "board.h"
+#include "piece.h"
 using namespace std;
 
 Queen::Queen(bool isWhite) : Piece{ isWhite } {
@@ -105,9 +106,9 @@ void Queen::updateMovePossibilities()  {
 	}
 }
 
-/* Use dscan?
-bool Queen::kingInCheck()  {
 
+bool Queen::kingInCheck()  {
+	/* Use dscan?
 	for (int i = 0; i < upperLeftDiag.size(); ++i) {
 
 		// for queen, check diagonals and cross, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
@@ -316,15 +317,16 @@ bool Queen::kingInCheck()  {
 	// since no king has been checked, return false
 
 	return false;
-
-}
 */
+}
+
 
 
 
 // need fix
-/*
+
 int Queen::canMove(int col, int row) {
+	/*
 	for (auto pos : moves) {
 		if (pos[0] == col && pos[1] == row) return 1;
 	}
@@ -332,7 +334,8 @@ int Queen::canMove(int col, int row) {
 		if (pos[0] == col && pos[1] == row) return 2;
 	}
 	return 0;
-}*/
+	*/
+}
 
 // helper function that determines of the queen in position (x, y) checks the king
 bool Queen::posInCheck(int x, int y) {

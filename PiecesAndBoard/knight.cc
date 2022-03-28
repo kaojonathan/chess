@@ -50,8 +50,9 @@ void Knight::updateMovePossibilities()  {
 	}
 }
 
-/* dscan?
-bool Knight::kingInCheck(bool isWhite)  {
+
+bool Knight::kingInCheck()  {
+	/* dscan?
 	for (int i = 0; i < leftoneuptwo.size(); ++i) {
 
 		// for knight, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
@@ -236,8 +237,9 @@ bool Knight::kingInCheck(bool isWhite)  {
 	}
 	// since no king has been checked, return false
 	return false;
+	*/
 }
-*/
+
 
 
 int Knight::canMove(int x, int y) {

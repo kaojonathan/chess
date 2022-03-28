@@ -11,6 +11,8 @@
 using namespace std;
 
 twoPlayerBoard::twoPlayerBoard() {}
+twoPlayerBoard::~twoPlayerBoard() {}
+bool twoPlayerBoard::end() {};
 
 Piece *twoPlayerBoard::getP(int x, int y)
 {

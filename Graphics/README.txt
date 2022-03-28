@@ -1,9 +1,9 @@
 Compile the files in this directory as follows:
 
 g++14 -c *.cc
-g++14 *.o -lX11 -o graphicboard
+g++14 *.o -lX11 -o graphics
 
-Then run ./graphicboard
+Then run ./graphics
 
 You should see a correct chess board!!!!
 

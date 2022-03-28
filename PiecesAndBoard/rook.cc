@@ -58,8 +58,9 @@ void Rook::updateMovePossibilities() {
 }
 
 
-/* dscan?
+
 bool Rook::kingInCheck() {
+	/* dscan?
 	for (int i = 0; i < up.size(); ++i) {
 
 		// for rook, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
@@ -164,9 +165,9 @@ bool Rook::kingInCheck() {
 	// since no king has been checked, return false
 
 	return false;
-
+	*/
 }
-*/
+
 
 
 int Rook::canMove(int col, int row) {

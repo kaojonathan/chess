@@ -82,9 +82,9 @@ void Pawn::updateMovePossibilities() {
 }
 
 
-/*dscan?
-bool Pawn::kingInCheck(bool isWhite) {
 
+bool Pawn::kingInCheck() {
+/*dscan?
 	// just check forward one square diagonals i think
 
 	if ((65 <= representation[0]) && (representation[0] <= 90)) { // capital letter (white)
@@ -135,9 +135,9 @@ bool Pawn::kingInCheck(bool isWhite) {
 	}
 	// since no king has been checked, return false
 	return false;
-
-}
 */
+}
+
 
 
 int Pawn::canMove(int col, int row) {

@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <utility>
 #include "king.h"
 #include "board.h"
 using namespace std;
@@ -74,3 +75,9 @@ int King::canMove(int col, int row){
 	// determine if the move make the king in check, and if a castling is valid not implemented yet
 
 }
+
+
+//empty functions
+bool King::posInCheck(int x, int y) { return 0; }
+pair<int, int> King::getCheckCoords() { return pair<int,int>{};} 
+bool King::kingInCheck() {return 0;}

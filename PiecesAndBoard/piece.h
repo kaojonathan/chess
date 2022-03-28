@@ -23,15 +23,15 @@ class Piece {
         // updates possible moves
         virtual void updateMovePossibilities() = 0; 
         // if the piece is checking the king
-        virtual bool kingInCheck();
+        virtual bool kingInCheck() = 0;
 
         // added this (vincent) /// for computer level 2/3 class
 
         // returns the coordinate (x, y) that the piece can move to, 
         // to check the king, or (-1, -1) if no move is found
-        virtual std::pair<int, int> getCheckCoords(); 
+        virtual std::pair<int, int> getCheckCoords() = 0; 
         // determines if the piece in position (x, y) checks the king,
-        virtual bool posInCheck(int x, int y);
+        virtual bool posInCheck(int x, int y) = 0;
         virtual void forcedBy(Piece *);
 
     public:

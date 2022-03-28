@@ -35,7 +35,8 @@ bool Bishop::posInCheck(int col, int row) {
 	return dScan(col, row, 1)->isKing();
 }
 
-
+// resolve
+bool Bishop::kingInCheck() {return 0;}
 
 pair<int, int> Bishop::getCheckCoords() {
 
