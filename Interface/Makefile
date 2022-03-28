@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall
-OBJECTS = main.o game.o
+OBJECTS = Game.o
 DEPENDS = ${OBJECTS:.o=.d}
 EXEC = interface
 
