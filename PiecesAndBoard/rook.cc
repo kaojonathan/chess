@@ -20,9 +20,9 @@ void Rook::updateMovePossibilities() {
 	updateStatus(2);
 }
 
-// helper function that determines of the bishop in position (x, y) checks the king
-bool Rook::posInCheck(int col, int row) {
-	enemyKing(mostVal(dScan(col, row, 2)));
+
+std::vector<Piece *> Rook::attackable(std::pair<int, int> at){
+	dScan(at, 2);
 }
 
 

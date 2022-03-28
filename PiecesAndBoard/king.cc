@@ -5,6 +5,7 @@
 #include "board.h"
 using namespace std;
 
+
 King::King(bool isWhite) : Piece{ isWhite } {
 	value = 10;
 	if (isWhite) {
@@ -19,7 +20,7 @@ King::~King() {
 }
 
 // return a vector of Piece that can be attacked by King if king is at position at
-vector<Piece *> King::canAttack(pair<int, int> at){
+vector<Piece *> King::attackable(pair<int, int> at){
 	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);
 	vector<pair<int, int>> res {};
 	for (auto pos : possibleMoves){
@@ -53,15 +54,9 @@ void King::updateMovePossibilities() {
 				attacks.emplace_back(target); 
 			}
 		}
-		else moves.emplace_back(pair{pos, canAttack(pos)}); 
+		else moves.emplace_back(pair{pos, attackable(pos)}); 
 	}
 }
 
-// king does not have kingInCheck method since that could never happen
-
-
-
-//empty functions
-bool King::posInCheck(int x, int y) { return 0; }
 
 /* pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */

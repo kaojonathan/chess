@@ -16,14 +16,11 @@ class King : public Piece {
     std::vector<Piece*> upleft; // positions that the piece can move to
     */
     void updateMovePossibilities() override;
-    // do nothing for king
-    bool posInCheck(int, int) override;
-
-    std::vector<Piece *> canAttack(std::pair<int, int> at);
 
     /* std::pair<int, int> getCheckCoords() override; */
 
 public:
+    std::vector<Piece *> attackable(std::pair<int, int> at);
     King(bool isWhite);
     ~King();
 };

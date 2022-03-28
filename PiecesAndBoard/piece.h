@@ -33,16 +33,16 @@ class Piece {
 
         /* virtual std::pair<int, int> getCheckCoords() = 0; */
 
+        // return all attackable enemy piece if the piece is pos
+        virtual std::vector<Piece *> attackable(std::pair<int, int> at) = 0;
 
-        // determines if the piece in position (col, row) checks the king,
-        virtual bool posInCheck(int col, int row) = 0;
         // make this piece forced by a piece
         virtual void forcedBy(Piece *);
 
 
         // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
         // note that this can be use to determine a position is controled by the enemy
-        virtual bool canAttack(int col, int row);
+        virtual bool canAttack(std::pair<int, int>);
         // return true if this piece can attack the enemy piece in position (col, row) if it is at pos
         // may be useful
         // virtual bool canAttack(int col, int row, std::pair<int,int> pos) = 0;
@@ -68,22 +68,25 @@ class Piece {
         
         // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         //  Scan the each direction, return a list of attackable enemies, if any
-        vector<Piece *> dScan(int x, int y, int type);
+        vector<Piece *> dScan(std::pair<int,int>, int type);
 
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
         void updateStatus(int type);
 
         bool isKing();                      //  true if the target is a king
         bool enemyKing(Piece * target);     //  true if the target is the enemy king
+
+         // determines if the piece in position (col, row) checks the king,
+        bool posInCheck(int col, int row);
 };
    
 // get the most valuable Piece
-Piece * mostVal(vector<Piece *>);
+Piece * mostVal(std::vector<Piece *>);
 
 // generate the paths with direction based on type: 
 //	1: diagonal directions only
 //	2: cross directions only
 //	3: both diagonal and cross directions
-vector<pair<int, int>> getPos(int col, int row, int i, int type);
+std::vector<std::pair<int, int>> getPos(int col, int row, int i, int type);
 
 #endif

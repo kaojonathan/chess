@@ -72,6 +72,11 @@ vector<pair<int, int>> getPos(int col, int row, int i, int type){
 	return pos;
 }
 
+// helper function that determines of the piece in position (x, y) checks the king
+bool Piece::posInCheck(int col, int row) {
+	return !isKing() && enemyKing(mostVal(attackable(pair{col, row})));
+}
+
 // return true if all int in dir are 0
 bool checkEnd(vector<int> dir){
 	for (auto j : dir) {
@@ -81,12 +86,12 @@ bool checkEnd(vector<int> dir){
 }
 
 // scan the paths with direction based on type, find all the enemy pieces that block each path (if any)
-vector<Piece *> Piece::dScan(int col, int row, int type){
+vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 	vector <Piece *> attackables;
 	int ndir = (type == 3) ? 8 : 4; // number of directions
 	vector<int> dir(ndir, 1);		// 0 means the path ends
 	for (int i = 1; !checkEnd(dir); i += 1){
-		vector<pair<int,int>> pos = getPos(col, row, i, type); // all possible positions of this iteration
+		vector<pair<int,int>> pos = getPos(at.first, at.second, i, type); // all possible positions of this iteration
 		for (int j = 0; j < ndir; j += 1){	// loop on all directions
 			// check if out of board
 			if (pos.at(j).first > 8 || pos.at(j).second > 8 || pos.at(j).first < 0 || pos.at(j).second < 0) dir.at(j) = 0;
@@ -113,7 +118,7 @@ void Piece::updateStatus(int type) {
 		vector<pair<int,int>> newAttacks{};
 		for (auto possibleMove : forced->getCheckRoute()) {
 			int c = move(possibleMove.first, possibleMove.second);
-			if (c == 1) newMoves.emplace_back(pair{possibleMove, dScan(possibleMove.first, possibleMove.second, type)});
+			if (c == 1) newMoves.emplace_back(pair{possibleMove, dScan(possibleMove, type)});
 			else if (c == 2) newAttacks.emplace_back(possibleMove);
 		}	// the piece can move only if the move still block the opposite piece from checking.
 		moves = newMoves;
@@ -164,7 +169,7 @@ void Piece::updateStatus(int type) {
 						}
 					}
 					else {	//  no piece on that position
-							if (!forced) moves.emplace_back(pair{pos.at(j), dScan(pos.at(j).first, pos.at(j).second, type)});
+							if (!forced) moves.emplace_back(pair{pos.at(j), dScan(pos.at(j), type)});
 							paths.at(j).emplace_back(pos.at(j));
 					} 	// no block
 				}
@@ -211,9 +216,9 @@ bool Piece::kingCheck() {
 	return checkRoute.size() != 0;
 }
 
-// return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece), used by queen, rooo, bishop, knight, and king.
-bool Piece::canAttack(int col, int row){
-	return move(col, row) > 0;
+// return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece), used by queen, rook, bishop, knight, and king.
+bool Piece::canAttack(pair<int, int> pos){
+	return move(pos.first, pos.second) > 0;
 }
 
 

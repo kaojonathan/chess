@@ -15,7 +15,7 @@ class Bishop : public Piece {
 public:
     void updateMovePossibilities() override;
     Bishop(bool isWhite);
-    bool posInCheck(int x, int y) override;
+    std::vector<Piece *> attackable(std::pair<int, int> at) override;
 };
 
 #endif

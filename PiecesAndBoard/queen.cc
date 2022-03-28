@@ -21,9 +21,9 @@ void Queen::updateMovePossibilities()  {
 	updateStatus(3);
 }
 
-// helper function that determines of the queen in position (col, row) checks the king
-bool Queen::posInCheck(int col, int row) {
-	return enemyKing(mostVal(dScan(col, row, 3)));
+
+std::vector<Piece *> Queen::attackable(std::pair<int, int> at){
+	return dScan(at, 3);
 }
 
 /*

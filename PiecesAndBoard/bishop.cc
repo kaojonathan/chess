@@ -29,10 +29,8 @@ void Bishop::updateMovePossibilities() {
 // if successful, will update the position 
 // [Edit: updating the position should be implemented by a board/player/main method, so that the board can check if the move is invalid and ask player to enter the correct comment. This method can only return the validity of the move, cannot move the piece. edit2: now it is not pure virtual]
 
-
-// helper function that determines of the bishop in position (x, y) checks the king
-bool Bishop::posInCheck(int col, int row) {
-	return enemyKing(mostVal(dScan(col, row, 1)));
+std::vector<Piece *> Bishop::attackable(std::pair<int, int> at) {
+	return dScan(at, 1);
 }
 
 /*

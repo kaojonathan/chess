@@ -22,7 +22,7 @@ public:
     // edit: may not be useful anymore
     /* std::pair<int, int> getCheckCoords() override; */
     void updateMovePossibilities() override;
-    bool posInCheck(int x, int y) override;
+    std::vector<Piece *> attackable(std::pair<int, int>) override;
 };
 
 #endif
