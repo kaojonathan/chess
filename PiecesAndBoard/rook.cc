@@ -6,7 +6,7 @@
 using namespace std;
 
 Rook::Rook(bool isWhite) : Piece{isWhite} {
-	value = 6;
+	value = 5;
 	if (isWhite) {
 		representation = "R";
 	}

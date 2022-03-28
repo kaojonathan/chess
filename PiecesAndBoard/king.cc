@@ -7,7 +7,7 @@ using namespace std;
 
 
 King::King(bool isWhite) : Piece{ isWhite } {
-	value = 10;
+	value = 0;
 	if (isWhite) {
 		representation = "K";
 	}

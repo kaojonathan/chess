@@ -7,6 +7,8 @@ class Piece;
 class twoPlayerBoard : public Board {
 	Piece* board[8][8]; // array of piece pointers
 	
+
+
 	void origSetup() override;
 	void print() override;	// move to game
 	bool end() override; // implementation required? // need to move to game class
@@ -15,8 +17,8 @@ class twoPlayerBoard : public Board {
 	void removePiece(std::string position) override;
 	bool verifySetup() override;
 	Piece* getP(int x, int y) override; // getter
-	void movePiece(int x, int y, int newx, int newy); // setter
 	void updateBoardMoves() override; // every time the board changes, call this
+	void movePiece(int x, int y, int newx, int newy) override; // setter
 
 
 public:

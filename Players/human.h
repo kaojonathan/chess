@@ -3,12 +3,12 @@
 #define HUMAN_H_
 #include <vector>
 // abstract class for the different AI levels
+#include "player.h"
 
 class Piece;
 class Board;
-class Player; // we need this?
 
-class Human {
+class Human : public Player {
     protected:
         int side; // 0 for white and 1 for black
         Board* gameBoard;
