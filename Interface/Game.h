@@ -40,8 +40,24 @@ class Game {
     void init(); // starts a game window
     void handleEvents();
     void update();
-    void render();
     void quit(); // quits the game and deallocates memory
+
+    void fill(int x, int y);
+    void drawPiece(string piece, int x, int y);
+    void insertNewPiece(std::string validpiece, std::string position);
+	void removePiece(std::string position);
+
+
+
+    void displayOrigSetup();
+    
+    void displayCheck(bool isWhite);
+    void displayStalemate();
+    void displayWin(bool isWhite);
+
+
+
+
     bool running();
 
 

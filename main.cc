@@ -19,9 +19,9 @@ int main(int argc, const char * argv[]) { // implemented using help from https:/
 	while (game->running()) { // the game loop
 
 		game->handleEvents(); // handle input commands
-		game->update(); // update the model??????
-		game->render(); // render the display
 
+		
+		game->update(); // update the model??????
 	}
 
 	game->quit();

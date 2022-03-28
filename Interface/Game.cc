@@ -3,6 +3,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+
+#include <windows.h>
+
+
 #include <unistd.h>
 #include "window.h"
 #include "XWindowImpl.h"
@@ -68,6 +72,267 @@ bool isValidPiece(string piece) {
 }
 
 
+
+
+void Game::fill(int x, int y) { // fills the graphic board at coordinate (x, y) with a blank tile (erases the piece)
+
+			if ((x + y + 2) % 2) {
+				window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::Cyan);
+			}
+			else {
+
+				window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::White);
+
+			}
+}
+
+void Game::drawPiece(string piece, int x, int y) { // draws a piece at coordinate (x, y) with piece string
+
+window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
+
+
+
+} 
+
+	void Game::insertNewPiece(std::string validpiece, std::string position) {
+
+	if (('0' <= position[1] <= '7') && ('a' <= position[0] <= 'h'))
+	{
+		if (validpiece == "K")
+		{
+
+
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("K", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+
+
+
+		}
+		else if (validpiece == "k")
+		{
+
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("k", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+		}
+		else if (validpiece == "Q")
+		{
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("Q", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+		}
+		else if (validpiece == "q")
+		{
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("q", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+		}
+		else if (validpiece == "R")
+		{
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("R", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+		}
+		else if (validpiece == "r")
+		{
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("r", position[0] - 'a', 8 - (position[1] - '0'));
+
+
+		}
+		else if (validpiece == "B")
+		{
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("B", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+		else if (validpiece == "b")
+		{
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("b", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+		else if (validpiece == "N")
+		{
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("N", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+		else if (validpiece == "n")
+		{
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("n", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+		else if (validpiece == "P")
+		{
+
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("P", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+		else if (validpiece == "p")
+		{
+			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			{
+				fill(position[0] - 'a', 8 - (position[1] - '0'));
+			}
+
+
+			drawPiece("p", position[0] - 'a', 8 - (position[1] - '0'));
+		}
+	}
+
+
+	}
+
+
+	void Game::removePiece(std::string position) {
+
+	if (board[8 - (position[1] - '0')][position[0] - 'a'])
+	{
+		fill(position[0] - 'a', 8 - (position[1] - '0'));
+	}
+
+
+
+	}
+
+
+	
+    void Game::displayCheck(bool isWhite) {
+
+		if (isWhite) {
+			cout << "White is in check." << endl;
+
+			window->drawString(10, 10, "White is in check.");
+			Sleep(3000);
+			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+
+		} else {
+
+			cout << "Black is in check." << endl;
+						Sleep(3000);
+			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+		}
+
+	}
+    void Game::displayStalemate() {
+cout << "Stalemate!" << endl;
+			window->drawString(10, 10, "Stalemate!");
+			Sleep(3000);
+			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+
+	}
+    void Game::displayWin(bool isWhite) {
+
+		if (isWhite) {
+			cout << "White wins!" << endl;
+						window->drawString(10, 10, "White wins!");
+			Sleep(3000);
+			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+
+		} else {
+
+			cout << "Black wins!" << endl;
+						window->drawString(10, 10, "Black wins!");
+			Sleep(3000);
+			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+		}
+	}
+
+
+void Game::displayOrigSetup() {
+
+window->drawString(72, 77, "r");
+	window-drawString(122, 77, "n");
+	window-drawString(172, 77, "b");
+	window-drawString(222, 77, "q");
+	window->drawString(272, 77, "k");
+	window->drawString(322, 77, "b");
+	window->drawString(372, 77, "n");
+	window->drawString(422, 77, "r");
+
+	for (int i = 1; i <= 8; ++i) {
+		window->drawString(22 + (50 * i), 127, "p");
+		window->drawString(22 + (50 * i), 377, "P");
+
+	}
+
+	
+	window->drawString(72, 427, "R");
+	window->drawString(122, 427, "N");
+	window->drawString(172, 427, "B");
+	window->drawString(222, 427, "Q");
+	window->drawString(272, 427, "K");
+	window->drawString(322, 427, "B");
+	window->drawString(372, 427, "N");
+	window->drawString(422, 427, "R");
+
+}
+
 ////////////////////////////////////////////////////////////////////
 
 
@@ -84,11 +349,11 @@ void Game::init() {
 		for (int j = 1; j <= 8; ++j) {
 
 			if ((i + j) % 2) {
-				w.fillRectangle(50 * i, 50 * j, 50, 50, XWindow::Cyan);
+				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::Cyan);
 			}
 			else {
 
-				w.fillRectangle(50 * i, 50 * j, 50, 50, XWindow::White);
+				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::White);
 
 			}
 
@@ -99,49 +364,27 @@ void Game::init() {
 
 	}
 
-	w.drawLine(50, 50, 450, 50);
-	w.drawLine(50, 50, 50, 450);
-	w.drawLine(450, 450, 450, 50);
-	w.drawLine(450, 450, 50, 450);
+	window->drawLine(50, 50, 450, 50);
+	window->drawLine(50, 50, 50, 450);
+	window->drawLine(450, 450, 450, 50);
+	window->drawLine(450, 450, 50, 450);
 
-
-
-	w.drawString(72, 77, "r");
-	w.drawString(122, 77, "n");
-	w.drawString(172, 77, "b");
-	w.drawString(222, 77, "q");
-	w.drawString(272, 77, "k");
-	w.drawString(322, 77, "b");
-	w.drawString(372, 77, "n");
-	w.drawString(422, 77, "r");
 
 	for (int i = 1; i <= 8; ++i) {
-		w.drawString(22 + (50 * i), 127, "p");
 		string s{ 'a' + i - 1 };
-		w.drawString(22 + (50 * i), 40, s);
+		window->drawString(22 + (50 * i), 40, s);
 	}
 
 	for (int i = 1; i <= 8; ++i) {
-		w.drawString(22 + (50 * i), 377, "P");
 		string s{ 'a' + i - 1 };
-		w.drawString(22 + (50 * i), 470, s);
+		window->drawString(22 + (50 * i), 470, s);
 	}
 
 	for (int i = 1; i <= 8; ++i) {
 		string s{ i + '0' };
-		w.drawString(35, 27 + (50 * (9 - i)), s);
-		w.drawString(460, 27 + (50 * (9 - i)), s);
+		window->drawString(35, 27 + (50 * (9 - i)), s);
+		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
-
-
-	w.drawString(72, 427, "R");
-	w.drawString(122, 427, "N");
-	w.drawString(172, 427, "B");
-	w.drawString(222, 427, "Q");
-	w.drawString(272, 427, "K");
-	w.drawString(322, 427, "B");
-	w.drawString(372, 427, "N");
-	w.drawString(422, 427, "R");
 
 
 }
@@ -416,12 +659,6 @@ void Game::update() {
 
 }
 
-void Game::render() {
-
-
-
-
-}
 
 void Game::quit() {
 
