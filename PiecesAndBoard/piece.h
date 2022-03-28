@@ -68,7 +68,7 @@ class Piece {
         
         // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         //  Scan the each direction, return a list of attackable enemies, if any
-        vector<Piece *> dScan(std::pair<int,int>, int type);
+        std::vector<Piece *> dScan(std::pair<int,int>, int type);
 
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
         void updateStatus(int type);

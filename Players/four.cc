@@ -1,28 +1,69 @@
-#include "two.h"
-#include "board.h"
+#include "four.h"
 #include <utility>
 using namespace std;
 
-Two::Two(int side) : Computer{side} {}
+Four::Four(int side) : Computer{ side } {}
 
-void Two::move()
+
+void Four::move()
 {
+
+
+	// AVOIDING MOVES CONDITION (this needs implement)
+
+	for (int i = 0; i < pieces.size(); ++i)
+	{
+		for (int j = 0; j < enemypieces.size(); ++j) {
+
+			if (enemypieces[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
+
+
+			// batchest!!!
+
+
+
+
+
+
+
+			}
+
+
+
+
+		}
+
+	}
+
+
 	// CAPTURE CONDITION
 	for (int i = 0; i < pieces.size(); ++i)
 	{
 
+
+        int jmax = -1;
+        int kmax = -1;
+        int currentmax = 0;
 		for (int j = 0; j < 8; ++j)
 		{
-
 			for (int k = 0; k < 8; ++k)
 			{
 				if (pieces[i]->move(j, k) == 2)
-				{ // if the move is capture then move it
-					gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
-					return;
+				{ // if the move is capture
+                    if (currentmax < gameBoard->getPiece(j, k)->getVal()) { // find highest value capture!
+
+                        currentmax = gameBoard->getPiece(j, k)->getVal();
+                        jmax = j;
+                        kmax = k;
+                    }
 				}
 			}
 		}
+
+        if (currentmax != 0) {
+            gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), jmax, kmax); // capture it!!!
+            return;
+        }
 	}
 
 	// CHECK CONDITION

@@ -7,7 +7,7 @@
 using namespace std;
 
 Bishop::Bishop(bool isWhite) : Piece{isWhite} {
-	value = 6;
+	value = 3;
 	if (isWhite) {
 		representation = "B";
 	}

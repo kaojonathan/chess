@@ -2,20 +2,13 @@
 #define COMPUTER_H_
 #include <vector>
 // abstract class for the different AI levels
+#include "player.h"
 
 class Piece;
 class Board;
-class Player; // we need this?
 
-class Computer {
-    protected:
-        int side; // 0 for white and 1 for black
-        Board* gameBoard;
-        std::vector<Piece*> pieces; // the computer's pieces
-        std::vector<Piece*> enemypieces; // the opponent's pieces
-
+class Computer : public Player {
         virtual void move() = 0;
-        
     public:
         Computer(int);
         virtual ~Computer(); // needs implementation

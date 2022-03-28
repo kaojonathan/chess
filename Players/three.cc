@@ -5,103 +5,90 @@ using namespace std;
 Three::Three(int side) : Computer{ side } {}
 
 
-void Three::move() {
+void Three::move()
+{
 
 
-	// shuffle the array first (using some way)
+	// AVOIDING MOVES CONDITION (this needs implement)
 
-	for (int i = 0; i < pieces.size(); ++i) {
-
+	for (int i = 0; i < pieces.size(); ++i)
+	{
 		for (int j = 0; j < enemypieces.size(); ++j) {
 
-			if (canCapture(pieces[j])) {
-				if (canCapture(pieces[j]) == pieces[i]) { // if some enemy piece can capture one of your piece,
+			if (enemypieces[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
 
 
-					//// work in progress
-
-
+			// batchest!!!
 
 
 
 
-				}
+
+
 
 			}
 
 
 
 
-
-		}
-
-
-
-
-
-	}
-
-
-
-
-	for (int i = 0; i < pieces.size(); ++i) {
-		pair<int, int> checkCoords = getCheckCoords(pieces[i]);
-		// potential check x and y position (-1, -1) if there is none (need to implement this)
-
-		if (checkCoords.first != -1) { // if the piece can check
-
-			gameBoard->movePiece(pieces[i]->getX(), pieces[i]->getY(), checkCoords.first, checkCoords.second); // move it
-
-
-		}
-
-
-	}
-
-
-	// if no piece can check, check for a capture
-
-
-	for (int i = 0; i < pieces.size(); ++i) {
-		if (canCapture(pieces[i])) { // if the piece can capture (need to implement this)
-
-			gameBoard->movePiece(pieces[i]->getX(), pieces[i]->getY(), canCapture(pieces[i])->getX(), canCapture(pieces[i])->getY());
-
-
-
-
 		}
 
 	}
 
-	// otherwise randomize the move
 
+	// CAPTURE CONDITION
+	for (int i = 0; i < pieces.size(); ++i)
+	{
+
+		for (int j = 0; j < 8; ++j)
+		{
+
+			for (int k = 0; k < 8; ++k)
+			{
+				if (pieces[i]->move(j, k) == 2)
+				{ // if the move is capture then move it
+					gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+					return;
+				}
+			}
+		}
+	}
+
+	// CHECK CONDITION
+	for (int i = 0; i < pieces.size(); ++i)
+	{
+
+		for (int j = 0; j < 8; ++j)
+		{
+
+			for (int k = 0; k < 8; ++k)
+			{
+
+				if (pieces[i]->posInCheck(j, k))
+				{ // finds position of the piece that checks the king
+
+					if (pieces[i]->move(j, k) != 0)
+					{ // if the move is valid then move it
+						gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	// otherwise random legal move
 	bool madeMove = false;
-
-	while (!madeMove) { // keep looping if we haven't made a move
-
-
-
-		// randomly chooses from the type of pieces which one to move (there are 
-
-		int randNum = rand() % pieces.size(); // randomly gives us a number from 0 to number of pieces - 1
-
-
-		int randomX = rand() % 8; // randomly give us an x-coordinate
-
-
-		int randomY = rand() % 8; // randomly give us a y-coordinate
-
-
-		// check if the move is valid, then move it
-
-		if (pieces[randNum]->canMove(randomX, randomY)) {
-			gameBoard->movePiece(pieces[randNum]->getX(), pieces[randNum]->getY(), randomX, randomY);
-
-			madeMove = true;
+	while (!madeMove)
+	{											 // keep looping if we haven't made a move
+		int pieceIndex = rand() % pieces.size(); // randomly give us an x-coordinate
+		int i = rand() % 8;						 // randomly give us an x-coordinate
+		int j = rand() % 8;						 // randomly give us a y-coordinate
+		if (pieces[pieceIndex]->move(i, j) != 0)
+		{ // if the move is valid then move it
+			gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+			madeMove == true;
 		}
-
 		// otherwise keep looping (might be inefficient)
 	}
-
 }

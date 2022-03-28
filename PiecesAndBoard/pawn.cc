@@ -6,7 +6,7 @@
 using namespace std;
 
 Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
-	value = 3; // change after the first move?
+	value = 1; // change after the first move?
 	if (isWhite) {
 		representation = "P";
 	}
