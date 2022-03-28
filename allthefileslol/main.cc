@@ -14,7 +14,7 @@ int main(int argc, const char * argv[]) { // implemented using help from https:/
 
 	game = new Game;
 
-	game->init(); // initialize the game
+	//game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
 

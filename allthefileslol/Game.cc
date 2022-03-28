@@ -13,9 +13,56 @@
 using namespace std;
 
 
-Game::Game() {}
+Game::Game() : window{new Window}, isRunning{true} {
+	mode = "menu";
 
-Game::~Game() {}
+	for (int i = 1; i <= 8; ++i) {
+		for (int j = 1; j <= 8; ++j) {
+
+			if ((i + j) % 2) {
+				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::Cyan);
+			}
+			else {
+
+				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::White);
+
+			}
+
+		}
+
+
+
+
+	}
+
+	window->drawLine(50, 50, 450, 50);
+	window->drawLine(50, 50, 50, 450);
+	window->drawLine(450, 450, 450, 50);
+	window->drawLine(450, 450, 50, 450);
+
+
+	for (int i = 1; i <= 8; ++i) {
+		string s{ 'a' + i - 1 };
+		window->drawString(22 + (50 * i), 40, s);
+	}
+
+	for (int i = 1; i <= 8; ++i) {
+		string s{ 'a' + i - 1 };
+		window->drawString(22 + (50 * i), 470, s);
+	}
+
+	for (int i = 1; i <= 8; ++i) {
+		string s{ i + '0' };
+		window->drawString(35, 27 + (50 * (9 - i)), s);
+		window->drawString(460, 27 + (50 * (9 - i)), s);
+	}
+
+
+}
+
+Game::~Game() {
+	delete window;
+}
 
 
 
@@ -336,61 +383,7 @@ window->drawString(72, 77, "r");
 
 // This program is the command interpreter for the chess game.
 
-void Game::init() {
-    XWindow w;
-	*window = w;
-    isRunning = true;
-    mode = "menu";
-
-
-	for (int i = 1; i <= 8; ++i) {
-		for (int j = 1; j <= 8; ++j) {
-
-			if ((i + j) % 2) {
-				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::Cyan);
-			}
-			else {
-
-				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::White);
-
-			}
-
-		}
-
-
-
-
-	}
-
-	window->drawLine(50, 50, 450, 50);
-	window->drawLine(50, 50, 50, 450);
-	window->drawLine(450, 450, 450, 50);
-	window->drawLine(450, 450, 50, 450);
-
-
-	for (int i = 1; i <= 8; ++i) {
-		string s{ 'a' + i - 1 };
-		window->drawString(22 + (50 * i), 40, s);
-	}
-
-	for (int i = 1; i <= 8; ++i) {
-		string s{ 'a' + i - 1 };
-		window->drawString(22 + (50 * i), 470, s);
-	}
-
-	for (int i = 1; i <= 8; ++i) {
-		string s{ i + '0' };
-		window->drawString(35, 27 + (50 * (9 - i)), s);
-		window->drawString(460, 27 + (50 * (9 - i)), s);
-	}
-
-
-}
-
-
-
-
-
+// void Game::init() {}
 
 
 
