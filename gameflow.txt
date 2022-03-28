@@ -1,0 +1,34 @@
+game player1 player2
+    origSetup
+    startGame()
+
+setup
+    ... setup commands ...
+    ... done ...
+    verify setup
+    startGame()
+
+// pieces are all in position
+startGame() 
+    updatePossibleMoves
+
+
+Text UML:
+
+Game class
+    window
+    2 players
+    board
+
+Player class
+    pieces in play (owns the pieces)
+    pieces captured
+
+Board class
+    pieces
+
+Pieces
+    position
+    value
+    white/black
+    board

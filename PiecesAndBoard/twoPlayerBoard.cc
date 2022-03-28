@@ -359,7 +359,7 @@ bool twoPlayerBoard::kingInCheck(bool isWhite)
 		for (int j = 0; j < 8; ++j)
 		{
 
-			if (board[i][j]->kingCheck(isWhite))
+			if (board[i][j]->kingCheck())
 			{				 // if at least one piece has check (isWhite tells us if black king is in check)
 				return true; // then the king is in check
 			}
