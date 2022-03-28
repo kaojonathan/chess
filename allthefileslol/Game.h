@@ -35,7 +35,7 @@ class Game {
 
 
 
-    Game();
+    Game(Xwindow*);
     ~Game();
     void init(); // starts a game window
     void handleEvents();

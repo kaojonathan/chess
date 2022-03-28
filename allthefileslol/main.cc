@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "window.h"
 #include "Game.h"
 
 using namespace std;
@@ -11,10 +12,10 @@ using namespace std;
 Game *game = nullptr;
 
 int main(int argc, const char * argv[]) { // implemented using help from https://www.youtube.com/watch?v=44tO977slsU (type "game loop" and do some research)
+	Window w;
+	game = new Game{&w};
 
-	game = new Game;
-
-	//game->init(); // initialize the game
+	game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
 
