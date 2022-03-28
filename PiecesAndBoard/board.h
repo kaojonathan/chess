@@ -28,6 +28,16 @@ class Board {
 		Piece* getPiece(int x , int y) {
 			return getP(x, y);
 		}
+		bool verify() { return verifySetup(); }
+		void removeP(std::string position) {
+			removePiece(position);
+		}
+		void insertP(std::string p, std::string pos) {
+			insertNewPiece(p, pos);
+		}
+		void printBoard() {
+			print();
+		}
 };
 
 #endif

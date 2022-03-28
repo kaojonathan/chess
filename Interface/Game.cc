@@ -3,15 +3,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-
-#include <windows.h>
-
-
 #include <unistd.h>
-#include "window.h"
 #include "XWindowImpl.h"
 #include "Game.h"
 #include "window.h"
+#include "board.h"
+#include "twoPlayerBoard.h"
+#include "score.h"
 using namespace std;
 
 
@@ -102,8 +100,8 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		{
 
 
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+				
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -120,7 +118,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		{
 
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -132,7 +130,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		}
 		else if (validpiece == "Q")
 		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -145,7 +143,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		else if (validpiece == "q")
 		{
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -158,7 +156,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		else if (validpiece == "R")
 		{
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -171,7 +169,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		else if (validpiece == "r")
 		{
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -183,7 +181,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		}
 		else if (validpiece == "B")
 		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -193,7 +191,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		}
 		else if (validpiece == "b")
 		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -203,7 +201,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		}
 		else if (validpiece == "N")
 		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -214,7 +212,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		else if (validpiece == "n")
 		{
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -225,7 +223,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		else if (validpiece == "P")
 		{
 
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -235,7 +233,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 		}
 		else if (validpiece == "p")
 		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
+			if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 			{
 				fill(position[0] - 'a', 8 - (position[1] - '0'));
 			}
@@ -251,7 +249,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 
 	void Game::removePiece(std::string position) {
 
-	if (board[8 - (position[1] - '0')][position[0] - 'a'])
+	if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
 	{
 		fill(position[0] - 'a', 8 - (position[1] - '0'));
 	}
@@ -268,13 +266,13 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 			cout << "White is in check." << endl;
 
 			window->drawString(10, 10, "White is in check.");
-			Sleep(3000);
+			sleep(3000);
 			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 
 		} else {
 
 			cout << "Black is in check." << endl;
-						Sleep(3000);
+						sleep(3000);
 			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 		}
 
@@ -282,7 +280,7 @@ window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
     void Game::displayStalemate() {
 cout << "Stalemate!" << endl;
 			window->drawString(10, 10, "Stalemate!");
-			Sleep(3000);
+			sleep(3000);
 			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 
 	}
@@ -291,14 +289,14 @@ cout << "Stalemate!" << endl;
 		if (isWhite) {
 			cout << "White wins!" << endl;
 						window->drawString(10, 10, "White wins!");
-			Sleep(3000);
+			sleep(3000);
 			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 
 		} else {
 
 			cout << "Black wins!" << endl;
 						window->drawString(10, 10, "Black wins!");
-			Sleep(3000);
+			sleep(3000);
 			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 		}
 	}
@@ -307,9 +305,9 @@ cout << "Stalemate!" << endl;
 void Game::displayOrigSetup() {
 
 window->drawString(72, 77, "r");
-	window-drawString(122, 77, "n");
-	window-drawString(172, 77, "b");
-	window-drawString(222, 77, "q");
+	window->drawString(122, 77, "n");
+	window->drawString(172, 77, "b");
+	window->drawString(222, 77, "q");
 	window->drawString(272, 77, "k");
 	window->drawString(322, 77, "b");
 	window->drawString(372, 77, "n");
@@ -469,7 +467,7 @@ void Game::handleEvents() {
 
                 
         mode = "game";
-        board = new Board;
+        board = new twoPlayerBoard;
         score = new Score;
 		cout << "Started new game!" << endl;
 
@@ -514,12 +512,12 @@ void Game::handleEvents() {
 
 					if (whitemoves) {
 						cout << "Black wins!" << endl;
-						score.blackWin();
+						score->blackWin();
 
 					}
 					else {
 						cout << "White wins!" << endl;
-						score.whiteWin();
+						score->whiteWin();
 					}
 					mode = "menu";
 				}
@@ -569,7 +567,7 @@ void Game::handleEvents() {
 
 				cout << "Current Board Configuration:" << endl;
 
-				board.print();
+				board->printBoard();
 
 
 				string black;
@@ -579,12 +577,12 @@ void Game::handleEvents() {
 
 					string piece;
 					string position;
-					command >> piece >> position;
+					cin >> piece >> position;
 
 					if (isValidPiece(piece)) {
 						if (isValidPosition(position)) {
 
-							board.insertNewPiece(piece, position);
+							board->insertP(piece, position);
 
 							// do add thing here
 
@@ -598,9 +596,9 @@ void Game::handleEvents() {
 				}
 				else if (command == "-") {
 					string position;
-					command >> position;
+					cin >> position;
 					if (isValidPosition(position)) {
-						board.removePiece(position);
+						board->removeP(position);
 					}
 					else {
 
@@ -611,7 +609,7 @@ void Game::handleEvents() {
 
 					string color;
 
-					command >> color;
+					if (cin >> color);
 
 					if (color == "white") {
 
@@ -627,7 +625,7 @@ void Game::handleEvents() {
 				else if (command == "done") {
 					// verify the board
 
-					if (board.verifySetup()) {
+					if (board->verify()) {
 
 						// add thing here
 
@@ -676,7 +674,7 @@ void Game::quit() {
 
 }
 
-void Game::running() {
+bool Game::running() {
 
     return isRunning;
 
