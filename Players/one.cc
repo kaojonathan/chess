@@ -2,7 +2,7 @@
 #include "board.h"
 using namespace std;
 
-One::One(int side) : Computer{side} {}
+One::One(int side, int level) : Computer{side, level} {}
 
 void One::move()
 {

@@ -1,8 +1,9 @@
 #include "four.h"
+#include "computer.h"
 #include <utility>
 using namespace std;
 
-Four::Four(int side) : Computer{ side } {}
+Four::Four(int side, int level) : Computer{ side, level } {}
 
 
 void Four::move()

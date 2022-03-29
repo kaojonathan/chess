@@ -9,6 +9,10 @@
 #include "window.h"
 #include "board.h"
 #include "twoPlayerBoard.h"
+#include "one.h"
+#include "two.h"
+#include "three.h"
+#include "four.h"
 #include "score.h"
 using namespace std;
 
@@ -17,13 +21,8 @@ using namespace std;
 /////////// HELPER FUNCTIONS /////////////////
 
 
-// isHuman checks if the 'player' is a "human"
-bool isHuman(string player)
-{
-	return (player == "human");
-}
 
-// isComputer checks if the 'player' is a "computer". if it is, also updates level to give the difficulty of the computer
+// isComputer checks if the 'player' is a "computer". if it is, also updates level to give the level of the computer
 bool isComputer(string player, int& level)
 {
 	if (player.substr(0, 8) == "computer")
@@ -328,18 +327,24 @@ void Game::handleEvents() {
         if (command == "game") {
 			string white;
 			string black;
-			int difficulty;
+			int level;
 			linestream >> white >> black;
 
             bool correctinput = true;
-			if (isHuman(white)) {
-				// do human thing
-				// new Human(...)
 
+			if (white == "human") {
+				p1 = new Human{0};
 			}
-			else if (isComputer(white, difficulty)) {
-				// do computer thing
-				// new Computer(...)
+			else if (isComputer(white, level)) {
+				if (level == 1) {
+					p1 = new One{0, level};
+				} else if (level == 2) {
+					p1 = new Two{0,level};
+				} else if (level == 3) {
+					p1 = new Three{0,level};
+				} else {
+					p1 = new Four{0,level};
+				}
 			}
 			else {
 				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
@@ -355,7 +360,7 @@ void Game::handleEvents() {
 
                 
 			}
-			else if (isComputer(black, difficulty)) {
+			else if (isComputer(black, level)) {
 
 
 				// do computer thing
@@ -367,19 +372,14 @@ void Game::handleEvents() {
 				correctinput = false;
 			}
 
-    
             if (correctinput) {
 
-                
-        mode = "game";
-        board = new twoPlayerBoard;
-        score = new Score;
-		cout << "Started new game!" << endl;
-
-        // find a way to update the graphics as well?
-
-
+				mode = "game";
+				board = new twoPlayerBoard;
+				score = new Score;
+				cout << "Started new game!" << endl;
             }
+			// handle incorrect input?
 
 
 
@@ -469,7 +469,7 @@ void Game::handleEvents() {
 				board->printBoard();
 
 				string black;
-				int difficulty;
+				int level;
 
 				if (command == "+") {
 

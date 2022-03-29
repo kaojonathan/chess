@@ -2,7 +2,7 @@
 #include <utility>
 using namespace std;
 
-Three::Three(int side) : Computer{ side } {}
+Three::Three(int side, int level) : Computer{ side, level} {}
 
 
 void Three::move()

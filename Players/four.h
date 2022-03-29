@@ -5,7 +5,7 @@
 class Four : public Computer {
 
 	void move() override;
-	Four(int);
+	Four(int side, int level);
 	~Four();
 
 };
