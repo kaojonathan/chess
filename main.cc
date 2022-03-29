@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
 		// handle input commands
 		game->handleEvents(); 
 		// update the the graphic model and text model
-		game->update(); 
+		game->update(); // maybe have this have parameter move to minimize graphic load
 	}
 
 	game->quit();

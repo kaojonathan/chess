@@ -18,8 +18,8 @@ class Game {
     Score *score;
     bool isRunning;
     std::string mode; // game, setup, menu, etc.
-    Player *p1;
-    Player *p2;
+    Player *p1; // white
+    Player *p2; // black
 
     public:
         void init(); // starts a game window
