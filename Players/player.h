@@ -9,10 +9,12 @@ class Player {
     protected:
         int side; // 0 for white and 1 for black
         Board* gameBoard;
+        Piece * king;            // may change type to King
         // the player's pieces
         std::vector<Piece*> pieces; 
-        // the opponent's pieces
-        std::vector<Piece*> enemypieces;
+        // the opponent
+        Player *opponent;
+        Piece *opponentCheck;
         int type; // 0 for human, 1 for computer 
         virtual int playerMove(int oldCol, int oldRow, int newCol, int newRow) = 0;
 
@@ -25,6 +27,9 @@ class Player {
         int getType() {
             return type;
         }
+
+        // set opponentCheck to the Piece 
+        void kingCheckedBy(Piece *);
 };
 
 

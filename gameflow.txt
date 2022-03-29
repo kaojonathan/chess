@@ -13,12 +13,35 @@ setup
 
 // text version of display needs to be implemented too
 
+
+                                edit by Yuhong:  further needs on player class
+                                    field: 
+                                        Piece * enemyCheck (enemy Piece that is checking the king, nullptr if no);
+                                    methods:
+                                        void isCheckBy(Piece *p): set enemyCheck to p;
+                                        void makeForced(): loop all pieces with Piece::isForced(enemyCheck)
+                                        void checkForced(): loop all pieces with Piece::updateForced()
+                                        bool findMove(): loop all pieces with (bool) Piece::updateCheck(), return  
+                                                            ture if any of them is true
+                                        Piece * checker():   return enemyCheck 
+                                        void checkKing(): find the king with Piece::isKing(), run Piece::
+
+
 // pieces are all in position when called
 startGame() 
     while (game not ended <- checks status)
-        black.checkStatus()
-        white.checkStatus()
-        end()
+        player1.checkStatus()                                   # edited by Yuhong: 
+        player2.checkStatus()                                   # now the sequence does not matter
+        if (player1.isChecked())  {                             # adds those
+            makeForced(player1.checkedBy()); 
+        }
+        checkforced()                                           
+        end()                                                   
+        {
+            if !findMove
+                if (enemyCheck)      Game end with player1 lose
+                else                 Game ends with draw
+        }
         asks for pos1, pos2 if is human
         status = player1.move(pos1,pos2)
             act upon status {
@@ -77,6 +100,9 @@ Player class
     pieces in play (owns the pieces)
     pieces captured
     enemyPlayer
+
+
+
 
 Board class
     pieces

@@ -14,17 +14,18 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        bool updated;   // true if the status is updated
-        std::vector<std::pair<std::pair<int,int>, std::vector<Piece *>>> moves; // moves contains vector of pair(valid move position, vectors of attackable emeny pieces)
-        std::vector<std::pair<int,int>> attacks;            // contains a list of position that the piece can capture pieces on such location.
-        std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
+        std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
+        std::vector<std::pair<int,int>> attacks;            // contains a list of position of enemy that the piece can capture.
+        // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
         Board* gameBoard;
         Player* enemy;
-        // updates possible moves
+        // updates possible moves, not consider if the piece is forced or not
         virtual void updateMovePossibilities() = 0;
+
+        virtual void updateForced() = 0;
 
         // added this (vincent) /// for computer level 2/3 class
 
@@ -38,7 +39,7 @@ class Piece {
         virtual std::vector<Piece *> attackable(std::pair<int, int> at) = 0;
 
         // make this piece forced by a piece
-        virtual void forcedBy(Piece *);
+        virtual void isForcedBy(Piece *);
 
 
     public:
@@ -50,13 +51,10 @@ class Piece {
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
         int move(int col, int row);
-        // true if the piece is checking the king
-        bool kingCheck();
-        void updateMoves();
+        // true if the piece is checking the king  still use it?
+        // bool kingCheck();
 
-        // return the checkRoute field
-        std::vector<std::pair<int, int>> getCheckRoute();
-
+        std::vector<std::pair<int, int>> getCheckRoute(); // return the checkRoute field
         int getVal();                   // return the value of a piece
         std::string getRep();           // return the representation
         // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
@@ -64,7 +62,7 @@ class Piece {
         std::vector<Piece *> dScan(std::pair<int,int>, int type);
 
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
-        void updateStatus(int type);
+        void dirUpdateMoves(int type);
 
         bool isKing();                      //  true if the target is a king
         bool enemyKing(Piece * target);     //  true if the target is the enemy king
@@ -75,9 +73,13 @@ class Piece {
                 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
         // note that this can be use to determine a position is controled by the enemy
         bool canAttack(std::pair<int, int>);
-        // return true if this piece can attack the enemy piece in position (col, row) if it is at pos
+        // return true if this piece can attack the enemy piece in position (col, row)
         // may be useful
-        // virtual bool canAttack(int col, int row, std::pair<int,int> pos) = 0;
+        
+        // for Pieces that is not king, set the forced field into the given pieces, for King, update the excape route of the king.
+        void forcedBy(Piece *);
+        // basic update moves and attacks, not consider if the piece is forced or not
+        void basicUpdateStatus();
 };
    
 // get the most valuable Piece

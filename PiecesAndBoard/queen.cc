@@ -18,7 +18,7 @@ Queen::Queen(bool isWhite) : Piece{ isWhite } {
 
 
 void Queen::updateMovePossibilities()  {
-	updateStatus(3);
+	dirUpdateMoves(3);
 }
 
 
