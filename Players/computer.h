@@ -11,9 +11,9 @@ class Computer : public Player {
         virtual void move() = 0;
     public:
         Computer(int);
-        virtual ~Computer(); // needs implementation
+        virtual ~Computer();
         // asks computer player to make a move
-        int playerMove() override { 
+        int playerMove(int, int, int, int) override { 
             move();
             return 1;
         }

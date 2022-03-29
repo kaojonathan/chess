@@ -9,7 +9,7 @@ class Piece;
 class Board;
 
 class Human : public Player {
-    int playerMove() override;
+    int playerMove(int oldCol, int oldRow, int newCol, int newRow) override;
     public:
         Human(int);
         

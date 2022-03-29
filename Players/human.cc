@@ -9,8 +9,12 @@ Human::~Human(){}
 /*
 # return 0 if ask for different move (move failed)
 # return 1 if move was successful (ask for next move)
-# return 2 if game is over
+# return 2 if capture was sucessful (ask for next move)
 */
-int Human::playerMove() {
-
+int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow) {
+    /*
+    let p be the piece pointer at pos1
+        status = p.move(pos1)
+        return status
+    */
 }

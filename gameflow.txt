@@ -17,17 +17,20 @@ startGame()
         black.checkStatus()
         white.checkStatus()
         end()
-        status = player1.move() <- asks for pos1, pos2
+        asks for pos1, pos2 if is human
+        status = player1.move(pos1,pos2)
             act upon status {
                 if HUMAN
                     board.move(pos1,pos2) # moves the piece from pos1 to pos2
                     # moves piece from pos1 to pos2 and captures pos2 piece
                     board.capture(pos1, pos2) 
+                if computer
+                    computer handles the move already.
             }
         white.checkStatus()
         black.checkStatus()
         end()
-        status = player2.move()
+        status = player2.move(pos1,pos2)
             act upon status {
                 if HUMAN
                     board.move() # moves the piece from pos1 to pos2
@@ -38,23 +41,16 @@ startGame()
 
 # return 0 if ask for different move (move failed)
 # return 1 if move was successful (ask for next move)
-# return 2 if game is over
+# return 2 if capture was sucessful (ask for next move)
 player.move(pos1, pos2)
     if player = human
         let p be the piece pointer at pos1
         status = p.move(pos1)
-        if status = 0
-            return 0
-        elif status = 1
-            return 1
-        elif status = 2
-            
-            return 1
+        return status
+
     elif computer
         status = computer.move()
         return 1
-    if (end()) # check if game is over
-        return 2
 
 
 # returns status code

@@ -14,13 +14,13 @@ class Player {
         // the pieces captured from opponent
         std::vector<Piece*> enemypieces;
         int type; // 0 for human, 1 for computer 
-        int virtual playerMove() = 0;
+        virtual int playerMove(int oldCol, int oldRow, int newCol, int newRow) = 0;
 
     public:
         Player(int side, int type);
         virtual ~Player();
-        int move() { 
-            return playerMove();
+        int move(int oldCol, int oldRow, int newCol, int newRow) { 
+            return playerMove(oldCol, oldRow, newCol, newRow);
         }
         int getType() {
             return type;
