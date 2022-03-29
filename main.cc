@@ -13,17 +13,15 @@ int main(int argc, const char * argv[]) {
 	game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
-
-		game->handleEvents(); // handle input commands
-		game->update(); // update the model??????
-
+		// handle input commands
+		game->handleEvents(); 
+		// update the the graphic model and text model
+		game->update(); 
 	}
 
 	game->quit();
 
 	return 0;
-	// handle any user input
-	// update all objects
-	// render changes to the display
+
 
 }

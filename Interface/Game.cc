@@ -324,7 +324,6 @@ void Game::handleEvents() {
     bool whitemoves = true;
     linestream >> command; // read a command
 
-
     if (mode == "menu") {
         if (command == "game") {
 			string white;
