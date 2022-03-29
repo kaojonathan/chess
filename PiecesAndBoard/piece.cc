@@ -218,7 +218,7 @@ bool Piece::kingCheck() {
 
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece), used by queen, rook, bishop, knight, and king.
 bool Piece::canAttack(pair<int, int> pos){
-	return move(pos.first, pos.second) > 0;
+	return move(pos.first, pos.second) == 2;
 }
 
 

@@ -11,7 +11,7 @@ class Player {
         Board* gameBoard;
         // the player's pieces
         std::vector<Piece*> pieces; 
-        // the pieces captured from opponent
+        // the opponent's pieces
         std::vector<Piece*> enemypieces;
         int type; // 0 for human, 1 for computer 
         virtual int playerMove(int oldCol, int oldRow, int newCol, int newRow) = 0;

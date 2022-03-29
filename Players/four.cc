@@ -1,6 +1,7 @@
 #include "four.h"
 #include "computer.h"
 #include <utility>
+#include "board.h"
 using namespace std;
 
 Four::Four(int side, int level) : Computer{ side, level } {}

@@ -28,7 +28,7 @@ class Board {
 		Piece* getPiece(int x , int y) {
 			return getP(x, y);
 		}
-		void MoveP(int x, int y, int newx, int newy) {
+		void moveP(int x, int y, int newx, int newy) {
 			movePiece(x, y, newx, newy);
 		}
 		bool verify() { return verifySetup(); }

@@ -40,13 +40,6 @@ class Piece {
         virtual void forcedBy(Piece *);
 
 
-        // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
-        // note that this can be use to determine a position is controled by the enemy
-        virtual bool canAttack(std::pair<int, int>);
-        // return true if this piece can attack the enemy piece in position (col, row) if it is at pos
-        // may be useful
-        // virtual bool canAttack(int col, int row, std::pair<int,int> pos) = 0;
-
     public:
         Piece(bool isWhite);
         int getX();
@@ -78,6 +71,13 @@ class Piece {
 
          // determines if the piece in position (col, row) checks the king,
         bool posInCheck(int col, int row);
+
+                // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
+        // note that this can be use to determine a position is controled by the enemy
+        bool canAttack(std::pair<int, int>);
+        // return true if this piece can attack the enemy piece in position (col, row) if it is at pos
+        // may be useful
+        // virtual bool canAttack(int col, int row, std::pair<int,int> pos) = 0;
 };
    
 // get the most valuable Piece
