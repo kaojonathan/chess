@@ -14,9 +14,10 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        std::vector<std::pair<std::pair<int,int>, vector<Piece *>>> moves; // moves contains vector of pair(valid move position, vectors of attackable emeny pieces)
+        bool updated;   // true if the status is updated
+        std::vector<std::pair<std::pair<int,int>, std::vector<Piece *>>> moves; // moves contains vector of pair(valid move position, vectors of attackable emeny pieces)
         std::vector<std::pair<int,int>> attacks;            // contains a list of position that the piece can capture pieces on such location.
-        std::vector<Piece *> guarded;                        // protected by these pieces (not implemented yet)
+        std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
@@ -51,14 +52,13 @@ class Piece {
         int move(int col, int row);
         // true if the piece is checking the king
         bool kingCheck();
-        std::string getRep();   // print the representation
         void updateMoves();
 
         // return the checkRoute field
         std::vector<std::pair<int, int>> getCheckRoute();
 
         int getVal();                   // return the value of a piece
-        
+        std::string getRep();           // return the representation
         // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         //  Scan the each direction, return a list of attackable enemies, if any
         std::vector<Piece *> dScan(std::pair<int,int>, int type);
@@ -88,5 +88,7 @@ Piece * mostVal(std::vector<Piece *>);
 //	2: cross directions only
 //	3: both diagonal and cross directions
 std::vector<std::pair<int, int>> getPos(int col, int row, int i, int type);
+
+bool validPos(std::pair<int,int>);          // return false if the posistion is out of the board
 
 #endif

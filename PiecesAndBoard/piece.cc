@@ -113,7 +113,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 
 void Piece::updateStatus(int type) {
 	// check if the piece cannot move because the enemy piece threaten
-	if (forced) {
+	/*if (forced) {
 		vector<pair<pair<int,int>, vector<Piece*>>> newMoves{};
 		vector<pair<int,int>> newAttacks{};
 		for (auto possibleMove : forced->getCheckRoute()) {
@@ -125,10 +125,12 @@ void Piece::updateStatus(int type) {
 		attacks = newAttacks;
 		forced = nullptr;
 	}
-	else {
-		moves = vector<pair<pair<int,int>, vector<Piece *>>>{};
-		attacks = vector<pair<int,int>>{};
-	} 	// clean
+	else {*/
+	if (updated) return;
+	moves = vector<pair<pair<int,int>, vector<Piece *>>>{};
+	attacks = vector<pair<int,int>>{};
+	protects = vector<pair<int,int>>{};
+	//} 	// clean
 	checkRoute = vector<pair<int,int>>{};
 
 	// scan all/some directions from {tr, tl, br, bl, t, b, r, l}, end if goes out of bound or enounters at lease 2 pieces (opposite) or enounters at lease 1 piece (mate), record each path
@@ -137,10 +139,11 @@ void Piece::updateStatus(int type) {
 	vector<vector<pair<int,int>>> paths(ndir, vector<pair<int,int>>{pair<int,int>{x,y}});	
 	vector<Piece*> firstEncounter(ndir, nullptr); // record the first enemy piece that block each path
 	for (int i = 1; !checkEnd(dir); i += 1){
-		vector<pair<int, int>> pos = getPos(x, y, i, type);
+		vector<pair<int, int>> pos = getPos(x, y, i, type); // get all possible positions that the piece can go and i units away from the piece. 
 		for (int j = 0; j < ndir; j += 1){	// loop on all directions
 			// check if out of board
-			if (pos.at(j).first > 8 || pos.at(j).second > 8 || pos.at(j).first < 0 || pos.at(j).second < 0) dir.at(j) = 0;
+			pair<int,int>curPos{pos.at(j)}; 
+			if (!validPos(pos.at(j))) dir.at(j) = 0;
 			if (dir.at(j) > 0) {
 				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (dir.at(j) == 2){
@@ -156,7 +159,7 @@ void Piece::updateStatus(int type) {
 						}
 						else if (target->getSide() != side){
 							// the piece is not king but belongs to enemy
-							if (!forced) attacks.emplace_back(pos.at(j));
+							// if (!forced) attacks.emplace_back(pos.at(j));
 							dir.at(j) -= 1;
 							paths.at(j).emplace_back(pos.at(j));
 							firstEncounter.at(j) = target;
@@ -165,7 +168,7 @@ void Piece::updateStatus(int type) {
 							dir.at(j) = 0;
 							// add this to target's guard field
 							// problem: how to remove it when this is no more the guard of the target?
-
+							protects.emplace_back(pos.at(j));
 						}
 					}
 					else {	//  no piece on that position
@@ -231,3 +234,7 @@ Piece *mostVal(vector<Piece *> attackables){
 	}
 	return res;
 } 
+
+bool validPos(pair<int, int> pos){
+	return !(pos.first >= 8 || pos.second >= 8 || pos.first < 0 || pos.second < 0);
+}
