@@ -4,9 +4,12 @@ game player1 player2
 
 setup
     ... setup commands ...
+        redisplay after each insertion
     ... done ...
     verify setup
     if valid -> leave setup
+
+// text version of display needs to be implemented too
 
 // pieces are all in position when called
 startGame() 

@@ -1,18 +1,14 @@
-#include "board.h"
-#include "twoPlayerBoard.h"
-#include "score.h"
 #include <iostream>
-#include <sstream>
-#include <string>
 #include "Game.h"
 
 using namespace std;
 
-Game *game = nullptr;
 
-int main(int argc, const char * argv[]) { // implemented using help from https://www.youtube.com/watch?v=44tO977slsU (type "game loop" and do some research)
+// implemented using help from https://www.youtube.com/watch?v=44tO977slsU 
+// (type "game loop" and do some research)
+int main(int argc, const char * argv[]) { 
 
-	game = new Game;
+	Game *game = new Game;
 
 	game->init(); // initialize the game
 
