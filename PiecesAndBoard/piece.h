@@ -14,6 +14,7 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
+        bool updated;
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
         std::vector<std::pair<int,int>> attacks;            // contains a list of position of enemy that the piece can capture.
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
@@ -62,7 +63,7 @@ class Piece {
         std::vector<Piece *> dScan(std::pair<int,int>, int type);
 
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
-        void dirUpdateMoves(int type);
+        void dirScan(int type);
 
         bool isKing();                      //  true if the target is a king
         bool enemyKing(Piece * target);     //  true if the target is the enemy king
@@ -78,8 +79,11 @@ class Piece {
         
         // for Pieces that is not king, set the forced field into the given pieces, for King, update the excape route of the king.
         void forcedBy(Piece *);
-        // basic update moves and attacks, not consider if the piece is forced or not
-        void basicUpdateStatus();
+        // basic update moves and attacks, not consider if the piece is forced or not, won't change the updated piece
+        void normalStatusUpdate();
+
+        std::vector<std::pair<int,int>> getMoves();
+        std::vector<std::pair<int,int>> getAttacks();
 };
    
 // get the most valuable Piece

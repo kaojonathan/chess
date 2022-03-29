@@ -108,7 +108,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 }
 
 // updating the moves, attacks; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all those fields are empty). Used for Bishop, Rook and Queen only. 
-void Piece::dirUpdateMoves(int type) {
+void Piece::dirScan(int type) {
 	// check if the piece cannot move because the enemy piece threaten
 	/*if (forced) {
 		vector<pair<pair<int,int>, vector<Piece*>>> newMoves{};
@@ -122,6 +122,7 @@ void Piece::dirUpdateMoves(int type) {
 		attacks = newAttacks;
 		forced = nullptr;
 	}*/
+	if (updated) return;
 	moves = vector<pair<int,int>>{};
 	attacks = vector<pair<int,int>>{};
 	// protects = vector<pair<int,int>>{};
@@ -205,18 +206,27 @@ int Piece::move(int col, int row){
 }
 
 // update moves
-void Piece::basicUpdateStatus() {
+void Piece::normalStatusUpdate() {
     updateMovePossibilities();	
 }
 
 // return true if this piece is checking the enemy king
-bool Piece::kingCheck() {
+/*bool Piece::kingCheck() {
 	return checkRoute.size() != 0;
-}
+}*/
 
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos){
 	return move(pos.first, pos.second) == 2;
+}
+
+
+// getter
+vector<pair<int,int>> Piece::getMoves(){
+	return moves;
+}
+vector<pair<int,int>> Piece::getAttacks(){
+	return attacks;
 }
 
 
@@ -230,6 +240,7 @@ Piece *mostVal(vector<Piece *> attackables){
 	return res;
 } 
 
+// true if the position is not out of the board
 bool validPos(pair<int, int> pos){
 	return !(pos.first >= 8 || pos.second >= 8 || pos.first < 0 || pos.second < 0);
 }
