@@ -143,15 +143,15 @@ void Piece::updateStatus(int type) {
 		for (int j = 0; j < ndir; j += 1){	// loop on all directions
 			// check if out of board
 			pair<int,int>curPos{pos.at(j)}; 
-			if (!validPos(pos.at(j))) dir.at(j) = 0;
+			if (!validPos(curPos)) dir.at(j) = 0;
 			if (dir.at(j) > 0) {
-				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
+				Piece * target = gameBoard->getPiece(curPos.first, curPos.second); // piece on the next position
 				if (dir.at(j) == 2){
 					if(target) {	// if there is a piece on the position
 						if (enemyKing(target)) {
 							// if the piece is the king of the enemy
 							dir.at(j) = 0;
-							attacks.emplace_back(pos.at(j));
+							attacks.emplace_back(curPos);
 							checkRoute = paths.at(j);
 							//notify the other player the king is checked (incompleted)
 							
@@ -161,19 +161,19 @@ void Piece::updateStatus(int type) {
 							// the piece is not king but belongs to enemy
 							// if (!forced) attacks.emplace_back(pos.at(j));
 							dir.at(j) -= 1;
-							paths.at(j).emplace_back(pos.at(j));
+							paths.at(j).emplace_back(curPos);
 							firstEncounter.at(j) = target;
 						}
 						else {// blocked by mate, path stops
 							dir.at(j) = 0;
 							// add this to target's guard field
 							// problem: how to remove it when this is no more the guard of the target?
-							protects.emplace_back(pos.at(j));
+							protects.emplace_back(curPos);
 						}
 					}
 					else {	//  no piece on that position
-							if (!forced) moves.emplace_back(pair{pos.at(j), dScan(pos.at(j), type)});
-							paths.at(j).emplace_back(pos.at(j));
+							if (!forced) moves.emplace_back(pair{curPos, dScan(curPos, type)});
+							paths.at(j).emplace_back(curPos);
 					} 	// no block
 				}
 				else if (dir.at(j) == 1) {	// has past a enemy piece
@@ -182,7 +182,7 @@ void Piece::updateStatus(int type) {
 						if (enemyKing(target)) {
 							// the piece will check the king if there is no block, but there is 
 							checkRoute = paths.at(j);
-							firstEncounter[j]->forcedBy(this);
+							firstEncounter[j]->forcedBy(this);  // will update the status of the forced piece.
 						}
 						dir.at(j) == 0;	
 					}
