@@ -5,7 +5,7 @@
 #include "player.h"
 using namespace std;
 
-Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1} {}
+Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1}, updateStatus{0}, DNA{0} {}
 
 void Piece::setPos(int col, int row) {
 	x = col;

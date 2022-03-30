@@ -20,6 +20,7 @@ class Piece {
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
+        int DNA;                                       // can't think of a name yet, but different in each type pieces. for castle, en passant etc.
         std::string representation;
         Board* gameBoard;
         Player* enemy;
