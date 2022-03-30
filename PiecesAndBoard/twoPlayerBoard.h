@@ -3,7 +3,7 @@
 #include "board.h"
 class Piece;
 
-// owns-a piece (OWNS A RELATIONSHIP)
+
 class twoPlayerBoard : public Board {
 	Piece* board[8][8]; // array of piece pointers
 	

@@ -11,6 +11,7 @@ class Player {
         int side; // 0 for white and 1 for black
         Board* gameBoard;
         Piece * king;            // may change type to King
+        // PLAYER OWNS THE PIECES
         // the player's pieces
         std::vector<Piece*> pieces; 
         // the pieces not on the board
