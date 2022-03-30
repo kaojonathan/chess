@@ -12,7 +12,7 @@ class XWindow {
 	 XWindow(int width=500, int height=500);  // Constructor; displays the window.
   ~XWindow();                              // Destructor; destroys the window.
   XWindow(const XWindow&) = delete;
-  //XWindow&operator=(const XWindow&) = delete;
+  XWindow&operator=(const XWindow&) = delete;
 
   // Available colours.
   enum {White=0, Black, Red, Green, Blue, Cyan, Yellow, Magenta, Orange, Brown};

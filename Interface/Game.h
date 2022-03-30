@@ -22,6 +22,8 @@ class Game {
     Player *p2; // black
 
     public:
+        Game();
+        ~Game();
         void init(); // starts a game window
         void handleEvents();
         void update();
