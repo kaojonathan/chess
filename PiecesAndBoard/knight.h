@@ -19,7 +19,7 @@ public:
     Knight(int side, int x, int y, Board * board);
     void nUpdate() override;
     // get a list of positions that he knight at (col, row) can move to, positions cannot be out of bound 
-    vector<pair<int,int>> getPos(int col, int row);
+    std::vector<std::pair<int,int>> getPos(int col, int row);
 
 /*
     // for the computer level 2 and 3 class

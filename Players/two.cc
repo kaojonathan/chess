@@ -1,5 +1,5 @@
 #include "two.h"
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 #include <utility>
 using namespace std;
 

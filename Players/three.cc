@@ -1,5 +1,5 @@
 #include "three.h"
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 #include <utility>
 using namespace std;
 
@@ -15,7 +15,7 @@ void Three::move()
 		for (int j = 0; j < opponent->getPieces().size(); ++j)
 		{
 
-			if (opponent->getPieces()[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()}))
+			if (opponent->getPieces()[j]->canAttack(std::pair<int, int>{pieces[i]->getX(), pieces[i]->getY()}))
 			{ // if an enemy piece is about to capture it
 
 				for (int k = 0; k < pieces[i]->getMoves().size(); ++k)

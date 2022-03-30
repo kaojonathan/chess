@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Game.h"
+#include "Interface/Game.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
 	}
 
 	game->quit();
-
+	delete game;
 	return 0;
 
 

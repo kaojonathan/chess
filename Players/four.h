@@ -8,9 +8,8 @@ class Board;
 class Four : public Computer {
 
 	void move() override;
+public:
 	Four(int side, int level);
-	~Four();
-
 };
 
 

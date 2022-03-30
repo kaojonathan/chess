@@ -41,9 +41,6 @@ class Piece {
         // return all attackable enemy piece if the piece is pos
         virtual std::vector<Piece *> attackable(std::pair<int, int> at) = 0;
 
-        // make this piece forced by a piece
-        virtual void isForcedBy(Piece *);
-
          // return false if the position is the not valid one the piece can go
         bool validPos(std::pair<int,int>);
 

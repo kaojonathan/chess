@@ -1,7 +1,7 @@
 #include "four.h"
 #include "computer.h"
 #include <utility>
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 using namespace std;
 
 Four::Four(int side, int level) : Computer{ side, level } {}
@@ -17,7 +17,7 @@ void Four::move()
 	{
 		for (int j = 0; j < opponent->getPieces().size(); ++j) {
 
-			if (opponent->getPieces()[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
+			if (opponent->getPieces()[j]->canAttack(std::pair<int, int>{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
 
 
 			for (int k = 0; k < pieces[i]->getMoves().size(); ++k) {

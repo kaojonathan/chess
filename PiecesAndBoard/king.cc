@@ -15,6 +15,7 @@ King::King(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 King::~King() {
 }
 
+
 // return a vector of Piece that can be attacked by King if king is at position at
 vector<Piece *> King::attackable(pair<int, int> at){
 	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);	// all spaces around it
@@ -29,7 +30,14 @@ vector<Piece *> King::attackable(pair<int, int> at){
 			res.emplace_back(target);
 		}
 	}
+<<<<<<< HEAD
 	return res;
+=======
+
+	return res;
+
+
+>>>>>>> 3af86c7f85ca405a58971bbcffe14f119919c7fd
 }
 
 
@@ -43,7 +51,7 @@ void King::nUpdate() {
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
 		if (target){
 			if (side != target->getSide()) {
-				targets.emplace_back(target); 
+				targets.emplace_back(pos); 
 			}
 		}
 		else moves.emplace_back(pos);
