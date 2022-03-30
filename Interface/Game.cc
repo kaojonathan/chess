@@ -372,7 +372,11 @@ void Game::handleEvents() {
 						string to;
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to)) { 
-							p1->move(from[0], from[1], to[0], to[1]);
+							int status = p1->move(from[0], from[1], to[0], to[1]);
+							if (status == 0) {
+								cout << "Illegal move attempted. Please try another." << end;
+								return;
+							}
 						} else {
 							cout << "Unrecognized move. Please re-enter." << endl;
 							return;
@@ -389,7 +393,11 @@ void Game::handleEvents() {
 						string to;
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to)) { 
-							p2->move(from[0], from[1], to[0], to[1]);
+							int status = p2->move(from[0], from[1], to[0], to[1]);
+							if (status == 0) {
+								cout << "Illegal move attempted. Please try another." << end;
+								return;
+							}
 						} else {
 							cout << "Unrecognized move. Please re-enter." << endl;
 							return;
