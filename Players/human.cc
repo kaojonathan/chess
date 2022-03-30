@@ -13,6 +13,7 @@ Human::~Human(){}
 */
 int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow) {
     /*
+    check if player owns the piecse
     let p be the piece pointer at pos1
         status = p.move(pos1)
         return status
