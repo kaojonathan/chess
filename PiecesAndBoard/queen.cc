@@ -18,6 +18,7 @@ Queen::Queen(bool isWhite) : Piece{ isWhite } {
 
 // normal status update
 void Queen::nUpdate()  {
+	updateStatus = 1;
 	dirScan(3);
 }
 

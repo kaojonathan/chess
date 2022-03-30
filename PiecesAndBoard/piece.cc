@@ -107,21 +107,8 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 	return attackables;
 }
 
-// updating the moves, targets; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all those fields are empty). Used for Bishop, Rook and Queen only. 
+// updating the moves, targets; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all status fields are initially empty). Used for Bishop, Rook and Queen only. 
 void Piece::dirScan(int type) {
-	// check if the piece cannot move because the enemy piece threaten
-	/*if (forced) {
-		vector<pair<pair<int,int>, vector<Piece*>>> newMoves{};
-		vector<pair<int,int>> newtargets{};
-		for (auto possibleMove : forced->getCheckRoute()) {
-			int c = move(possibleMove.first, possibleMove.second);
-			if (c == 1) newMoves.emplace_back(pair{possibleMove, dScan(possibleMove, type)});
-			else if (c == 2) newtargets.emplace_back(possibleMove);
-		}	// the piece can move only if the move still block the opposite piece from checking.
-		moves = newMoves;
-		targets = newtargets;
-		forced = nullptr;
-	}*/
 	moves = vector<pair<int,int>>{};
 	targets = vector<pair<int,int>>{};
 	// protects = vector<pair<int,int>>{};
@@ -214,7 +201,7 @@ void Piece::fUpdate(Piece * enemyPiece){
 	targets = newtargets;
 }
 
-// update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king. Doesn't check if it is forced by other. 
+// update status field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king.
 void Piece::statusUpdate() {
 	if (updateStatus == 0) nUpdate();
 }

@@ -1,5 +1,8 @@
 #include "player.h"
 #include "board.h"
+#include <utility>
+
+using namespace std;
 
 Player::Player(int side, int type) : side{side}, type{type} {}
 
@@ -32,5 +35,11 @@ void Player::unsetStatus(){
     for (auto piece : pieces) piece->needsUpdate();
 }
 
-
+// determine any piece of Player can attack position pos
+bool Player::canAttack(pair<int, int> pos){
+    for(auto piece : pieces) {
+        if (piece->canAttack(pos)) return true;
+    }
+    return false;
+}
 

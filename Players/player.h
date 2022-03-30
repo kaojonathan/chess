@@ -1,6 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 #include <vector>
+#include <utility>
 
 class Piece;
 class Board;
@@ -34,6 +35,8 @@ class Player {
         }
 
         void removePiece(std::pair<int,int>); // removes the piece in position (x, y) and places it in inactivePieces.
+
+        bool canAttack(std::pair<int, int>);
 
         // set opponentCheck to the Piece 
         void kingCheckedBy(Piece *);

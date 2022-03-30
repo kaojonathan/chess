@@ -85,7 +85,7 @@ class Piece {
         
         // for Pieces that is not king, set the forced field into the given pieces, for King, update the excape route of the king.
         void forcedBy(Piece *);
-        // basic update moves and attacks, not consider if the piece is forced or not, won't change the updated piece
+        // update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king.
         void statusUpdate();
 };
    

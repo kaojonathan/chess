@@ -3,6 +3,7 @@
 #include <utility>
 #include "king.h"
 #include "board.h"
+#include "player.h"
 using namespace std;
 
 
@@ -40,21 +41,16 @@ void King::updateMovePossibilities() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y, 1, 3);
 	for (auto pos : possibleMoves){
 		// basic valid position
-		if (pos.second > 3 || pos.second < 0 || pos.first < 0 || pos.second > 8){
+		if (!validPos(pos) || enemy->canAttack(pos)){
 			continue;
-		}
-		// if pos not in the attack range of the enemy (not implemented)
+		} // if pos not in the board or in the attack range of the enemy (not implemented)
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
-		if (false){ 
-			// not implemented, if this position can be attacked by an enemy
-
-		}
-		else if (target){
+		if (target){
 			if (side != target->getSide()) {
-				attacks.emplace_back(target); 
+				targets.emplace_back(target); 
 			}
 		}
-		else moves.emplace_back(pair{pos, attackable(pos)}); 
+		else moves.emplace_back(pos); 
 	}
 }
 
