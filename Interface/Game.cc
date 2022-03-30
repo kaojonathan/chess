@@ -22,6 +22,7 @@ Game::Game() : window{new XWindow},
 			   score{new Score},
 			   isRunning{true} {
     mode = "menu";
+	whitemoves = true;
 }
 
 Game::~Game() {
@@ -253,7 +254,6 @@ void Game::handleEvents() {
 	}
 	stringstream linestream(line);
 	string command;
-    bool whitemoves = true;
     linestream >> command; // read a command
 
 	// initial mode
@@ -355,9 +355,10 @@ void Game::handleEvents() {
 			return;
 		}
     } else if (mode == "setup") {
+		
 		cout << "Current Board Configuration:" << endl;
 		this->update();
-		
+
 		if (command == "+") {
 			string piece;
 			string position;
@@ -388,26 +389,23 @@ void Game::handleEvents() {
 			return;
 		}
 		else if (command == "=") {
-
 			string color;
-
 			if (cin >> color);
-
 			if (color == "white") {
-
-				// white's turn to go next
-
+				whitemoves = true;
 			}
 			else if (color == "black") {
-
-				// black's turn to go next
-
+				whitemoves = false;
+			} else {
+				cout << "Invalid color, please try again." << endl;
 			}
+			return;
 		}
 		else if (command == "done") {
 			// verify the board
 			if (board->verify()) {
 					mode = "game"; // we are now in the game mode
+					cout << "Game-setup Complete!" << endl;
 			}
 			else {
 				cout << "ERROR: Setup conditions are not satisfied." << endl;
