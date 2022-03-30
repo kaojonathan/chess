@@ -190,9 +190,8 @@ void Game::displayOrigSetup() {
 
 // This program is the command interpreter for the chess game.
 
-void Game::init() {
-
-	// draws the initial board
+// draws the initial board
+void Game::init() {	
 	for (int i = 1; i <= 8; ++i) {
 		for (int j = 1; j <= 8; ++j) {
 			if ((i + j) % 2) {
@@ -204,30 +203,23 @@ void Game::init() {
 			}
 		}
 	}
-
 	window->drawLine(50, 50, 450, 50);
 	window->drawLine(50, 50, 50, 450);
 	window->drawLine(450, 450, 450, 50);
 	window->drawLine(450, 450, 50, 450);
-
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ 'a' + i - 1 };
 		window->drawString(22 + (50 * i), 40, s);
 	}
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ 'a' + i - 1 };
 		window->drawString(22 + (50 * i), 470, s);
 	}
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ i + '0' };
 		window->drawString(35, 27 + (50 * (9 - i)), s);
 		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
-
-
 }
 
 
@@ -236,10 +228,20 @@ void Game::update() {
 	// display text
 	board->printBoard();
 	// update window grphics here...
+	int totalMoves = history.size();
+	while (tracked < totalMoves) {
+		// update board using history[tracked]
+		// this way entire board doesnt get redrawn
 
-
+		
+		++tracked;
+	}
 }
 
+// resets the board to start a new game
+void Game::reset() {
+
+}
 
 // handles a single command at a time
 // game, move, setup, or resign
@@ -355,7 +357,7 @@ void Game::handleEvents() {
 			return;
 		}
     } else if (mode == "setup") {
-		
+
 		cout << "Current Board Configuration:" << endl;
 		this->update();
 
