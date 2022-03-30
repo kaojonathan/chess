@@ -27,7 +27,7 @@ class Piece {
         virtual void nUpdate() = 0;
 
         // updates possible moves and attack targets for a forced Piece
-        virtual void fUpdate();
+        virtual void fUpdate(Piece*);
 
         virtual void updateForced() = 0;
 
@@ -51,7 +51,10 @@ class Piece {
         int getX();
         int getY();
         int getSide();
-        void setPos(int col, int row);  // make sure row first or column first
+        std::vector<std::pair<int,int>> getMoves();
+        std::vector<std::pair<int,int>> getTargets();
+        void setPos(int col, int row);  // make sure col first and row second
+        void needsUpdate();
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
         int move(int col, int row);
@@ -84,9 +87,6 @@ class Piece {
         void forcedBy(Piece *);
         // basic update moves and attacks, not consider if the piece is forced or not, won't change the updated piece
         void normalStatusUpdate();
-
-        std::vector<std::pair<int,int>> getMoves();
-        std::vector<std::pair<int,int>> getTargets();
 };
    
 // get the most valuable Piece

@@ -12,33 +12,27 @@ void Piece::setPos(int col, int row) {
 	y = row;
 }
 
-string Piece::getRep() {
-	return representation;
-}
+string Piece::getRep() { return representation; }
 
-void Piece::attach(Board* board) {
-	gameBoard = board;
-}
+void Piece::attach(Board* board) { gameBoard = board; }
 
 // 0: white, 1: black
-int Piece::getSide() {
-	return side;
-}
+int Piece::getSide() { return side; }
 
-int Piece::getX() {
-	return x;
-}
+int Piece::getX() { return x; }
 
-int Piece::getY() {
-	return y;
-}
+int Piece::getY() { return y; }
 
 
 vector<pair<int,int>> Piece::getCheckRoute() { return checkRoute; }
 
-int Piece::getVal(){
-	return value;
-}
+int Piece::getVal(){ return value; }
+
+vector<pair<int,int>> Piece::getMoves(){ return moves; }
+
+vector<pair<int,int>> Piece::getTargets(){ return targets; }
+
+void Piece::needsUpdate() { updateStatus = 0; }
 
 bool Piece::isKing(){
 	return representation == "k" || representation == "K";
@@ -96,7 +90,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 			if (dir.at(j) > 0) {
 				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (target) {	// if there is a piece
-					if (target->getSide() != side) {// put the enemy piece into attackables
+					if (target->getSide() != side) {	// put the enemy piece into attackables
 						attackables.emplace_back(target);
 					}
 					dir.at(j) = 0;	// this path ends
@@ -200,6 +194,20 @@ int Piece::move(int col, int row){
 	return 0;
 }
 
+// update a piece that is forced by enemPiece
+void Piece::fUpdate(Piece * enemyPiece){
+	vector<pair<int,int>> newMoves{};
+	vector<pair<int,int>> newtargets{};
+	for (auto possibleMove : forced->getCheckRoute()) {
+		int c = move(possibleMove.first, possibleMove.second);
+		if (c == 1) newMoves.emplace_back(pair{possibleMove});
+		else if (c == 2) newtargets.emplace_back(possibleMove);
+	}	// the piece can move only if the move still block the opposite piece from checking.
+		moves = newMoves;
+		targets = newtargets;
+		forced = nullptr;
+}
+
 // update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king. Doesn't check if it is forced by other. 
 void Piece::normalStatusUpdate() {
 	if (updateStatus == 0) nUpdate();
@@ -209,7 +217,7 @@ void Piece::normalStatusUpdate() {
 void Piece::forcedBy(Piece * enemyPiece) {
 	forced = enemyPiece;
 	if (updateStatus == 0) nUpdate();
-	if (updateStatus == 1) fUpdate();
+	if (updateStatus == 1) fUpdate(enemyPiece);
 }
 
 
@@ -221,15 +229,6 @@ void Piece::forcedBy(Piece * enemyPiece) {
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos){
 	return move(pos.first, pos.second) == 2;
-}
-
-
-// getter
-vector<pair<int,int>> Piece::getMoves(){
-	return moves;
-}
-vector<pair<int,int>> Piece::getTargets(){
-	return targets;
 }
 
 
