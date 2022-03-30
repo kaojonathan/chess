@@ -14,17 +14,20 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        bool updated;
+        int updateStatus; // 0: not update, 1: normal update, 2: forced update
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
-        std::vector<std::pair<int,int>> attacks;            // contains a list of position of enemy that the piece can capture.
+        std::vector<std::pair<int,int>> targets;            // contains a list of position of enemy that the piece can capture.
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
         Board* gameBoard;
         Player* enemy;
-        // updates possible moves, not consider if the piece is forced or not
-        virtual void updateMovePossibilities() = 0;
+        // updates possible moves and attack targets, not consider if the piece is forced or not
+        virtual void nUpdate() = 0;
+
+        // updates possible moves and attack targets for a forced Piece
+        virtual void fUpdate();
 
         virtual void updateForced() = 0;
 
@@ -83,7 +86,7 @@ class Piece {
         void normalStatusUpdate();
 
         std::vector<std::pair<int,int>> getMoves();
-        std::vector<std::pair<int,int>> getAttacks();
+        std::vector<std::pair<int,int>> getTargets();
 };
    
 // get the most valuable Piece
