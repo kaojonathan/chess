@@ -157,7 +157,7 @@ void twoPlayerBoard::print()
 		{
 			if (board[i][j] == nullptr)
 			{ // empty tile
-				if ((i + j) % 2)
+				if ((i + j) % 1)
 				{ // if sum is odd it's a white tile
 					cout << ' ';
 				}
@@ -169,7 +169,7 @@ void twoPlayerBoard::print()
 			}
 			else
 			{ // piece is on it
-				board[i][j]->getRep();
+				cout << board[i][j]->getRep();
 			}
 		}
 		cout << endl;
@@ -178,7 +178,9 @@ void twoPlayerBoard::print()
 		 << "  ";
 	for (int i = 0; i < 8; ++i)
 	{
-		cout << 'a' + i;
+
+		char s = 'a' + i;
+		cout << s;
 	}
 	cout << endl;
 }
