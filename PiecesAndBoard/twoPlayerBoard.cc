@@ -334,3 +334,6 @@ void twoPlayerBoard::removePiece(string position)
 	}
 }
 
+void twoPlayerBoard::set(int x, int y, Piece * p) {
+	board[y][x] = p;
+}

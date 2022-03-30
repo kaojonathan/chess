@@ -21,6 +21,11 @@ public:
 	~twoPlayerBoard(); // needs implementation
 	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
 
+
+
+	// setter
+	void set(int x, int y, Piece * p);
+
 };
 
 #endif
