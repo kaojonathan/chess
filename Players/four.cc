@@ -15,12 +15,27 @@ void Four::move()
 
 	for (int i = 0; i < pieces.size(); ++i)
 	{
-		for (int j = 0; j < enemypieces.size(); ++j) {
+		for (int j = 0; j < opponent->getPieces().size(); ++j) {
 
-			if (enemypieces[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
+			if (opponent->getPieces()[j]->canAttack(std::pair{pieces[i]->getX(), pieces[i]->getY()})) { // if an enemy piece is about to capture it
 
 
-			// batchest!!!
+			for (int k = 0; k < pieces[i]->getMoves().size(); ++k) {
+
+				if (!opponent->getPieces()[j]->canAttack(pieces[i]->getMoves()[k])) { // if the same enemy piece can't attack a current piece's move position 
+
+
+
+					gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second); // move to that position
+
+					return;
+
+
+				}
+
+
+
+			}
 
 
 
@@ -101,7 +116,7 @@ void Four::move()
 		if (pieces[pieceIndex]->move(i, j) != 0)
 		{ // if the move is valid then move it
 			gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
-			madeMove == true;
+			madeMove = true;
 		}
 		// otherwise keep looping (might be inefficient)
 	}

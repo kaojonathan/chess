@@ -12,6 +12,8 @@ class Player {
         Piece * king;            // may change type to King
         // the player's pieces
         std::vector<Piece*> pieces; 
+        // the pieces not on the board
+        std::vector<Piece*> inactivePieces; 
         // the opponent
         Player *opponent;
         Piece *opponentCheck;
@@ -27,6 +29,11 @@ class Player {
         int getType() {
             return type;
         }
+        std::vector<Piece*> getPieces() {
+            return pieces;
+        }
+
+        void removePiece(std::pair<int,int>); // removes the piece in position (x, y) and places it in inactivePieces.
 
         // set opponentCheck to the Piece 
         void kingCheckedBy(Piece *);
