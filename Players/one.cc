@@ -14,8 +14,19 @@ void One::move()
 		int j = rand() % 8; // randomly give us a y-coordinate
 				if (pieces[pieceIndex]->move(i, j) != 0)
 				{ // if the move is valid then move it
+
+
+					if (pieces[pieceIndex]->move(i, j) == 2) {
+						opponent->removePiece(std::pair<int, int> {i, j});
+					}
+
 					gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
-					madeMove == true;
+
+
+
+					madeMove = true;
+
+
 				}
 		
 		// otherwise keep looping (might be inefficient)

@@ -12,33 +12,27 @@ void Piece::setPos(int col, int row) {
 	y = row;
 }
 
-string Piece::getRep() {
-	return representation;
-}
+string Piece::getRep() { return representation; }
 
-void Piece::attach(Board* board) {
-	gameBoard = board;
-}
+void Piece::attach(Board* board) { gameBoard = board; }
 
 // 0: white, 1: black
-int Piece::getSide() {
-	return side;
-}
+int Piece::getSide() { return side; }
 
-int Piece::getX() {
-	return x;
-}
+int Piece::getX() { return x; }
 
-int Piece::getY() {
-	return y;
-}
+int Piece::getY() { return y; }
 
 
 vector<pair<int,int>> Piece::getCheckRoute() { return checkRoute; }
 
-int Piece::getVal(){
-	return value;
-}
+int Piece::getVal(){ return value; }
+
+vector<pair<int,int>> Piece::getMoves(){ return moves; }
+
+vector<pair<int,int>> Piece::getTargets(){ return targets; }
+
+void Piece::needsUpdate() { updateStatus = 0; }
 
 bool Piece::isKing(){
 	return representation == "k" || representation == "K";
@@ -96,7 +90,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 			if (dir.at(j) > 0) {
 				Piece * target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
 				if (target) {	// if there is a piece
-					if (target->getSide() != side) {// put the enemy piece into attackables
+					if (target->getSide() != side) {	// put the enemy piece into attackables
 						attackables.emplace_back(target);
 					}
 					dir.at(j) = 0;	// this path ends
@@ -107,24 +101,23 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 	return attackables;
 }
 
-// updating the moves, attacks; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all those fields are empty). Used for Bishop, Rook and Queen only. 
+// updating the moves, targets; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all those fields are empty). Used for Bishop, Rook and Queen only. 
 void Piece::dirScan(int type) {
 	// check if the piece cannot move because the enemy piece threaten
 	/*if (forced) {
 		vector<pair<pair<int,int>, vector<Piece*>>> newMoves{};
-		vector<pair<int,int>> newAttacks{};
+		vector<pair<int,int>> newtargets{};
 		for (auto possibleMove : forced->getCheckRoute()) {
 			int c = move(possibleMove.first, possibleMove.second);
 			if (c == 1) newMoves.emplace_back(pair{possibleMove, dScan(possibleMove, type)});
-			else if (c == 2) newAttacks.emplace_back(possibleMove);
+			else if (c == 2) newtargets.emplace_back(possibleMove);
 		}	// the piece can move only if the move still block the opposite piece from checking.
 		moves = newMoves;
-		attacks = newAttacks;
+		targets = newtargets;
 		forced = nullptr;
 	}*/
-	if (updated) return;
 	moves = vector<pair<int,int>>{};
-	attacks = vector<pair<int,int>>{};
+	targets = vector<pair<int,int>>{};
 	// protects = vector<pair<int,int>>{};
 	checkRoute = vector<pair<int,int>>{};
 
@@ -146,7 +139,7 @@ void Piece::dirScan(int type) {
 						if (enemyKing(target)) {
 							// if the piece is the king of the enemy
 							dirs.at(j) = 0;
-							attacks.emplace_back(curPos);
+							targets.emplace_back(curPos);
 							checkRoute = paths.at(j);
 							//notify the other player the king is checked
 							// in Player class, need a field Piece * enemyCheck and a set method checkBy(Piece) 
@@ -155,7 +148,7 @@ void Piece::dirScan(int type) {
 						else if (target->getSide() != side){
 							// the piece is not king but belongs to enemy
 							dirs.at(j) -= 1;
-							attacks.emplace_back(pos.at(j));
+							targets.emplace_back(pos.at(j));
 							paths.at(j).emplace_back(curPos);
 							firstEncounter.at(j) = target;
 						}
@@ -172,9 +165,9 @@ void Piece::dirScan(int type) {
 					if (target) {
 						// meet the second piece
 						if (enemyKing(target)) {
-							// the piece will check the king if there is no block, but there is 
+							// will check the king the enemy piece here moves.
 							checkRoute = paths.at(j);
-							firstEncounter.at(j)->forcedBy(this);  // will update the status of the forced piece.
+							firstEncounter.at(j)->forcedBy(this);  // update the status of the forced piece.
 						}
 						dirs.at(j) == 0;	
 					}
@@ -187,10 +180,6 @@ void Piece::dirScan(int type) {
 	}
 }
 
-void Piece::forcedBy(Piece * enemyPiece) {
-	forced = enemyPiece;
-}
-
 // return the validity of an attempt to move:
 //  0: not valid
 //	1: valid move
@@ -199,16 +188,38 @@ int Piece::move(int col, int row){
 	for (auto mv : moves) {
 		if (mv.first == col && mv.first == row) return 1;
 	}
-	for (auto pos : attacks){
+	for (auto pos : targets){
 		if (pos.first = col && pos.second == row) return 2;
 	}
 	return 0;
 }
 
-// update moves
-void Piece::normalStatusUpdate() {
-    updateMovePossibilities();	
+// update a piece that is forced by enemPiece
+void Piece::fUpdate(Piece * enemyPiece){
+	vector<pair<int,int>> newMoves{};
+	vector<pair<int,int>> newtargets{};
+	for (auto possibleMove : forced->getCheckRoute()) {
+		int c = move(possibleMove.first, possibleMove.second);
+		if (c == 1) newMoves.emplace_back(pair{possibleMove});
+		else if (c == 2) newtargets.emplace_back(possibleMove);
+	}	// the piece can move only if the move still block the opposite piece from checking.
+		moves = newMoves;
+		targets = newtargets;
+		forced = nullptr;
 }
+
+// update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king. Doesn't check if it is forced by other. 
+void Piece::normalStatusUpdate() {
+	if (updateStatus == 0) nUpdate();
+}
+
+// update moves and targets field of a piece that is forced by enemyPiece
+void Piece::forcedBy(Piece * enemyPiece) {
+	forced = enemyPiece;
+	if (updateStatus == 0) nUpdate();
+	if (updateStatus == 1) fUpdate(enemyPiece);
+}
+
 
 // return true if this piece is checking the enemy king
 /*bool Piece::kingCheck() {
@@ -218,15 +229,6 @@ void Piece::normalStatusUpdate() {
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos){
 	return move(pos.first, pos.second) == 2;
-}
-
-
-// getter
-vector<pair<int,int>> Piece::getMoves(){
-	return moves;
-}
-vector<pair<int,int>> Piece::getAttacks(){
-	return attacks;
 }
 
 

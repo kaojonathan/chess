@@ -14,17 +14,20 @@ class Piece {
         int y;
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
-        bool updated;
+        int updateStatus; // 0: not update, 1: normal update, 2: forced update
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
-        std::vector<std::pair<int,int>> attacks;            // contains a list of position of enemy that the piece can capture.
+        std::vector<std::pair<int,int>> targets;            // contains a list of position of enemy that the piece can capture.
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
         std::string representation;
         Board* gameBoard;
         Player* enemy;
-        // updates possible moves, not consider if the piece is forced or not
-        virtual void updateMovePossibilities() = 0;
+        // updates possible moves and attack targets, not consider if the piece is forced or not
+        virtual void nUpdate() = 0;
+
+        // updates possible moves and attack targets for a forced Piece
+        virtual void fUpdate(Piece*);
 
         virtual void updateForced() = 0;
 
@@ -48,7 +51,10 @@ class Piece {
         int getX();
         int getY();
         int getSide();
-        void setPos(int col, int row);  // make sure row first or column first
+        std::vector<std::pair<int,int>> getMoves();
+        std::vector<std::pair<int,int>> getTargets();
+        void setPos(int col, int row);  // make sure col first and row second
+        void needsUpdate();
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
         int move(int col, int row);
@@ -81,9 +87,6 @@ class Piece {
         void forcedBy(Piece *);
         // basic update moves and attacks, not consider if the piece is forced or not, won't change the updated piece
         void normalStatusUpdate();
-
-        std::vector<std::pair<int,int>> getMoves();
-        std::vector<std::pair<int,int>> getAttacks();
 };
    
 // get the most valuable Piece

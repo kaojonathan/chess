@@ -19,7 +19,7 @@ class Queen : public Piece {
     
 public:
     Queen(bool isWhite);
-    void updateMovePossibilities() override;
+    void nUpdate() override;
     std::vector<Piece *> attackable(std::pair<int, int>) override;
 };
 
