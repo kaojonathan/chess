@@ -1,6 +1,6 @@
 #include "player.h"
 #include "board.h"
-#include "piece.h
+#include "piece.h"
 #include <utility>
 
 using namespace std;

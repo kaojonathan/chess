@@ -340,26 +340,37 @@ void Game::handleEvents() {
 		}
 		else if (command == "move") {
 			// if the command is "move"
+			int end;
 			p1->unsetStatus();
 			p2->unsetStatus();
-			p1->checkStatus();
-			p2->checkStatus();
-			// call end()?
-			if (p1->type == 0) {
-				// human
-				string from;
-				string to;
-				linestream >> from >> to;
-				if (isValidPosition(from) && isValidPosition(to)) { 
-				
+			if (whitemoves) {
+				end = p1->checkStatus();
+			} else {
+				end = p2->checkStatus();
+			}
+			if (end == 1) {
+				// the player that is about to move
+				// is checkmated
+			} else if (end ==2) {
+				// stalemate
+			}
+			if (whitemoves) {
+				if (p1->type == 0) {
+					// human
+					string from;
+					string to;
+					linestream >> from >> to;
+					if (isValidPosition(from) && isValidPosition(to)) { 
+						p1->move(from[0], from[1], to[0], to[1]);
+					} else {
+						cout << "Unrecognized move. Please re-enter." << endl;
+						return;
+					}
 				} else {
-					cout << "Unrecognized move. Please re-enter." << endl;
+					// computer
+					p1->move(0,0,0,0);
 					return;
 				}
-			} else {
-				// computer
-				p1->move(0,0,0,0);
-				return;
 			}
 		} else if (command == "setup") {
 			cout << "ERROR: setup can only be called before a game has started." << endl;
