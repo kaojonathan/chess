@@ -202,6 +202,7 @@ int Piece::move(int col, int row){
 
 // update a piece that is forced by enemPiece
 void Piece::fUpdate(Piece * enemyPiece){
+	updateStatus = 2;
 	vector<pair<int,int>> newMoves{};
 	vector<pair<int,int>> newtargets{};
 	for (auto possibleMove : forced->getCheckRoute()) {
@@ -209,20 +210,19 @@ void Piece::fUpdate(Piece * enemyPiece){
 		if (c == 1) newMoves.emplace_back(pair{possibleMove});
 		else if (c == 2) newtargets.emplace_back(possibleMove);
 	}	// the piece can move only if the move still block the opposite piece from checking.
-		moves = newMoves;
-		targets = newtargets;
-		forced = nullptr;
+	moves = newMoves;
+	targets = newtargets;
 }
 
 // update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king. Doesn't check if it is forced by other. 
-void Piece::normalStatusUpdate() {
+void Piece::statusUpdate() {
 	if (updateStatus == 0) nUpdate();
 }
 
 // update moves and targets field of a piece that is forced by enemyPiece
 void Piece::forcedBy(Piece * enemyPiece) {
 	forced = enemyPiece;
-	normalStatusUpdate();
+	statusUpdate();
 	if (updateStatus == 1) fUpdate(enemyPiece);
 }
 
