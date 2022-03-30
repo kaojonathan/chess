@@ -6,14 +6,9 @@
 using namespace std;
 
 
-Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
+Pawn::Pawn(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 1; // change after the first move?
-	if (isWhite) {
-		representation = "P";
-	}
-	else {
-		representation = "p";
-	}
+	representation = (side == 0) ? "P" : "p";
 }
 
 int Pawn::frDir(){ return (side == 0) ? 1 : -1; }

@@ -4,17 +4,12 @@
 #include <iostream>
 #include "knight.h"
 #include "board.h"
-#include "player.h"
+#include "../Players/player.h"
 using namespace std;
 
-Knight::Knight(bool isWhite) : Piece{ isWhite } {
+Knight::Knight(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 3;
-	if (isWhite) {
-		representation = "N";
-	}
-	else {
-		representation = "n";
-	}
+	representation = (side == 0) ? "N" : "n";
 }
 
 // return all positions the Knight at (col, row) can move to, not include positions out of bound 
@@ -23,11 +18,11 @@ vector<pair<int, int>> Knight::getPos(int col, int row) {
 	for (int i = 1; i <= 2; i += 1){
 		pair<int,int>curPos{col+i,row+(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
-		pair<int,int>curPos{col+i,row-(3-i)};
+		curPos = pair<int,int>{col+i,row-(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
-		pair<int,int>curPos{col-i,row-(3-i)};
+		curPos = pair<int,int>{col-i,row-(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
-		pair<int,int>curPos{col-i,row+(3-i)};
+		curPos = pair<int,int>{col-i,row+(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
 	}
 	return res;

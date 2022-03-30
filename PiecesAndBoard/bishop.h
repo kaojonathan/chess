@@ -14,7 +14,7 @@ class Bishop : public Piece {
     */
 public:
     void nUpdate() override;
-    Bishop(bool isWhite);
+    Bishop(int side, int x, int y, Board * board);
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
 };
 

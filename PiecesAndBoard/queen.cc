@@ -6,16 +6,10 @@
 #include "piece.h"
 using namespace std;
 
-Queen::Queen(bool isWhite) : Piece{ isWhite } {
+Queen::Queen(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 9;
-	if (isWhite) {
-		representation = "Q";
-	}
-	else {
-		representation = "q";
-	}
+	representation = (side == 0) ? "Q" : "q";
 }
-
 // normal status update
 void Queen::nUpdate()  {
 	updateStatus = 1;

@@ -5,15 +5,9 @@
 #include "board.h"
 using namespace std;
 
-Rook::Rook(bool isWhite) : Piece{isWhite} {
+Rook::Rook(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 5;
-	if (isWhite) {
-		representation = "R";
-	}
-	else {
-
-		representation = "r";
-	}
+	representation = (side == 0) ? "R" : "r";
 }
 
 // normal status update, assuming it is not forced

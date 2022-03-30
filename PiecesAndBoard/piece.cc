@@ -2,10 +2,12 @@
 #include <vector>
 #include "piece.h"
 #include "board.h"
-#include "player.h"
+#include "../players/player.h"
 using namespace std;
 
-Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1}, updateStatus{0}, DNA{0} {}
+Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, DNA{0} {
+	board->set(x, y, this);
+}
 
 void Piece::setPos(int col, int row) {
 	x = col;

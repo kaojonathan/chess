@@ -6,14 +6,9 @@
 #include "piece.h"
 using namespace std;
 
-Bishop::Bishop(bool isWhite) : Piece{isWhite} {
+Bishop::Bishop(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 3;
-	if (isWhite) {
-		representation = "B";
-	}
-	else {
-		representation = "b";
-	}
+	representation = (side == 0) ? "B" : "b";
 }
 
 

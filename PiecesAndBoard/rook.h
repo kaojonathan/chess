@@ -15,7 +15,7 @@ class Rook : public Piece {
 */
 
 public:
-    Rook(bool isWhite);
+    Rook(int side, int x, int y, Board * board);
     // edit: show be implemented in player/board class, which contain the position of the king and the rook
     /* void castling(); */
     // for the computer level 2 and 3 class

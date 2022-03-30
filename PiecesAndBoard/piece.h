@@ -49,7 +49,7 @@ class Piece {
 
 
     public:
-        Piece(bool isWhite);
+        Piece(int side, int x, int y, Board *);
         int getX();
         int getY();
         int getSide();

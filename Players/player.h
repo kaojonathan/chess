@@ -25,6 +25,8 @@ class Player {
     public:
         Player(int side, int type);
         virtual ~Player();
+        void init(Board *);
+        void claimPieces();
         int move(int oldCol, int oldRow, int newCol, int newRow) { 
             return playerMove(oldCol, oldRow, newCol, newRow);
         }

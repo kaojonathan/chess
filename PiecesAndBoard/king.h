@@ -20,8 +20,8 @@ class King : public Piece {
     /* std::pair<int, int> getCheckCoords() override; */
 
 public:
-    std::vector<Piece *> attackable(std::pair<int, int> at);
-    King(bool isWhite);
+    std::vector<Piece *> attackable(std::pair<int, int> at) override;
+    King(int side, int x, int y, Board * board);
     ~King();
 };
 

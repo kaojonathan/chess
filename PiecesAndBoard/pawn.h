@@ -12,7 +12,7 @@ class Pawn : public Piece {
     // will always be size 1 after we move once!!! (b/c we can't move two squares after)
 
 public:
-    Pawn(bool isWhite);
+    Pawn(int side, int x, int y, Board *);
     int frDir();            // return the forward direction, either 1 or -1 
 
     void prommote();

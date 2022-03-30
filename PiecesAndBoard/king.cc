@@ -3,18 +3,13 @@
 #include <utility>
 #include "king.h"
 #include "board.h"
-#include "player.h"
+#include "../Players/player.h"
 using namespace std;
 
 
-King::King(bool isWhite) : Piece{ isWhite } {
-	value = 0;
-	if (isWhite) {
-		representation = "K";
-	}
-	else {
-		representation = "k";
-	}
+King::King(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
+	value = 10;
+	representation = (side == 0) ? "K" : "k";
 }
 
 King::~King() {
@@ -23,7 +18,7 @@ King::~King() {
 // return a vector of Piece that can be attacked by King if king is at position at
 vector<Piece *> King::attackable(pair<int, int> at){
 	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);	// all spaces around it
-	vector<pair<int, int>> res {};
+	vector<Piece *> res {};
 	for (auto pos : possibleMoves){
 		// basic valid position
 		if (pos.second > 3 || pos.second < 0 || pos.first < 0 || pos.second > 8){
@@ -34,6 +29,7 @@ vector<Piece *> King::attackable(pair<int, int> at){
 			res.emplace_back(target);
 		}
 	}
+	return res;
 }
 
 

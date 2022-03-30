@@ -1,11 +1,49 @@
 #include "player.h"
-#include "board.h"
-#include "piece.h"
+#include "../PiecesAndBoard/board.h"
+#include "../PiecesAndBoard/piece.h"
+#include "../PiecesAndBoard/rook.h"
+#include "../PiecesAndBoard/bishop.h"
+#include "../PiecesAndBoard/king.h"
+#include "../PiecesAndBoard/queen.h"
+#include "../PiecesAndBoard/knight.h"
+#include "../PiecesAndBoard/pawn.h"
 #include <utility>
 
 using namespace std;
 
 Player::Player(int side, int type) : side{side}, type{type} {}
+
+
+// initial player, use only when there is no setup
+void Player::init(Board * board){
+    gameBoard = board;
+    int firstRow = (side == 0) ? 0 : 7;
+    pieces.emplace_back(new Rook{side, 0, firstRow, gameBoard});
+	pieces.emplace_back(new Knight{side, 1, firstRow, gameBoard});
+	pieces.emplace_back(new Bishop{side, 2, firstRow, gameBoard});
+	pieces.emplace_back(new Queen{side, 3, firstRow, gameBoard});
+    king = new King{side, 4, firstRow, gameBoard};
+    pieces.emplace_back(new Bishop{side, 5, firstRow, gameBoard});
+    pieces.emplace_back(new Knight{side, 6, firstRow, gameBoard});
+    pieces.emplace_back(new Rook{side, 7, firstRow, gameBoard});
+    int secondRow = (side == 0) ? 1 : 6;
+	for (int i = 0; i < 8; ++i){
+		pieces.emplace_back(new Pawn{side, 5, secondRow, gameBoard});
+	}
+}
+
+// get Piece for each players, only use after setup
+void Player::claimPieces(){
+    for (int i = 0; i < 8; i += 1) {
+        for (int j = 0; j < 8; j += 1) {
+            Piece *pc = gameBoard->getPiece(i, j);
+            if (side == pc->getSide()) {
+                if (pc->isKing()) king = pc;
+                else pieces.emplace_back(pc);
+            } 
+        }
+    }
+}
 
 Player::~Player() {}
 
