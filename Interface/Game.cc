@@ -340,14 +340,26 @@ void Game::handleEvents() {
 		}
 		else if (command == "move") {
 			// if the command is "move"
-			string from;
-			string to;
-			linestream >> from >> to;
-			if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
-				// GAMEFLOW.txt PLAYER MOVE OCCURS
-			}
-			else {
-				cout << "ERROR: invalid position/s." << endl;
+			p1->unsetStatus();
+			p2->unsetStatus();
+			p1->checkStatus();
+			p2->checkStatus();
+			// call end()?
+			if (p1->type == 0) {
+				// human
+				string from;
+				string to;
+				linestream >> from >> to;
+				if (isValidPosition(from) && isValidPosition(to)) { 
+				
+				} else {
+					cout << "Unrecognized move. Please re-enter." << endl;
+					return;
+				}
+			} else {
+				// computer
+				p1->move(0,0,0,0);
+				return;
 			}
 		} else if (command == "setup") {
 			cout << "ERROR: setup can only be called before a game has started." << endl;
