@@ -157,14 +157,14 @@ void twoPlayerBoard::print()
 		{
 			if (board[i][j] == nullptr)
 			{ // empty tile
-				if ((i + j) % 1)
+				if ((i + j) % 2)
 				{ // if sum is odd it's a white tile
-					cout << ' ';
+					cout << '_';
 				}
 				else
 				{ // otherwise it's a black tile
 
-					cout << '_';
+					cout << ' ';
 				}
 			}
 			else
