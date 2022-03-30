@@ -37,6 +37,9 @@ class Player {
 
         // set opponentCheck to the Piece 
         void kingCheckedBy(Piece *);
+
+        // unset the status fields of each piece
+        void unsetStatus();
 };
 
 

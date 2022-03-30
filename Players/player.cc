@@ -22,5 +22,9 @@ void Player::removePiece(std::pair<int,int> pos) {// removes the piece in positi
     }
 }
 
+void Player::unsetStatus(){
+    for (auto piece : pieces) piece->needsUpdate();
+}
+
 
 
