@@ -14,6 +14,8 @@
 #include "three.h"
 #include "four.h"
 #include "score.h"
+#include "human.h"
+#include "computer.h"
 using namespace std;
 
 
@@ -336,6 +338,7 @@ void Game::handleEvents() {
 				cout << "White wins!" << endl;
 				score->whiteWin();
 			}
+			// reset game?
 			mode = "menu";
 		}
 		else if (command == "move") {
@@ -351,25 +354,51 @@ void Game::handleEvents() {
 			if (end == 1) {
 				// the player that is about to move
 				// is checkmated
+				if (whitemoves) {
+					score->blackWin();
+				} else {
+					score->whiteWin();
+				}
+				//reset
 			} else if (end ==2) {
 				// stalemate
-			}
-			if (whitemoves) {
-				if (p1->type == 0) {
-					// human
-					string from;
-					string to;
-					linestream >> from >> to;
-					if (isValidPosition(from) && isValidPosition(to)) { 
-						p1->move(from[0], from[1], to[0], to[1]);
+				score->tie();
+				//reset
+			} else { // moves available
+				if (whitemoves) {
+					if (p1->type == 0) {
+						// human
+						string from;
+						string to;
+						linestream >> from >> to;
+						if (isValidPosition(from) && isValidPosition(to)) { 
+							p1->move(from[0], from[1], to[0], to[1]);
+						} else {
+							cout << "Unrecognized move. Please re-enter." << endl;
+							return;
+						}
 					} else {
-						cout << "Unrecognized move. Please re-enter." << endl;
+						// computer
+						p1->move(0,0,0,0);
 						return;
 					}
-				} else {
-					// computer
-					p1->move(0,0,0,0);
-					return;
+				} else { // black's turn
+					if (p2->type == 0) {
+						// human
+						string from;
+						string to;
+						linestream >> from >> to;
+						if (isValidPosition(from) && isValidPosition(to)) { 
+							p2->move(from[0], from[1], to[0], to[1]);
+						} else {
+							cout << "Unrecognized move. Please re-enter." << endl;
+							return;
+						}
+					} else {
+						// computer
+						p2->move(0,0,0,0);
+						return;
+					}
 				}
 			}
 		} else if (command == "setup") {
