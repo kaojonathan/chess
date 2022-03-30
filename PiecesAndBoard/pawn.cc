@@ -38,13 +38,13 @@ void Pawn::nUpdate() {
 	int dir = (side == 0) ? 1 : -1;	// forward dircection
 	int fr = y + dir;
 	if (fr < 8 && fr >= 0) {
-		if (!gameBoard->getPiece(x, fr)) moves.emplace_back(pair{x,fr});
+		if (!gameBoard->getPiece(x, fr)) moves.emplace_back(pair<int, int>{x,fr});
 		int sd = x - 1;
 		if (x < 8 && x >= 0) {
 			Piece * target = gameBoard->getPiece(sd, fr);
 			if (target && (target->getSide() != side)) targets.emplace_back();
 		}
-		int sd = x + 1;
+		sd = x + 1;
 		if (x < 8 && x >= 0) {
 			Piece * target = gameBoard->getPiece(sd, fr);
 			if (target && (target->getSide() != side)) targets.emplace_back();
@@ -52,7 +52,7 @@ void Pawn::nUpdate() {
 	}
 	fr += dir;
 	if (numMoves == 0 && fr < 8 && fr >= 0 && !gameBoard->getPiece(x, fr))
-		moves.emplace_back(pair{x,fr});
+		moves.emplace_back(pair<int, int>{x,fr});
 }
 
 

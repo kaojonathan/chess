@@ -2,7 +2,7 @@
 #include <vector>
 #include "piece.h"
 #include "board.h"
-#include "player.h"
+#include "../Players/player.h"
 using namespace std;
 
 Piece::Piece(bool isWhite) : side{isWhite ? 0 : 1}, updateStatus{0}, DNA{0} {}
@@ -71,7 +71,7 @@ vector<pair<int, int>> getPos(int col, int row, int i, int type){
 
 // helper function that determines of the piece in position (x, y) checks the king
 bool Piece::posInCheck(int col, int row) {
-	return !isKing() && enemyKing(mostVal(attackable(pair{col, row})));
+	return !isKing() && enemyKing(mostVal(attackable(pair<int, int>{col, row})));
 }
 
 // return true if all int in dir are 0

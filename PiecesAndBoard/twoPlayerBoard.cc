@@ -66,7 +66,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 				board[newy][newx]->setPos(newy, newx);
 			}
 
-			updateBoardMoves();
 		}
 		else if (result == 1)
 		{
@@ -75,26 +74,11 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 			board[y][x] = nullptr;
 			board[newy][newx]->setPos(newy, newx);
 
-			updateBoardMoves();
 		}
 		else if (result == 0)
 		{
 
 			// do nothing
-		}
-	}
-}
-
-// updates the move possiblities for the pieces on the board
-// should be called after each move
-void twoPlayerBoard::updateBoardMoves()
-{
-	for (int i = 0; i < 8; ++i)
-	{
-		for (int j = 0; j < 8; ++j)
-		{
-
-			board[i][j]->updateMoves();
 		}
 	}
 }
@@ -348,69 +332,3 @@ void twoPlayerBoard::removePiece(string position)
 	}
 }
 
-bool twoPlayerBoard::kingInCheck(bool isWhite)
-{ // not checkmate
-	for (int i = 0; i < 8; ++i)
-	{
-		for (int j = 0; j < 8; ++j)
-		{
-
-			if (board[i][j]->kingCheck())
-			{				 // if at least one piece has check (isWhite tells us if black king is in check)
-				return true; // then the king is in check
-			}
-		}
-	}
-	// otherwise they all not have check so
-	return false;
-}
-
-bool twoPlayerBoard::verifySetup()
-{ // uses the character matrix
-	int numWhiteKings = 0;
-	int numBlackKings = 0;
-	for (int i = 0; i < 8; ++i)
-	{
-		for (int j = 0; j < 8; ++j)
-		{
-			// check one white and black king
-
-			if (board[i][j]->getRep() == "k")
-			{
-				++numBlackKings;
-			}
-			else if (board[i][j]->getRep() == "K")
-			{
-				++numWhiteKings;
-			}
-
-			// check no pawns on first or last row of board
-
-			if (i == 0 || i == 7)
-			{
-				if (board[i][j]->getRep() == "P" || board[i][j]->getRep() == "p")
-				{				  // if pawn exists on first or last row of board
-					return false; // false
-				}
-			}
-
-			// check if neither king is in check
-
-			if (kingInCheck(true) || kingInCheck(false))
-			{				  // if either king is in check (white or black)
-				return false; // return false
-			}
-		}
-	}
-
-	if (numWhiteKings != 1 || numBlackKings != 1)
-	{
-
-		return false;
-	}
-	else
-	{ // if all conditions are satisfied return true
-
-		return true;
-	}
-}
