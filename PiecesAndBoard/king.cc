@@ -41,7 +41,7 @@ void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y, 1, 3);
 	for (auto pos : possibleMoves){
 		// basic valid position
-		if (!validPos(pos) || enemy->canAttack(pos)){
+		if (!validPos(pos) || enemy->canAttack(pos).size() > 0){
 			continue;
 		} // if pos not in the board or in the attack range of the enemy (not implemented)
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
@@ -50,7 +50,7 @@ void King::nUpdate() {
 				targets.emplace_back(target); 
 			}
 		}
-		else moves.emplace_back(pos); 
+		else moves.emplace_back(pos);
 	}
 }
 

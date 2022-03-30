@@ -36,7 +36,7 @@ void Player::unsetStatus(){
     king->needsUpdate();
 }
 
-// determine any piece of Player can attack position pos
+// find all piece of Player can attack position pos
 vector<Piece *> Player::canAttack(pair<int, int> pos){
     vector<Piece *> res{};
     if (king->canAttack(pos)) res.emplace_back(king);
