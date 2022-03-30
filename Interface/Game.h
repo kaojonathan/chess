@@ -20,8 +20,11 @@ class Game {
     std::string mode; // game, setup, menu, etc.
     Player *p1; // white
     Player *p2; // black
+    bool whitemoves; // true if it is white's turn
 
     public:
+        Game();
+        ~Game();
         void init(); // starts a game window
         void handleEvents();
         void update();
