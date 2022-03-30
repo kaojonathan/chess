@@ -32,7 +32,13 @@ vector<pair<int,int>> Piece::getMoves(){ return moves; }
 
 vector<pair<int,int>> Piece::getTargets(){ return targets; }
 
-void Piece::needsUpdate() { updateStatus = 0; }
+void Piece::needsUpdate() { 
+	updateStatus = 0;
+	moves = vector<pair<int,int>> {};
+	targets = vector<pair<int,int>> {};
+	checkRoute = vector<pair<int,int>> {};
+	forced = nullptr;
+}
 
 bool Piece::isKing(){
 	return representation == "k" || representation == "K";
@@ -216,7 +222,7 @@ void Piece::normalStatusUpdate() {
 // update moves and targets field of a piece that is forced by enemyPiece
 void Piece::forcedBy(Piece * enemyPiece) {
 	forced = enemyPiece;
-	if (updateStatus == 0) nUpdate();
+	normalStatusUpdate();
 	if (updateStatus == 1) fUpdate(enemyPiece);
 }
 
