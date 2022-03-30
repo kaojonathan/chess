@@ -37,7 +37,7 @@ vector<Piece *> King::attackable(pair<int, int> at){
 }
 
 
-void King::updateMovePossibilities() {
+void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y, 1, 3);
 	for (auto pos : possibleMoves){
 		// basic valid position

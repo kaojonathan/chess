@@ -236,6 +236,6 @@ Piece *mostVal(vector<Piece *> attackables){
 } 
 
 // true if the position is not out of the board
-bool validPos(pair<int, int> pos){
+bool Piece::validPos(pair<int, int> pos){
 	return !(pos.first >= 8 || pos.second >= 8 || pos.first < 0 || pos.second < 0);
 }

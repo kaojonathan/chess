@@ -29,8 +29,6 @@ class Piece {
         // updates possible moves and attack targets for a forced Piece
         virtual void fUpdate(Piece*);
 
-        virtual void updateForced() = 0;
-
         // added this (vincent) /// for computer level 2/3 class
 
         // returns the coordinate (x, y) that the piece can move to, 
@@ -44,6 +42,9 @@ class Piece {
 
         // make this piece forced by a piece
         virtual void isForcedBy(Piece *);
+
+         // return false if the position is the not valid one the piece can go
+        bool validPos(std::pair<int,int>);
 
 
     public:
@@ -97,7 +98,5 @@ Piece * mostVal(std::vector<Piece *>);
 //	2: cross directions only
 //	3: both diagonal and cross directions
 std::vector<std::pair<int, int>> getPos(int col, int row, int i, int type);
-
-bool validPos(std::pair<int,int>);          // return false if the posistion is out of the board
 
 #endif

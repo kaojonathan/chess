@@ -33,13 +33,16 @@ void Player::checkStatus(){
 // unset that status fields of each piece
 void Player::unsetStatus(){
     for (auto piece : pieces) piece->needsUpdate();
+    king->needsUpdate();
 }
 
 // determine any piece of Player can attack position pos
-bool Player::canAttack(pair<int, int> pos){
+vector<Piece *> Player::canAttack(pair<int, int> pos){
+    vector<Piece *> res{};
+    if (king->canAttack(pos)) res.emplace_back(king);
     for(auto piece : pieces) {
-        if (piece->canAttack(pos)) return true;
+        if (piece->canAttack(pos)) res.emplace_back(piece);
     }
-    return false;
+    return res;
 }
 
