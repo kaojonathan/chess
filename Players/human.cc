@@ -1,10 +1,9 @@
 #include "human.h"
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 using namespace std;
 
 Human::Human(int side) : Player{side, 0} {}
 
-Human::~Human() {}
 // hello
 /*
 # return 0 if ask for different move (move failed)

@@ -1,6 +1,6 @@
 #include "player.h"
-#include "board.h"
-#include "piece.h"
+#include "../PiecesAndBoard/board.h"
+#include "../PiecesAndBoard/piece.h"
 #include <utility>
 
 using namespace std;
@@ -54,9 +54,9 @@ vector<Piece *> Player::canAttack(pair<int, int> pos){
 // true if there is any pieces that the player can move
 bool Player::canMove() {
     for (auto piece : pieces){
-        if (piece->getMoves.size() != 0 || piece->getTargets.size() != 0) return true;
+        if ((piece->getMoves().size() != 0) || (piece->getTargets().size() != 0)) return true;
     }
-    if (king->getMoves.size() != 0 || king->getTargets.size() != 0) return true;
+    if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0)) return true;
 }
 
 

@@ -6,11 +6,13 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 
 class XWindow;
 class Board;
 class Score;
+class Player;
 
 class Game {
     XWindow *window;
@@ -27,14 +29,14 @@ class Game {
     public:
         Game();
         ~Game();
-        reset();
+        void reset();
         void init(); // starts a game window
         void handleEvents();
         void update();
         void quit(); // quits the game and deallocates memory
 
         void fill(int x, int y);
-        void drawPiece(string piece, int x, int y);
+        void drawPiece(std::string piece, int x, int y);
         void insertNewPiece(std::string validpiece, std::string position);
         void removePiece(std::string position);
 

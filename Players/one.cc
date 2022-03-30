@@ -1,5 +1,5 @@
 #include "one.h"
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 using namespace std;
 
 One::One(int side, int level) : Computer{side, level} {}

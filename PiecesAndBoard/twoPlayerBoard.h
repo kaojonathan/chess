@@ -10,12 +10,9 @@ class twoPlayerBoard : public Board {
 	void origSetup() override;
 	void print() override;	// move to game
 	bool end() override; // implementation required? // need to move to game class
-	bool kingInCheck(bool isWhite) override;
 	void insertNewPiece(std::string validpiece, std::string position) override;
 	void removePiece(std::string position) override;
-	bool verifySetup() override;
 	Piece* getP(int x, int y) override; // getter
-	void updateBoardMoves() override; // every time the board changes, call this
 	void movePiece(int x, int y, int newx, int newy) override; // setter
 
 
