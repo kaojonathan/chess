@@ -4,6 +4,7 @@
 #include <iostream>
 #include "knight.h"
 #include "board.h"
+#include "player.h"
 using namespace std;
 
 Knight::Knight(bool isWhite) : Piece{ isWhite } {
@@ -19,14 +20,16 @@ Knight::Knight(bool isWhite) : Piece{ isWhite } {
 // return all positions the Knight at (col, row) can move to, not include positions out of bound 
 vector<pair<int, int>> Knight::getPos(int col, int row) {
 	vector<pair<int,int>> res{};
-	if (col+2 < 8 && row+1 < 8) res.emplace_back(pair{col+2, row+1});
-	if (col+1 < 8 && row+2 < 8) res.emplace_back(pair{col+1, row+2});
-	if (col-1 >= 0 && row+2 < 8) res.emplace_back(pair{col-1, row+2});
-	if (col-2 >= 0 && row+1 < 8) res.emplace_back(pair{col-2, row+1});
-	if (col+1 < 8 && row-2 >= 0) res.emplace_back(pair{col+1, row-2});
-	if (col+2 < 8 && row-1 >= 0) res.emplace_back(pair{col+2, row-1});
-	if (col-2 >= 0 && row-1 >= 0) res.emplace_back(pair{col-2, row-1});
-	if (col-1 >= 0 && row-2 >= 0) res.emplace_back(pair{col-1, row-2});
+	for (int i = 1; i <= 2; i += 1){
+		pair<int,int>curPos{col+i,row+(3-i)};
+		if (validPos(curPos)) res.emplace_back(curPos);
+		pair<int,int>curPos{col+i,row-(3-i)};
+		if (validPos(curPos)) res.emplace_back(curPos);
+		pair<int,int>curPos{col-i,row-(3-i)};
+		if (validPos(curPos)) res.emplace_back(curPos);
+		pair<int,int>curPos{col-i,row+(3-i)};
+		if (validPos(curPos)) res.emplace_back(curPos);
+	}
 	return res;
 }
 
@@ -44,34 +47,16 @@ vector<Piece *> Knight::attackable(pair<int, int> position){
 
 
 
-void Knight::updateMovePossibilities()  {
-	if (forced) {
-		vector<pair<pair<int,int>, vector<Piece*>>> newMoves{};
-		vector<pair<int,int>> newAttacks{};
-		for (auto possibleMove : forced->getCheckRoute()) {
-			int c = move(possibleMove.first, possibleMove.second);
-			if (c == 1) newMoves.emplace_back(pair{possibleMove, attackable(possibleMove)});
-			else if (c == 2) newAttacks.emplace_back(possibleMove);
-		}	// the piece can move only if the move still block the opposite piece from checking.
-		moves = newMoves;
-		attacks = newAttacks;
-		forced = nullptr;
-	}
-	else {
-		moves = vector<pair<pair<int,int>, vector<Piece *>>>{};
-		attacks = vector<pair<int,int>>{};
-	}
-	checkRoute = vector<pair<int, int>>{};
+void Knight::nUpdate()  {
+	updateStatus = 1;
 	for (auto pos : getPos(x, y)){
 		Piece * target = gameBoard->getPiece(pos.first, pos.second);
 		if (target) {
 			if (enemyKing(target)) {
-				// notify the enemy player (not completed)
 				checkRoute.emplace_back(pair{x,y});
+				enemy->kingCheckedBy(this);
 			}
-			else if (target->getSide() != side) { attacks.emplace_back(pos); }
-			else { // update guard of target
-			}
+			else if (target->getSide() != side) targets.emplace_back(pos);
 		}
 		else {
 			moves.emplace_back(pair{pos, attackable(pos)});

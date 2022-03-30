@@ -11,6 +11,7 @@ Player::~Player() {}
 
 void Player::kingCheckedBy(Piece * enemy) {
     opponentCheck = enemy;
+    for (auto piece : pieces) piece->forcedBy(enemy, true);
 }
 
 void Player::removePiece(std::pair<int,int> pos) {// removes the piece in position (x, y) and places it in inactivePieces.

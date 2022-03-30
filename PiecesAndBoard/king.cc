@@ -22,7 +22,7 @@ King::~King() {
 
 // return a vector of Piece that can be attacked by King if king is at position at
 vector<Piece *> King::attackable(pair<int, int> at){
-	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);
+	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);	// all spaces around it
 	vector<pair<int, int>> res {};
 	for (auto pos : possibleMoves){
 		// basic valid position

@@ -5,6 +5,7 @@
 #include "board.h"
 using namespace std;
 
+
 Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
 	value = 1; // change after the first move?
 	if (isWhite) {
@@ -15,54 +16,43 @@ Pawn::Pawn(bool isWhite) : Piece{ isWhite } {
 	}
 }
 
- vector<pair<int,int>> Pawn::getPos(int col, int row){
-	vector<pair<int,int>> res{};
-	int dir = (side == 0) ? 1 : -1;
-	if (row + dir < 8 && row + dir >= 0) res.emplace_back(pair{col, row + dir}); 
-	if (numMoves == 0 && row + 2*dir < 8 && row + 2*dir >= 0) res.emplace_back(pair{col, row +dir});
-	return res;
- }
+int Pawn::frDir(){ return (side == 0) ? 1 : -1; }
 
 std::vector<Piece *> Pawn::attackable(std::pair<int, int> at) {
 	vector <Piece *> res {};
-	int dir = (side == 0) ? 1 : -1;
-	if (at.second + dir >= 8 &&  at.second + dir < 0) return res;
-	if (at.first-1 >= 0) {
+	int dir = frDir();
+	if (at.second + dir  >= 8 || at.second + dir < 0) return res;
+	if (at.first-1 < 8 && at.first-1 >= 0) {
 		Piece *target = gameBoard->getPiece(at.first-1, at.second);
 		if (target && (target->getSide() != side))  res.emplace_back(target);
 	}
-	if (at.first+1 < 8) {
+	if (at.first+1 < 8 && at.first+1 >= 0) {
 		Piece *target = gameBoard->getPiece(at.first+1, at.second);
 		if (target && (target->getSide() != side))  res.emplace_back(target);
 	}
 	return res;
 }
 
-void Pawn::updateMovePossibilities() {
+void Pawn::nUpdate() {
+	updateStatus = 1;
 	int dir = (side == 0) ? 1 : -1;	// forward dircection
-	if (forced) {
-		vector<pair<pair<int,int>, vector<Piece *>>> newMoves{};
-		vector<pair<int,int>> newAttacks{};
-		for (auto possibleMove : forced->getCheckRoute()) {
-			int c = move(possibleMove.first, possibleMove.second);	// cases
-			if (c == 1) newMoves.emplace_back(pair{possibleMove, attackable(possibleMove)});
-			else if (c == 2) newAttacks.emplace_back(possibleMove);
-		}	// the piece can move only if the move still block the opposite piece from checking.
-		moves = newMoves;
-		attacks = newAttacks;
-		forced = nullptr;
-	}
-	else {
-		moves = vector<pair<pair<int,int>, vector<Piece *>>>{};
-		attacks = vector<pair<int,int>>{};
-	}
-	checkRoute = vector<pair<int, int>>{};
-	for (auto pos : getPos(x, y)){
-		Piece * target = gameBoard->getPiece(pos.first, pos.second);
-		if (! target) {
-			moves.emplace_back(pair{pos, attackable(pos)});
+	int fr = y + dir;
+	if (fr < 8 && fr >= 0) {
+		if (!gameBoard->getPiece(x, fr)) moves.emplace_back(pair{x,fr});
+		int sd = x - 1;
+		if (x < 8 && x >= 0) {
+			Piece * target = gameBoard->getPiece(sd, fr);
+			if (target && (target->getSide() != side)) targets.emplace_back();
+		}
+		int sd = x + 1;
+		if (x < 8 && x >= 0) {
+			Piece * target = gameBoard->getPiece(sd, fr);
+			if (target && (target->getSide() != side)) targets.emplace_back();
 		}
 	}
+	fr += dir;
+	if (numMoves == 0 && fr < 8 && fr >= 0 && !gameBoard->getPiece(x, fr))
+		moves.emplace_back(pair{x,fr});
 }
 
 

@@ -13,7 +13,7 @@ class Bishop : public Piece {
     std::vector<Piece*> lowerRightDiag; // positions that the piece can move to
     */
 public:
-    void updateMovePossibilities() override;
+    void nUpdate() override;
     Bishop(bool isWhite);
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
 };

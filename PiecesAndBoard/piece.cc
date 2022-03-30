@@ -109,11 +109,6 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type){
 
 // updating the moves, targets; notify the opponent if it is checking the king; notify the enemy piece if this is forcing the piece. (assuming this is not forced, all status fields are initially empty). Used for Bishop, Rook and Queen only. 
 void Piece::dirScan(int type) {
-	moves = vector<pair<int,int>>{};
-	targets = vector<pair<int,int>>{};
-	// protects = vector<pair<int,int>>{};
-	checkRoute = vector<pair<int,int>>{};
-
 	// scan all/some directions from {tr, tl, br, bl, t, b, r, l}, end if goes out of bound or enounters at lease 2 pieces (opposite) or enounters at lease 1 piece (mate), record each path
 	int ndir = (type == 3) ? 8 : 4; // number of directions
 	vector<int> dirs(ndir, 2);
@@ -158,7 +153,7 @@ void Piece::dirScan(int type) {
 					if (target) {
 						// meet the second piece
 						if (enemyKing(target)) {
-							// will check the king the enemy piece here moves.
+							// will check the king if the enemy piece here moves.
 							checkRoute = paths.at(j);
 							firstEncounter.at(j)->forcedBy(this);  // update the status of the forced piece.
 						}
@@ -194,7 +189,7 @@ void Piece::fUpdate(Piece * enemyPiece){
 	vector<pair<int,int>> newtargets{};
 	for (auto possibleMove : forced->getCheckRoute()) {
 		int c = move(possibleMove.first, possibleMove.second);
-		if (c == 1) newMoves.emplace_back(pair{possibleMove});
+		if (c == 1) newMoves.emplace_back(possibleMove);
 		else if (c == 2) newtargets.emplace_back(possibleMove);
 	}	// the piece can move only if the move still block the opposite piece from checking.
 	moves = newMoves;
@@ -207,10 +202,10 @@ void Piece::statusUpdate() {
 }
 
 // update moves and targets field of a piece that is forced by enemyPiece
-void Piece::forcedBy(Piece * enemyPiece) {
+void Piece::forcedBy(Piece * enemyPiece, bool check) {
 	forced = enemyPiece;
 	statusUpdate();
-	if (updateStatus == 1) fUpdate(enemyPiece);
+	if (updateStatus == 1 || check) fUpdate(enemyPiece);
 }
 
 

@@ -13,15 +13,14 @@ class Pawn : public Piece {
 
 public:
     Pawn(bool isWhite);
+    int frDir();            // return the forward direction, either 1 or -1 
 
     void prommote();
     void enPassant();
     void capture();
     void castling();
-    void updateMovePossibilities() override; // did not implement yet since it is more complicated than the othersss
-
+    void nUpdate() override; // update status, assuming that it is not forced
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
-    std::vector<pair<int,int>> getPos(int col, int row);
 
     // for the computer level 2 and 3 class
     /*std::pair<int, int> getCheckCoords() override;*/

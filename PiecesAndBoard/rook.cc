@@ -16,8 +16,10 @@ Rook::Rook(bool isWhite) : Piece{isWhite} {
 	}
 }
 
-void Rook::updateMovePossibilities() {
-	updateStatus(2);
+// normal status update, assuming it is not forced
+void Rook::nUpdate() {
+	updateStatus = 1;
+	dirScan(2);
 }
 
 

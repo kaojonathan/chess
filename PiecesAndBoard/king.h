@@ -15,7 +15,6 @@ class King : public Piece {
     std::vector<Piece*> left; // positions that the piece can move to
     std::vector<Piece*> upleft; // positions that the piece can move to
     */
-    void fUpdate(Piece *) override;
     void nUpdate() override;
 
     /* std::pair<int, int> getCheckCoords() override; */

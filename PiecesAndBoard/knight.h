@@ -17,7 +17,7 @@ class Knight : public Piece {
 
 public:
     Knight(bool isWhite);
-    void updateMovePossibilities() override;
+    void nUpdate() override;
     // get a list of positions that he knight at (col, row) can move to, positions cannot be out of bound 
     vector<pair<int,int>> getPos(int col, int row);
 

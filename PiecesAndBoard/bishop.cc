@@ -17,9 +17,10 @@ Bishop::Bishop(bool isWhite) : Piece{isWhite} {
 }
 
 
-// NEW! update fields moves, attacks, checkRoute
-void Bishop::updateMovePossibilities() {
-	updateStatus(1);
+// normal status update, assuming it is not forced
+void Bishop::nUpdate() {
+	updateStatus = 1;
+	dirScan(1);
 }
 
 // check if the emeny king is checked
