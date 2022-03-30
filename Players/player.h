@@ -43,9 +43,11 @@ class Player {
         void kingCheckedBy(Piece *);
 
         // update all the status fields of each piece
-        void checkStatus();
+        int checkStatus();
         // unset the status fields of each piece
         void unsetStatus();
+        // true if the player still has valid move
+        bool canMove();
 };
 
 
