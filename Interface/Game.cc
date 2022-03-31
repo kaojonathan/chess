@@ -226,8 +226,9 @@ void Game::displayOrigSetup() {
 
 // This program is the command interpreter for the chess game.
 
-// draws the initial board
+
 void Game::init() {	
+	
 	for (int i = 1; i <= 8; ++i) {
 		for (int j = 1; j <= 8; ++j) {
 			if ((i + j) % 2) {
@@ -257,9 +258,9 @@ void Game::init() {
 		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
 
-	// set up the actual board with default pieces
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
 	board->origSetup();
+	displayOrigSetup();
 }
 
 
@@ -283,7 +284,13 @@ void Game::update() {
 // resets the board to start a new game
 // occurs after resign, checkmate, stalemate
 void Game::reset() {
-	// board reset, please enter setup or start a new game
+	mode = "menu";
+	whitemoves = true;
+	delete p1;
+	p1 = nullptr;
+	delete p2;
+	p2 = nullptr;
+	cout << "Board reset. Please enter set-up or start a new game!" << endl;
 }
 
 // handles a single command at a time
@@ -368,13 +375,14 @@ void Game::handleEvents() {
 			if (whitemoves) {
 				cout << "Black wins!" << endl;
 				score->blackWin();
+				displayWin(false);
 			}
 			else {
 				cout << "White wins!" << endl;
 				score->whiteWin();
+				displayWin(true);
 			}
-			// reset game?
-			mode = "menu";
+			reset();
 		}
 		else if (command == "move") {
 			// if the command is "move"
@@ -393,14 +401,17 @@ void Game::handleEvents() {
 				// is checkmated
 				if (whitemoves) {
 					score->blackWin();
+					displayWin(false);
 				} else {
 					score->whiteWin();
+					displayWin(true);
 				}
-				//reset
+				reset();
 			} else if (end ==2) {
 				// stalemate
 				score->tie();
-				//reset
+				displayStalemate();
+				reset();
 			} else { // moves available
 				if (whitemoves) {
 					if (p1->getType() == 0) {
