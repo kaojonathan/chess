@@ -271,13 +271,37 @@ void Game::update() {
 	// display text
 	printBoard();
 	// update window grphics here...
-	int totalMoves = history.size();
-	while (tracked < totalMoves) {
-		// update board using history[tracked]
-		// this way entire board doesnt get redrawn
 
-		
-		++tracked;
+	/* 
+	extract most recent move from history - 
+	Move *move = history.back();
+
+	extract position data pos1 to pos2 - 
+	int oldCol = move->pos1x;
+	int oldRow = move->pos1y;
+	int newCol = move->pos2x;
+	int newRow = move->pos2y;
+
+	extract type of move - 
+	string type = move->type
+
+	update graphics accordingly -
+	if (type == "normal" || type == "capture") {
+		fill(newCol, newRow); // erase both squares
+		fill(oldCol, oldRow);
+		string rep = board[newRow][newCol]->getRep();
+		drawPiece(piece, newCol, newRow);
+	} else if (type == "castle") {
+		// distinguish between types of castles
+		// based off positiong info
+	} else if (type == "promotion") {
+		// clear both squares
+		// redraw to promoted piece
+	} else { // (type == "enpassant")
+		//
+	}
+	*/
+
 	}
 }
 
@@ -290,6 +314,7 @@ void Game::reset() {
 	p1 = nullptr;
 	delete p2;
 	p2 = nullptr;
+	history.clear();
 	cout << "Board reset. Please enter set-up or start a new game!" << endl;
 }
 

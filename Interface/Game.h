@@ -23,8 +23,7 @@ class Game {
     Player *p1; // white
     Player *p2; // black
     bool whitemoves; // true if it is white's turn
-    int tracked; // tracks number of moves reflected on the window
-    std::vector<std::string> history; 
+    std::vector<std::string> history; // change to vector<Move *>
 
     void printBoard();
     void reset();
