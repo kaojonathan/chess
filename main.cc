@@ -1,34 +1,32 @@
-#include "board.h"
-#include "twoPlayerBoard.h"
-#include "score.h"
-#include <iostream>
-#include <sstream>
-#include <string>
-#include "Game.h"
+#include "Interface/Game.h"
 
 using namespace std;
 
-Game *game = nullptr;
 
-int main(int argc, const char * argv[]) { // implemented using help from https://www.youtube.com/watch?v=44tO977slsU (type "game loop" and do some research)
+// implemented using help from https://www.youtube.com/watch?v=44tO977slsU 
+// (type "game loop" and do some research)
+int main(int argc, const char * argv[]) { 
 
-	game = new Game;
+	Game *game = new Game;
 
 	game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
 
-		game->handleEvents(); // handle input commands
+		try {
+			// handle input commands
+			game->handleEvents(); 
+			// update the the graphic model and text model
+			game->update(); 
+		} catch (...) {
+			// fill in with runtime error
+		}
 
-		
-		game->update(); // update the model??????
 	}
 
 	game->quit();
-
+	delete game;
 	return 0;
-	// handle any user input
-	// update all objects
-	// render changes to the display
+
 
 }

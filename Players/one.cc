@@ -1,37 +1,34 @@
 #include "one.h"
-#include "board.h"
+#include "../PiecesAndBoard/board.h"
 using namespace std;
 
+One::One(int side, int level) : Computer{side, level} {}
 
-One::One(int side) : Computer{ side } {}
-
-void One::move() {
+void One::move()
+{
 	bool madeMove = false;
+	while (!madeMove)
+	{ // keep looping if we haven't made a move
+	int pieceIndex =  rand() % pieces.size(); // randomly give us an x-coordinate
+		int i = rand() % 8; // randomly give us an x-coordinate
+		int j = rand() % 8; // randomly give us a y-coordinate
+				if (pieces[pieceIndex]->move(i, j) != 0)
+				{ // if the move is valid then move it
 
 
-	while (!madeMove) { // keep looping if we haven't made a move
+					if (pieces[pieceIndex]->move(i, j) == 2) {
+						opponent->removePiece(std::pair<int, int> {i, j});
+					}
+
+					gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
 
 
 
-		// randomly chooses from the type of pieces which one to move (there are 
-
-		int randNum = rand() % pieces.size(); // randomly gives us a number from 0 to number of pieces - 1
+					madeMove = true;
 
 
-		int randomX = rand() % 8; // randomly give us an x-coordinate
-
-
-		int randomY = rand() % 8; // randomly give us a y-coordinate
-
-
-		// check if the move is valid, then move it
-
-		if (pieces[randNum]->canMove(randomX, randomY)) {
-			gameBoard->movePiece(pieces[randNum]->getX(), pieces[randNum]->getY(), randomX, randomY);
-
-			madeMove = true;
-		}
-
+				}
+		
 		// otherwise keep looping (might be inefficient)
 	}
 }

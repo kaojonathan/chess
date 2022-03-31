@@ -3,34 +3,43 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-
-#include <windows.h>
-
-
 #include <unistd.h>
-#include "window.h"
-#include "XWindowImpl.h"
+#include "../Graphics/XWindowImpl.h"
 #include "Game.h"
-#include "window.h"
+#include "../Graphics/window.h"
+#include "../PiecesAndBoard/board.h"
+#include "../PiecesAndBoard/twoPlayerBoard.h"
+#include "../Players/one.h"
+#include "../Players/two.h"
+#include "../Players/three.h"
+#include "../Players/four.h"
+#include "../score.h"
+#include "../Players/human.h"
+#include "../Players/computer.h"
 using namespace std;
 
 
-Game::Game() {}
+Game::Game() : window{new XWindow}, 
+			   board{new twoPlayerBoard},
+			   score{new Score},
+			   isRunning{true} {
+    mode = "menu";
+	whitemoves = true;
+}
 
-Game::~Game() {}
-
-
+Game::~Game() {
+	delete window;
+	delete board;
+	delete score;
+	delete p1;
+	delete p2;
+}
 
 /////////// HELPER FUNCTIONS /////////////////
 
 
-// isHuman checks if the 'player' is a "human"
-bool isHuman(string player)
-{
-	return (player == "human");
-}
 
-// isComputer checks if the 'player' is a "computer". if it is, also updates level to give the difficulty of the computer
+// isComputer checks if the 'player' is a "computer". if it is, also updates level to give the level of the computer
 bool isComputer(string player, int& level)
 {
 	if (player.substr(0, 8) == "computer")
@@ -48,8 +57,7 @@ bool isComputer(string player, int& level)
 	}
 }
 
-
-
+// checks if given position is in bounds (ex. e4)
 bool isValidPosition(string position) {
 	if (position.length() == 2) {
 		if (('a' <= position[0] <= 'h') && (1 <= position[1] <= 8)) {
@@ -61,7 +69,7 @@ bool isValidPosition(string position) {
 	}
 }
 
-// used for set up to check if a piece has been specified correctly
+// used for set up to check if a piece symbol is valid
 bool isValidPiece(string piece) {
 	if (piece.length() == 1) {
 		return ((piece[0] == 'r') || (piece[0] == 'n') || (piece[0] == 'b') || 
@@ -72,244 +80,87 @@ bool isValidPiece(string piece) {
 }
 
 
-
-
-void Game::fill(int x, int y) { // fills the graphic board at coordinate (x, y) with a blank tile (erases the piece)
-
-			if ((x + y + 2) % 2) {
-				window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::Cyan);
-			}
-			else {
-
-				window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::White);
-
-			}
+// fills the graphic board at coordinate (x, y) with a blank tile (erases the piece)
+void Game::fill(int x, int y) { 
+	if ((x + y + 2) % 2) {
+		window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::Cyan);
+	}
+	else {
+		window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::White);
+	}
 }
 
-void Game::drawPiece(string piece, int x, int y) { // draws a piece at coordinate (x, y) with piece string
-
-window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
-
-
-
+ // draws a piece at coordinate (x, y) with piece string
+void Game::drawPiece(std::string piece, int x, int y) {
+	window->drawString(25 + (50 * (x + 1)), 25 + (50 * (y + 1)), piece);
 } 
 
-	void Game::insertNewPiece(std::string validpiece, std::string position) {
+// setup: inserts a piece at given position
+// assumes that piece and position are valid
+void Game::insertNewPiece(std::string validpiece, std::string position) {
+	int col = position[0] - 'a';
+	int row = 8 - (position[1] - '0');
+	// if old piece drawn there
+	if (board->getPiece(col, row)) fill(col, row);
+	drawPiece(validpiece, col, row);
+}
 
-	if (('0' <= position[1] <= '7') && ('a' <= position[0] <= 'h'))
-	{
-		if (validpiece == "K")
-		{
-
-
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("K", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-
-
-
-		}
-		else if (validpiece == "k")
-		{
-
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("k", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-		}
-		else if (validpiece == "Q")
-		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("Q", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-		}
-		else if (validpiece == "q")
-		{
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("q", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-		}
-		else if (validpiece == "R")
-		{
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("R", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-		}
-		else if (validpiece == "r")
-		{
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("r", position[0] - 'a', 8 - (position[1] - '0'));
-
-
-		}
-		else if (validpiece == "B")
-		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("B", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-		else if (validpiece == "b")
-		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("b", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-		else if (validpiece == "N")
-		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("N", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-		else if (validpiece == "n")
-		{
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("n", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-		else if (validpiece == "P")
-		{
-
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("P", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-		else if (validpiece == "p")
-		{
-			if (board[8 - (position[1] - '0')][position[0] - 'a'])
-			{
-				fill(position[0] - 'a', 8 - (position[1] - '0'));
-			}
-
-
-			drawPiece("p", position[0] - 'a', 8 - (position[1] - '0'));
-		}
-	}
-
-
-	}
-
-
-	void Game::removePiece(std::string position) {
-
-	if (board[8 - (position[1] - '0')][position[0] - 'a'])
-	{
-		fill(position[0] - 'a', 8 - (position[1] - '0'));
-	}
-
-
-
-	}
-
+// draws blank square over position
+void Game::removePiece(std::string position) {
+	// clears out square if a piece exists 
+	fill(position[0] - 'a', 8 - (position[1] - '0'));
+}
 
 	
-    void Game::displayCheck(bool isWhite) {
+void Game::displayCheck(bool isWhite) {
 
-		if (isWhite) {
-			cout << "White is in check." << endl;
+	if (isWhite) {
+		cout << "White is in check." << endl;
 
-			window->drawString(10, 10, "White is in check.");
-			Sleep(3000);
-			window->fillRectangle(9, 9, 200, 10, XWindow::White);
+		window->drawString(10, 10, "White is in check.");
+		sleep(3000);
+		window->fillRectangle(9, 9, 200, 10, XWindow::White);
 
-		} else {
+	} else {
 
-			cout << "Black is in check." << endl;
-						Sleep(3000);
-			window->fillRectangle(9, 9, 200, 10, XWindow::White);
-		}
-
+		cout << "Black is in check." << endl;
+					sleep(3000);
+		window->fillRectangle(9, 9, 200, 10, XWindow::White);
 	}
-    void Game::displayStalemate() {
-cout << "Stalemate!" << endl;
-			window->drawString(10, 10, "Stalemate!");
-			Sleep(3000);
-			window->fillRectangle(9, 9, 200, 10, XWindow::White);
 
+}
+
+void Game::displayStalemate() {
+	cout << "Stalemate!" << endl;
+	window->drawString(10, 10, "Stalemate!");
+	sleep(3000);
+	window->fillRectangle(9, 9, 200, 10, XWindow::White);
+
+}
+
+void Game::displayWin(bool isWhite) {
+	if (isWhite) {
+		cout << "White wins!" << endl;
+					window->drawString(10, 10, "White wins!");
+		sleep(3000);
+		window->fillRectangle(9, 9, 200, 10, XWindow::White);
+
+	} else {
+
+		cout << "Black wins!" << endl;
+					window->drawString(10, 10, "Black wins!");
+		sleep(3000);
+		window->fillRectangle(9, 9, 200, 10, XWindow::White);
 	}
-    void Game::displayWin(bool isWhite) {
-
-		if (isWhite) {
-			cout << "White wins!" << endl;
-						window->drawString(10, 10, "White wins!");
-			Sleep(3000);
-			window->fillRectangle(9, 9, 200, 10, XWindow::White);
-
-		} else {
-
-			cout << "Black wins!" << endl;
-						window->drawString(10, 10, "Black wins!");
-			Sleep(3000);
-			window->fillRectangle(9, 9, 200, 10, XWindow::White);
-		}
-	}
+}
 
 
 void Game::displayOrigSetup() {
 
-window->drawString(72, 77, "r");
-	window-drawString(122, 77, "n");
-	window-drawString(172, 77, "b");
-	window-drawString(222, 77, "q");
+	window->drawString(72, 77, "r");
+	window->drawString(122, 77, "n");
+	window->drawString(172, 77, "b");
+	window->drawString(222, 77, "q");
 	window->drawString(272, 77, "k");
 	window->drawString(322, 77, "b");
 	window->drawString(372, 77, "n");
@@ -320,7 +171,6 @@ window->drawString(72, 77, "r");
 		window->drawString(22 + (50 * i), 377, "P");
 
 	}
-
 	
 	window->drawString(72, 427, "R");
 	window->drawString(122, 427, "N");
@@ -338,346 +188,315 @@ window->drawString(72, 77, "r");
 
 // This program is the command interpreter for the chess game.
 
-void Game::init() {
-    XWindow w;
-	*window = w;
-    isRunning = true;
-    mode = "menu";
-
-
+// draws the initial board
+void Game::init() {	
 	for (int i = 1; i <= 8; ++i) {
 		for (int j = 1; j <= 8; ++j) {
-
 			if ((i + j) % 2) {
 				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::Cyan);
 			}
 			else {
 
 				window->fillRectangle(50 * i, 50 * j, 50, 50, XWindow::White);
-
 			}
-
 		}
-
-
-
-
 	}
-
 	window->drawLine(50, 50, 450, 50);
 	window->drawLine(50, 50, 50, 450);
 	window->drawLine(450, 450, 450, 50);
 	window->drawLine(450, 450, 50, 450);
-
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ 'a' + i - 1 };
 		window->drawString(22 + (50 * i), 40, s);
 	}
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ 'a' + i - 1 };
 		window->drawString(22 + (50 * i), 470, s);
 	}
-
 	for (int i = 1; i <= 8; ++i) {
 		string s{ i + '0' };
 		window->drawString(35, 27 + (50 * (9 - i)), s);
 		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
 
-
+	// set up the actual board with default pieces
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	board->origSetup();
 }
 
 
 
 
+// updates the graphics and text display
+void Game::update() {
+	// display text
+	board->printBoard();
+	// update window grphics here...
+	int totalMoves = history.size();
+	while (tracked < totalMoves) {
+		// update board using history[tracked]
+		// this way entire board doesnt get redrawn
 
+		
+		++tracked;
+	}
+}
 
+// resets the board to start a new game
+void Game::reset() {
+	// board reset, please enter setup or start a new game
+}
 
-
-
-
+// handles a single command at a time
+// game, move, setup, or resign
 void Game::handleEvents() {
 
-
 	string line;
-    getline(cin, line);
+	// maybe just have input "quit" to end
+    if(!getline(cin, line)) { 
+		// crtl+D game is over
+		isRunning = false;
+		return;
+	}
 	stringstream linestream(line);
 	string command;
-    bool whitemoves = true;
     linestream >> command; // read a command
 
-
+	// initial mode
     if (mode == "menu") {
-
         if (command == "game") {
-
-
 			string white;
 			string black;
-			int difficulty;
+			int level;
 			linestream >> white >> black;
 
-            bool correctinput = true;
-			if (isHuman(white)) {
-				// do human thing
-				// new Human(...)
-
-                
-
-
+			// check player types
+			if (white == "human") {
+				p1 = new Human{0};
 			}
-			else if (isComputer(white, difficulty)) {
-				// do computer thing
-				// new Computer(...)
-
-
-			}
-			else {
-				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
-				correctinput = false;
-			}
-
-
-
-			if (isHuman(black)) {
-
-
-				// do human thing
-				// new Human(...)
-
-                
-
-
-			}
-			else if (isComputer(black, difficulty)) {
-
-
-				// do computer thing
-				// new Computer(...)
-
-
+			else if (isComputer(white, level)) {
+				if (level == 1) {
+					p1 = new One{0, level};
+				} else if (level == 2) {
+					p1 = new Two{0,level};
+				} else if (level == 3) {
+					p1 = new Three{0,level};
+				} else {
+					p1 = new Four{0,level};
+				}
 			}
 			else {
 				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
-				correctinput = false;
+				cout << "Please re-enter game start command." << endl;
+				return;
 			}
 
-    
-            if (correctinput) {
+			if (black == "human") {
+				p1 = new Human{1};
+			}
+			else if (isComputer(black, level)) {
+				if (level == 1) {
+					p1 = new One{1, level};
+				} else if (level == 2) {
+					p1 = new Two{1,level};
+				} else if (level == 3) {
+					p1 = new Three{1,level};
+				} else {
+					p1 = new Four{1,level};
+				}
+			}
+			else {
+				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
+				cout << "Please re-enter game start command." << endl;
+				// reset p1
+				delete p1;
+				return;
+			}
 
-                
-        mode = "game";
-        board = new Board;
-        score = new Score;
-		cout << "Started new game!" << endl;
+			// begin the game
+			mode = "game";
 
-        // find a way to update the graphics as well?
-
-
-            }
-
-
-
+			p1->claimPieces();
+			p2->claimPieces();
+			cout << "Started new game!" << endl;
+			return;
 
 
         } else if (command == "setup") {
-
-
             mode = "setup";
+			cout << "Entered set up mode..." << endl;
+			return;
+        } else {
+			cout << "Unrecognized command. Please try again." << endl;
+			return;
+		}
 
-
-
-        }
-
-    
-
-
-
-
-
-
+	// assumes that game has started and board has been set up
     } else if (mode == "game") {
-
-				if (command == "resign") {
-
-					 // if the command is "resign"
-					// resign(...)
-
-						/*
-						*
-						*  resign concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a
-						*   game.
-						*
-						*/
-
-					if (whitemoves) {
-						cout << "Black wins!" << endl;
-						score.blackWin();
-
-					}
-					else {
-						cout << "White wins!" << endl;
-						score.whiteWin();
-					}
-					mode = "menu";
+		if (command == "resign") {
+			if (whitemoves) {
+				cout << "Black wins!" << endl;
+				score->blackWin();
+			}
+			else {
+				cout << "White wins!" << endl;
+				score->whiteWin();
+			}
+			// reset game?
+			mode = "menu";
+		}
+		else if (command == "move") {
+			// if the command is "move"
+			int end;
+			p1->unsetStatus();
+			p2->unsetStatus();
+			if (whitemoves) {
+				end = p1->checkStatus();
+				p2->checkStatus();
+			} else {
+				end = p2->checkStatus();
+				p1->checkStatus();
+			}
+			if (end == 1) {
+				// the player that is about to move
+				// is checkmated
+				if (whitemoves) {
+					score->blackWin();
+				} else {
+					score->whiteWin();
 				}
-				else if (command == "move") {
-					// if the command is "move"
-					string from;
-					string to;
-					linestream >> from >> to;
-
-
-					if (isValidPosition(from) && isValidPosition(to)) { // is valid positions
-
-						// do add thing here
-
+				//reset
+			} else if (end ==2) {
+				// stalemate
+				score->tie();
+				//reset
+			} else { // moves available
+				if (whitemoves) {
+					if (p1->getType() == 0) {
+						// human
+						string from;
+						string to;
+						linestream >> from >> to;
+						if (isValidPosition(from) && isValidPosition(to)) { 
+							int status = p1->move(from[0], from[1], to[0], to[1]);
+							if (status == 0) {
+								cout << "Illegal move attempted. Please try another." << end;
+								return;
+							}
+						} else {
+							cout << "Unrecognized move. Please re-enter." << endl;
+							return;
+						}
+					} else {
+						// computer
+						p1->move(0,0,0,0);
+						return;
 					}
-					else {
-						cout << "ERROR: invalid position/s." << endl;
-
+				} else { // black's turn
+					if (p2->getType() == 0) {
+						// human
+						string from;
+						string to;
+						linestream >> from >> to;
+						if (isValidPosition(from) && isValidPosition(to)) { 
+							int status = p2->move(from[0], from[1], to[0], to[1]);
+							if (status == 0) {
+								cout << "Illegal move attempted. Please try another." << end;
+								return;
+							}
+						} else {
+							cout << "Unrecognized move. Please re-enter." << endl;
+							return;
+						}
+					} else {
+						// computer
+						p2->move(0,0,0,0);
+						return;
 					}
-
-
-					// move(...)
-
-		/*
-
-		* A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For
-		* example: move e2 e4. Castling would specified by the two-square move for the king: move e1 g1 or move e1
-		* c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7
-		* e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a
-		* move.
-
-		*/
-
 				}
-				else if (command == "setup") {
-					cout << "ERROR: setup can only be called before a game has started." << endl;
-				}
-				else {
-					cout << "ERROR: Invalid game command." << endl;
-				}
-
-
-
-
+			}
+		} else if (command == "setup") {
+			cout << "ERROR: setup can only be called before a game has started." << endl;
+			return;
+		} else {
+			cout << "ERROR: Invalid game command." << endl;
+			return;
+		}
     } else if (mode == "setup") {
 
+		cout << "Current Board Configuration:" << endl;
+		this->update();
 
-				cout << "Current Board Configuration:" << endl;
+		if (command == "+") {
+			string piece;
+			string position;
+			if (cin >> piece >> position);
 
-				board.print();
-
-
-				string black;
-				int difficulty;
-
-				if (command == "+") {
-
-					string piece;
-					string position;
-					command >> piece >> position;
-
-					if (isValidPiece(piece)) {
-						if (isValidPosition(position)) {
-
-							board.insertNewPiece(piece, position);
-
-							// do add thing here
-
-						}
-
-					}
-					else {
-
-						cout << "ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
-					}
-				}
-				else if (command == "-") {
-					string position;
-					command >> position;
-					if (isValidPosition(position)) {
-						board.removePiece(position);
-					}
-					else {
-
-						cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
-					}
-				}
-				else if (command == "=") {
-
-					string color;
-
-					command >> color;
-
-					if (color == "white") {
-
-						// white's turn to go next
-
-					}
-					else if (color == "black") {
-
-						// black's turn to go next
-
-					}
-				}
-				else if (command == "done") {
-					// verify the board
-
-					if (board.verifySetup()) {
-
-						// add thing here
-
-						 mode = "game"; // we are now in the game mode
-
-					}
-					else {
-						cout << "ERROR: Setup conditions are not satisfied." << endl;
-
-					}
-				}
-
-
-
-
-
+			if (isValidPiece(piece) && isValidPosition(position)) {
+				board->insertP(piece, position);
+				insertNewPiece(piece, position);
+				cout << "Inserted piece at: " << position;
+			}
+			else {
+				cout << "ERROR: Invalid. Must be [a-h][1-8] and ";
+				cout << "piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
+			}
+			return;
+		}
+		else if (command == "-") {
+			string position;
+			if (cin >> position);
+			if (isValidPosition(position)) {
+				removePiece(position);
+				board->removeP(position);
+				cout << "Removed piece at: " << position;
+			}
+			else {
+				cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
+			}
+			return;
+		}
+		else if (command == "=") {
+			string color;
+			if (cin >> color);
+			if (color == "white") {
+				whitemoves = true;
+			}
+			else if (color == "black") {
+				whitemoves = false;
+			} else {
+				cout << "Invalid color, please try again." << endl;
+			}
+			return;
+		}
+		else if (command == "done") {
+			// verify the board
+			if (1) {
+					mode = "menu"; 
+					cout << "Game-setup Complete!" << endl;
+			}
+			else {
+				cout << "ERROR: Setup conditions are not satisfied." << endl;
+				cout << "Please continue set-up" << endl;
+			}
+			return;
+		} else {
+			cout << "Unrecognized setup command." << endl;
+			return;
+		}
     }
-
-
-
-
-
-
 }
 
-void Game::update() {
-
-
-
-}
 
 
 void Game::quit() {
-
-
 	// print winning results
-	score->printScore();
+	if (score) {
+		score->printScore();
+	}
 	cout << endl  << "Thanks for playing!" << endl;
-	// delete and free stuff here
-
-
-    delete window;
-    delete board;
-    delete score;
-
-
 }
 
-void Game::running() {
-
+bool Game::running() {
     return isRunning;
-
 }

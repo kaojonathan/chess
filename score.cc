@@ -1,12 +1,5 @@
+#include "score.h"
 #include <iostream>
-#include <fstream> 
-#include <sstream>
-#include <iomanip>
-#include <string>
-#include <utility>
-#include <stdexcept>
-#include <vector>
-#include <score.h>
 using namespace std;
 
 void Score::printScore() {

@@ -5,8 +5,8 @@
 class Two : public Computer {
 
 	void move() override;
-	Two(int side);
-	~Two();
+public:
+	Two(int side, int level);
 
 };
 
