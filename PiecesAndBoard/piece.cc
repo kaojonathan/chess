@@ -2,15 +2,11 @@
 #include <vector>
 #include "piece.h"
 #include "board.h"
-<<<<<<< HEAD
-#include "../players/player.h"
-=======
 #include "../Players/player.h"
->>>>>>> 3af86c7f85ca405a58971bbcffe14f119919c7fd
 using namespace std;
 
 Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, DNA{0} {
-	board->set(x, y, this);
+	board->setPiece(x, y, this);
 }
 
 void Piece::setPos(int col, int row) {

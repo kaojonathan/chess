@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Interface/Game.h"
 
 using namespace std;

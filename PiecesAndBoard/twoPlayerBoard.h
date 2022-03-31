@@ -14,17 +14,15 @@ class twoPlayerBoard : public Board {
 	void removePiece(std::string position) override;
 	Piece* getP(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy) override; // setter
+	// setter
+	void set(int x, int y, Piece * p);
 
 
 public:
 	twoPlayerBoard();
 	~twoPlayerBoard(); // needs implementation
 	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
-
-
-
-	// setter
-	void set(int x, int y, Piece * p);
+	
 
 };
 

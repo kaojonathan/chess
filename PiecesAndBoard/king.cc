@@ -30,14 +30,7 @@ vector<Piece *> King::attackable(pair<int, int> at){
 			res.emplace_back(target);
 		}
 	}
-<<<<<<< HEAD
 	return res;
-=======
-
-	return res;
-
-
->>>>>>> 3af86c7f85ca405a58971bbcffe14f119919c7fd
 }
 
 

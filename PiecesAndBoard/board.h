@@ -14,6 +14,7 @@ class Board {
 		virtual Piece* getP(int, int) = 0;
 		virtual void movePiece(int x, int y, int newx, int newy) = 0; // setter
 		virtual bool validPos (int, int) = 0;
+		virtual void set(int x, int y, Piece * p);
 
 	public:
 		virtual ~Board();
@@ -35,6 +36,9 @@ class Board {
 		}
 		void printBoard() {
 			print();
+		}
+		void setPiece(int x, int y, Piece * p) {
+			set(x,y,p);
 		}
 };
 

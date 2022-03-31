@@ -18,19 +18,11 @@ vector<std::pair<int, int>> Knight::getPos(int col, int row) {
 	for (int i = 1; i <= 2; i += 1){
 		pair<int,int>curPos{col+i,row+(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
-<<<<<<< HEAD
-		curPos = pair<int,int>{col+i,row-(3-i)};
-		if (validPos(curPos)) res.emplace_back(curPos);
-		curPos = pair<int,int>{col-i,row-(3-i)};
-		if (validPos(curPos)) res.emplace_back(curPos);
-		curPos = pair<int,int>{col-i,row+(3-i)};
-=======
 		curPos = pair<int, int>{col+i,row-(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
 		curPos = pair<int, int>{col-i,row-(3-i)};
 		if (validPos(curPos)) res.emplace_back(curPos);
 		curPos = pair<int, int>{col-i,row+(3-i)};
->>>>>>> 3af86c7f85ca405a58971bbcffe14f119919c7fd
 		if (validPos(curPos)) res.emplace_back(curPos);
 	}
 	return res;
