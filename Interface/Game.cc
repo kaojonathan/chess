@@ -313,7 +313,9 @@ void Game::handleEvents() {
 
 			// begin the game
 			mode = "game";
-			board->originalSetup(); // default setup
+			// default setup
+			p1->init();
+			p2->init();
 			cout << "Started new game!" << endl;
 			return;
 
@@ -468,7 +470,7 @@ void Game::handleEvents() {
 		else if (command == "done") {
 			// verify the board
 			if (1) {
-					mode = "game"; // we are now in the game mode
+					mode = "menu"; // we are now return to menu mode, await "game"
 					cout << "Game-setup Complete!" << endl;
 			}
 			else {

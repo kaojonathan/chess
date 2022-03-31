@@ -6,7 +6,6 @@
 class Board {
 	protected:
 		// default board set up
-		virtual void origSetup() = 0;
 		virtual void print() = 0; // get rid of?
 		virtual bool end() = 0; // needs implementation
 		virtual void insertNewPiece(std::string validpiece, std::string position) = 0;
@@ -19,9 +18,6 @@ class Board {
 	public:
 		virtual ~Board();
 		bool checkPos(int, int);
-		void originalSetup() {
- 			origSetup();
-		}
 		Piece* getPiece(int x , int y) {
 			return getP(x, y);
 		}
