@@ -298,7 +298,10 @@ void Game::update() {
 		// clear both squares
 		// redraw to promoted piece
 	} else { // (type == "enpassant")
-		//
+		// clear oldPos
+		// erase at newPosx, oldPosy (location of capt pawn)
+		// draw pawn in newPos
+
 	}
 	*/
 
