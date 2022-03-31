@@ -26,26 +26,25 @@ class Game {
     int tracked; // tracks number of moves reflected on the window
     std::vector<std::string> history; 
 
-    public:
+    void printBoard();
+    void reset();
+    void fill(int x, int y);
+    void drawPiece(std::string piece, int x, int y);
+    void insertNewPiece(std::string validpiece, std::string position);
+    void removePiece(std::string position);
 
+    void displayOrigSetup();
+    void displayCheck(bool isWhite);
+    void displayStalemate();
+    void displayWin(bool isWhite);
+
+    public:
         Game();
         ~Game();
-        void reset();
         void init(); // starts a game window
         void handleEvents();
         void update();
         void quit(); // quits the game and deallocates memory
-
-        void fill(int x, int y);
-        void drawPiece(std::string piece, int x, int y);
-        void insertNewPiece(std::string validpiece, std::string position);
-        void removePiece(std::string position);
-
-        void displayOrigSetup();
-        
-        void displayCheck(bool isWhite);
-        void displayStalemate();
-        void displayWin(bool isWhite);
         bool running();
 
 };

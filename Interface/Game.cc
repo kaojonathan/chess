@@ -112,6 +112,44 @@ void Game::removePiece(std::string position) {
 	fill(position[0] - 'a', 8 - (position[1] - '0'));
 }
 
+// prints the board
+void Game::printBoard()
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		cout << 8 - i << ' ';
+		for (int j = 0; j < 8; ++j)
+		{
+			if (board[i][j] == nullptr)
+			{ // empty tile
+				if ((i + j) % 2)
+				{ // if sum is odd it's a white tile
+					cout << '_';
+				}
+				else
+				{ // otherwise it's a black tile
+
+					cout << ' ';
+				}
+			}
+			else
+			{ // piece is on it
+				cout << board[i][j]->getRep();
+			}
+		}
+		cout << endl;
+	}
+	cout << endl
+		 << "  ";
+	for (int i = 0; i < 8; ++i)
+	{
+
+		char s = 'a' + i;
+		cout << s;
+	}
+	cout << endl;
+}
+
 	
 void Game::displayCheck(bool isWhite) {
 
@@ -231,7 +269,7 @@ void Game::init() {
 // updates the graphics and text display
 void Game::update() {
 	// display text
-	board->printBoard();
+	printBoard();
 	// update window grphics here...
 	int totalMoves = history.size();
 	while (tracked < totalMoves) {

@@ -5,8 +5,6 @@
 
 class Board {
 	protected:
-		// default board set up
-		virtual void print() = 0; // get rid of?
 		virtual bool end() = 0; // needs implementation
 		virtual void insertNewPiece(std::string validpiece, std::string position) = 0;
 		virtual void removePiece(std::string position)= 0;
@@ -32,9 +30,6 @@ class Board {
 		}
 		void insertP(std::string p, std::string pos) {
 			insertNewPiece(p, pos);
-		}
-		void printBoard() {
-			print();
 		}
 		void setPiece(int x, int y, Piece * p) {
 			set(x,y,p);
