@@ -12,7 +12,7 @@ using namespace std;
 
 twoPlayerBoard::twoPlayerBoard() {}
 twoPlayerBoard::~twoPlayerBoard() {}
-bool twoPlayerBoard::end() {};
+bool twoPlayerBoard::end(){};
 
 Piece *twoPlayerBoard::getP(int x, int y)
 {
@@ -26,7 +26,7 @@ bool twoPlayerBoard::validPos(int x, int y)
 }
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
-{ 
+{
 	// check if piece is null
 	if (board[y][x])
 	{
@@ -42,8 +42,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 				 (board[newy][newx]->getRep() <= "Z")))
 			{
 
-		
-
 				board[newy][newx] = board[y][x];
 				board[y][x] = nullptr;
 				board[newy][newx]->setPos(newy, newx);
@@ -58,7 +56,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 				board[y][x] = nullptr;
 				board[newy][newx]->setPos(newy, newx);
 			}
-
 		}
 		else if (result == 1)
 		{
@@ -66,7 +63,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 			board[newy][newx] = board[y][x];
 			board[y][x] = nullptr;
 			board[newy][newx]->setPos(newy, newx);
-
 		}
 		else if (result == 0)
 		{
@@ -75,7 +71,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 		}
 	}
 }
-
 
 // move to interface
 void twoPlayerBoard::print()
@@ -115,37 +110,60 @@ void twoPlayerBoard::print()
 	cout << endl;
 }
 
-
 void twoPlayerBoard::insertNewPiece(string name, string position)
 {
 	int row = 8 - (position[1] - '0');
 	int col = position[0] - 'a';
-	if (board[row][col]) {
+	if (board[row][col])
+	{
 		delete board[row][col];
 	}
-	if (name == "K") {
+	if (name == "K")
+	{
 		new King{1, col, row, this};
-	} else if (name == "k") {
+	}
+	else if (name == "k")
+	{
 		new King{0, col, row, this};
-	} else if (name == "Q") {
+	}
+	else if (name == "Q")
+	{
 		new Queen{0, col, row, this};
-	} else if (name == "q") {
+	}
+	else if (name == "q")
+	{
 		new Queen{0, col, row, this};
-	} else if (name == "R") {
+	}
+	else if (name == "R")
+	{
 		new Rook{0, col, row, this};
-	} else if (name == "r") {
+	}
+	else if (name == "r")
+	{
 		new Rook{0, col, row, this};
-	} else if (name == "P") {
+	}
+	else if (name == "P")
+	{
 		new Pawn{0, col, row, this};
-	} else if (name == "p") {
+	}
+	else if (name == "p")
+	{
 		new Pawn{0, col, row, this};
-	} else if (name == "B") {
+	}
+	else if (name == "B")
+	{
 		new Bishop{0, col, row, this};
-	} else if (name == "b") {
+	}
+	else if (name == "b")
+	{
 		new Bishop{0, col, row, this};
-	} else if (name == "N") {
+	}
+	else if (name == "N")
+	{
 		new Knight{0, col, row, this};
-	} else if (name == "n") {
+	}
+	else if (name == "n")
+	{
 		new Knight{0, col, row, this};
 	}
 }
@@ -160,6 +178,94 @@ void twoPlayerBoard::removePiece(string position)
 	}
 }
 
-void twoPlayerBoard::set(int x, int y, Piece * p) {
+void twoPlayerBoard::set(int x, int y, Piece *p)
+{
 	board[y][x] = p;
+}
+
+bool twoPlayerBoard::verifySetup()
+{ // uses the character matrix
+	int numWhiteKings = 0;
+	int numBlackKings = 0;
+
+	Piece *whiteKing;
+	Piece *blackKing;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			if (board[i][j])
+			{
+
+				// check one white and black king
+
+				if (board[i][j]->getRep() == "k")
+				{
+					blackKing = board[i][j];
+					++numBlackKings;
+				}
+				else if (board[i][j]->getRep() == "K")
+				{
+					whiteKing = board[i][j];
+					++numWhiteKings;
+				}
+
+				// check no pawns on first or last row of board
+
+				if (i == 0 || i == 7)
+				{
+					if (board[i][j]->getRep() == "P" || board[i][j]->getRep() == "p")
+					{				  // if pawn exists on first or last row of board
+						return false; // false
+					}
+				}
+			}
+		}
+	}
+
+	if (numWhiteKings != 1 || numBlackKings != 1)
+	{
+
+		return false;
+	}
+	else
+	{ // if these conditions are satisfied
+
+		// check if neither king is in check
+
+		for (int i = 0; i < 8; ++i)
+		{
+			for (int j = 0; j < 8; ++j)
+			{
+
+				if (board[i][j])
+				{
+
+					if (board[i][j]->canAttack(std::pair<int, int>{whiteKing->getX(), whiteKing->getY()}))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < 8; ++i)
+		{
+			for (int j = 0; j < 8; ++j)
+			{
+
+				if (board[i][j])
+				{
+
+					if (board[i][j]->canAttack(std::pair<int, int>{blackKing->getX(), blackKing->getY()}))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
 }

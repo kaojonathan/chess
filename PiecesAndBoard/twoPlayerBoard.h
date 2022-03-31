@@ -16,6 +16,8 @@ class twoPlayerBoard : public Board {
 	// setter
 	void set(int x, int y, Piece * p);
 
+	bool verifySetup() override;
+
 
 public:
 	twoPlayerBoard();

@@ -15,6 +15,8 @@ class Board {
 		virtual bool validPos (int, int) = 0;
 		virtual void set(int x, int y, Piece * p);
 
+		virtual bool verifySetup() = 0;
+
 	public:
 		virtual ~Board();
 		bool checkPos(int, int);
@@ -35,6 +37,9 @@ class Board {
 		}
 		void setPiece(int x, int y, Piece * p) {
 			set(x,y,p);
+		}
+		bool verify() {
+			return verifySetup();
 		}
 };
 
