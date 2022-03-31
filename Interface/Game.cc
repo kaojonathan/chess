@@ -40,21 +40,20 @@ Game::~Game() {
 
 
 
-// isComputer checks if the 'player' is a "computer". if it is, also updates level to give the level of the computer
-bool isComputer(string player, int& level)
+// returns the level of the computer, otherwise returns 0
+int isComputer(string player)
 {
 	if (player.substr(0, 8) == "computer")
 	{
 		if ((player[8] = '[') && (player[10] = ']')) {
 			if ('1' <= player[9] && player[9] <= 4) {
-				level = player[9];
-				return true;
+				return player[9];	
 			}
 		}
 	}
 	else
 	{
-		return false;
+		return 0;
 	}
 }
 
@@ -307,45 +306,41 @@ void Game::handleEvents() {
         if (command == "game") {
 			string white;
 			string black;
-			int level;
-			linestream >> white >> black;
-
+			linestream >> white >> black;	
+			
 			// check player types
-			if (white == "human") {
-				p1 = new Human{0};
-			}
-			else if (isComputer(white, level)) {
-				if (level == 1) {
-					p1 = new One{0, level};
-				} else if (level == 2) {
-					p1 = new Two{0,level};
-				} else if (level == 3) {
-					p1 = new Three{0,level};
-				} else {
-					p1 = new Four{0,level};
-				}
-			}
-			else {
-				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\n" +
-									 "Please re-enter game start command."};
-			}
+			int whiteLevel = isComputer(white);
+			int blackLevel = isComputer(black);
 
-			if (black == "human") {
-				p1 = new Human{1};
-			}
-			else if (isComputer(black, level)) {
-				if (level == 1) {
-					p1 = new One{1, level};
-				} else if (level == 2) {
-					p1 = new Two{1,level};
-				} else if (level == 3) {
-					p1 = new Three{1,level};
-				} else {
-					p1 = new Four{1,level};
-				}
-			}
-			else {
-				delete p1;
+			if (white == "human" || whiteLevel) && 
+				(black == "human" || blackLevel) {
+					if (white == "human") {
+						p1 = new Human{0};
+					} else {
+						if (level == 1) {
+							p1 = new One{0, level};
+						} else if (level == 2) {
+							p1 = new Two{0,level};
+						} else if (level == 3) {
+							p1 = new Three{0,level};
+						} else {
+							p1 = new Four{0,level};
+						}
+					}
+					if (black == "human") {
+						p2 = new Human{1};
+					} else {
+						if (level == 1) {
+							p2 = new One{1, level};
+						} else if (level == 2) {
+							p2 = new Two{1,level};
+						} else if (level == 3) {
+							p2 = new Three{1,level};
+						} else {
+							p2 = new Four{1,level};
+						}
+					}
+			} else {
 				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\n" +
 									 "Please re-enter game start command."};
 			}
