@@ -1,5 +1,5 @@
 #include "Interface/Game.h"
-
+#include <stdexcept>
 using namespace std;
 
 
@@ -7,24 +7,23 @@ using namespace std;
 // (type "game loop" and do some research)
 int main(int argc, const char * argv[]) { 
 
-	Game *game = new Game;
+	Game game;
 
-	game->init(); // initialize the game
+	game.init(); // initialize the game
 
-	while (game->running()) { // the game loop
-
+	while (game.running()) { // the game loop
 		try {
 			// handle input commands
-			game->handleEvents(); 
+			game.handleEvents(); 
 			// update the the graphic model and text model
-			game->update(); 
-		} catch (...) {
-			// fill in with runtime error
+			game.update(); 
+		} catch (runtime_error &e) {
+			cout << e.what() << endl;
 		}
 
 	}
 
-	game->quit();
+	game.quit();
 	delete game;
 	return 0;
 

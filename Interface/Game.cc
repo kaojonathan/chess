@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <string>
 #include <unistd.h>
+#include <stdexcept>
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
 #include "../Graphics/window.h"
@@ -243,6 +244,7 @@ void Game::update() {
 }
 
 // resets the board to start a new game
+// occurs after resign, checkmate, stalemate
 void Game::reset() {
 	// board reset, please enter setup or start a new game
 }
@@ -286,9 +288,8 @@ void Game::handleEvents() {
 				}
 			}
 			else {
-				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
-				cout << "Please re-enter game start command." << endl;
-				return;
+				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\n" +
+									 "Please re-enter game start command."};
 			}
 
 			if (black == "human") {
@@ -306,11 +307,9 @@ void Game::handleEvents() {
 				}
 			}
 			else {
-				cout << "ERROR: Invalid player type. Must be 'human' or 'computer[1-4]'" << endl;
-				cout << "Please re-enter game start command." << endl;
-				// reset p1
 				delete p1;
-				return;
+				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\n" +
+									 "Please re-enter game start command."};
 			}
 
 			// begin the game
@@ -327,8 +326,7 @@ void Game::handleEvents() {
 			cout << "Entered set up mode..." << endl;
 			return;
         } else {
-			cout << "Unrecognized command. Please try again." << endl;
-			return;
+			throw runtime_error{"Unrecognized command. Please try again."};
 		}
 
 	// assumes that game has started and board has been set up
@@ -380,12 +378,10 @@ void Game::handleEvents() {
 						if (isValidPosition(from) && isValidPosition(to)) { 
 							int status = p1->move(from[0], from[1], to[0], to[1]);
 							if (status == 0) {
-								cout << "Illegal move attempted. Please try another." << end;
-								return;
+								throw runtime_error{"Illegal move attempted. Please try another."};
 							}
 						} else {
-							cout << "Unrecognized move. Please re-enter." << endl;
-							return;
+							throw runtime_error{"Unrecognized move. Please re-enter."};
 						}
 					} else {
 						// computer
@@ -401,12 +397,10 @@ void Game::handleEvents() {
 						if (isValidPosition(from) && isValidPosition(to)) { 
 							int status = p2->move(from[0], from[1], to[0], to[1]);
 							if (status == 0) {
-								cout << "Illegal move attempted. Please try another." << end;
-								return;
+								throw runtime_error{"Illegal move attempted. Please try another."};
 							}
 						} else {
-							cout << "Unrecognized move. Please re-enter." << endl;
-							return;
+							throw runtime_error{"Unrecognized move. Please re-enter."};
 						}
 					} else {
 						// computer
@@ -416,11 +410,9 @@ void Game::handleEvents() {
 				}
 			}
 		} else if (command == "setup") {
-			cout << "ERROR: setup can only be called before a game has started." << endl;
-			return;
+			throw runtime_error{"ERROR: setup can only be called before a game has started."};
 		} else {
-			cout << "ERROR: Invalid game command." << endl;
-			return;
+			throw runtime_error{"ERROR: Invalid game command."};
 		}
     } else if (mode == "setup") {
 
@@ -436,12 +428,12 @@ void Game::handleEvents() {
 				board->insertP(piece, position);
 				insertNewPiece(piece, position);
 				cout << "Inserted piece at: " << position;
+				return;
 			}
 			else {
-				cout << "ERROR: Invalid. Must be [a-h][1-8] and ";
-				cout << "piece r, n, b, q, k, p, R, N, B, Q, K, P" << endl;
+				throw runtime_error{"ERROR: Invalid. Must be [a-h][1-8] and " +
+									"piece r, n, b, q, k, p, R, N, B, Q, K, P"};
 			}
-			return;
 		}
 		else if (command == "-") {
 			string position;
@@ -450,39 +442,40 @@ void Game::handleEvents() {
 				removePiece(position);
 				board->removeP(position);
 				cout << "Removed piece at: " << position;
+				return;
 			}
 			else {
-				cout << "ERROR: Invalid position. Must be [a-h][1-8]" << endl;
+				throw runtime_error{"ERROR: Invalid position. Must be [a-h][1-8]"};
 			}
-			return;
 		}
 		else if (command == "=") {
 			string color;
 			if (cin >> color);
 			if (color == "white") {
 				whitemoves = true;
+				return;
 			}
 			else if (color == "black") {
 				whitemoves = false;
+				return;
 			} else {
-				cout << "Invalid color, please try again." << endl;
+				throw runtime_error{"Invalid color, please try again."};
 			}
-			return;
 		}
 		else if (command == "done") {
 			// verify the board
-			if (1) {
+			if (board->verify()) {
 					mode = "menu"; 
 					cout << "Game-setup Complete!" << endl;
+					return;
 			}
 			else {
-				cout << "ERROR: Setup conditions are not satisfied." << endl;
-				cout << "Please continue set-up" << endl;
+				throw runtime_error{"ERROR: Setup conditions are not satisfied.\n" +
+									"Please continue set-up"};
 			}
-			return;
+			
 		} else {
-			cout << "Unrecognized setup command." << endl;
-			return;
+			throw runtime_error{"Unrecognized Command."};
 		}
     }
 }
