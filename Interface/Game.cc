@@ -222,6 +222,10 @@ void Game::init() {
 		window->drawString(35, 27 + (50 * (9 - i)), s);
 		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
+
+	// set up the actual board with default pieces
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	board->origSetup();
 }
 
 
@@ -242,7 +246,7 @@ void Game::update() {
 
 // resets the board to start a new game
 void Game::reset() {
-
+	// board reset, please enter setup or start a new game
 }
 
 // handles a single command at a time
@@ -313,9 +317,9 @@ void Game::handleEvents() {
 
 			// begin the game
 			mode = "game";
-			// default setup
-			p1->init();
-			p2->init();
+
+			p1->claimPieces();
+			p2->claimPieces();
 			cout << "Started new game!" << endl;
 			return;
 
@@ -470,7 +474,7 @@ void Game::handleEvents() {
 		else if (command == "done") {
 			// verify the board
 			if (1) {
-					mode = "menu"; // we are now return to menu mode, await "game"
+					mode = "menu"; 
 					cout << "Game-setup Complete!" << endl;
 			}
 			else {
