@@ -31,7 +31,7 @@ int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
             return 2;
         }
-    }
+    } 
     else
     {
         return 0;
