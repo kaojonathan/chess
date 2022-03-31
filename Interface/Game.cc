@@ -108,11 +108,7 @@ void Game::insertNewPiece(std::string validpiece, std::string position) {
 // draws blank square over position
 void Game::removePiece(std::string position) {
 	// clears out square if a piece exists 
-	// !!!!! MAY NOT WORK IF PIECE HAS ALREADY BEEN DELETED?!!!
-	if (board->getPiece(position[0] - 'a',8 - (position[1] - '0')))
-	{
-		fill(position[0] - 'a', 8 - (position[1] - '0'));
-	}
+	fill(position[0] - 'a', 8 - (position[1] - '0'));
 }
 
 	

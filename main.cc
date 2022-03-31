@@ -12,10 +12,14 @@ int main(int argc, const char * argv[]) {
 	game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
-		// handle input commands
-		game->handleEvents(); 
-		// update the the graphic model and text model
-		game->update(); // maybe have this have parameter move to minimize graphic load
+		try {
+			// handle input commands
+			game->handleEvents(); 
+			// update the the graphic model and text model
+			game->update(); 
+		} catch (...) {
+			// fill in with runtime error
+		}
 	}
 
 	game->quit();
