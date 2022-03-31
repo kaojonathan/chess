@@ -225,6 +225,8 @@ void Game::init() {
 }
 
 
+
+
 // updates the graphics and text display
 void Game::update() {
 	// display text

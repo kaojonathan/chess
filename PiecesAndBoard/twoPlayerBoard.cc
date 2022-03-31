@@ -2,6 +2,7 @@
 #include <string>
 #include "piece.h"
 #include "twoPlayerBoard.h"
+#include "board.h"
 #include "rook.h"
 #include "bishop.h"
 #include "king.h"
@@ -12,7 +13,7 @@ using namespace std;
 
 twoPlayerBoard::twoPlayerBoard() {}
 twoPlayerBoard::~twoPlayerBoard() {}
-bool twoPlayerBoard::end(){};
+bool twoPlayerBoard::end() {}
 
 Piece *twoPlayerBoard::getP(int x, int y)
 {
@@ -120,51 +121,51 @@ void twoPlayerBoard::insertNewPiece(string name, string position)
 	}
 	if (name == "K")
 	{
-		new King{1, col, row, this};
+		board[row][col] = new King{0, col, row, this};
 	}
 	else if (name == "k")
 	{
-		new King{0, col, row, this};
+		board[row][col] = new King{1, col, row, this};
 	}
 	else if (name == "Q")
 	{
-		new Queen{0, col, row, this};
+		board[row][col] = new Queen{0, col, row, this};
 	}
 	else if (name == "q")
 	{
-		new Queen{0, col, row, this};
+		board[row][col] = new Queen{1, col, row, this};
 	}
 	else if (name == "R")
 	{
-		new Rook{0, col, row, this};
+		board[row][col] = new Rook{0, col, row, this};
 	}
 	else if (name == "r")
 	{
-		new Rook{0, col, row, this};
+		board[row][col] = new Rook{1, col, row, this};
 	}
 	else if (name == "P")
 	{
-		new Pawn{0, col, row, this};
+		board[row][col] = new Pawn{0, col, row, this};
 	}
 	else if (name == "p")
 	{
-		new Pawn{0, col, row, this};
+		board[row][col] = new Pawn{1, col, row, this};
 	}
 	else if (name == "B")
 	{
-		new Bishop{0, col, row, this};
+		board[row][col] = new Bishop{0, col, row, this};
 	}
 	else if (name == "b")
 	{
-		new Bishop{0, col, row, this};
+		board[row][col] = new Bishop{1, col, row, this};
 	}
 	else if (name == "N")
 	{
-		new Knight{0, col, row, this};
+		board[row][col] = new Knight{0, col, row, this};
 	}
 	else if (name == "n")
 	{
-		new Knight{0, col, row, this};
+		board[row][col] = new Knight{1, col, row, this};
 	}
 }
 
@@ -267,5 +268,37 @@ bool twoPlayerBoard::verifySetup()
 		}
 
 		return true;
+	}
+}
+
+void twoPlayerBoard::origSetup()
+{
+
+	board[0][0] = new Rook{1, 0, 0, this};
+	board[0][1] = new Knight{1, 1, 0, this};
+	board[0][2] = new Bishop{1, 2, 0, this};
+	board[0][3] = new Queen{1, 3, 0, this};
+	board[0][4] = new King{1, 4, 0, this};
+	board[0][5] = new Bishop{1, 5, 0, this};
+	board[0][6] = new Knight{1, 6, 0, this};
+	board[0][7] = new Rook{1, 7, 0, this};
+
+	for (int i = 0; i < 8; ++i)
+	{
+		board[1][i] = new Pawn{1, i, 1, this};
+	}
+
+	board[7][0] = new Rook{0, 0, 7, this};
+	board[7][1] = new Knight{0, 1, 7, this};
+	board[7][2] = new Bishop{0, 2, 7, this};
+	board[7][3] = new Queen{0, 3, 7, this};
+	board[7][4] = new King{0, 4, 7, this};
+	board[7][5] = new Bishop{0, 5, 7, this};
+	board[7][6] = new Knight{0, 6, 7, this};
+	board[7][7] = new Rook{0, 7, 7, this};
+
+	for (int i = 0; i < 8; ++i)
+	{
+		board[6][i] = new Pawn{0, i, 6, this};
 	}
 }

@@ -16,6 +16,7 @@ class Board {
 		virtual void set(int x, int y, Piece * p);
 
 		virtual bool verifySetup() = 0;
+		virtual void origSetup() = 0;
 
 	public:
 		virtual ~Board();
@@ -40,6 +41,9 @@ class Board {
 		}
 		bool verify() {
 			return verifySetup();
+		}
+		void oSetup() {
+			origSetup();
 		}
 };
 
