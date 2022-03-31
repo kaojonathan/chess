@@ -23,7 +23,7 @@ Piece *twoPlayerBoard::getP(int x, int y)
 // returns true of the (x, y) position is in the board
 bool twoPlayerBoard::validPos(int x, int y)
 {
-	return 0 <= x && 0 <= y && x <= 8 && y <= 8;
+	return 0 <= x && 0 <= y && x < 8 && y < 8;
 }
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
