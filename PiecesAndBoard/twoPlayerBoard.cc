@@ -47,7 +47,7 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 				 (board[newy][newx]->getRep() <= "Z")))
 			{
 
-				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
+		
 
 				board[newy][newx] = board[y][x];
 				board[y][x] = nullptr;
@@ -58,8 +58,6 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 					 (("a" <= board[newy][newx]->getRep()) &&
 					  (board[newy][newx]->getRep() <= "z")))
 			{
-
-				delete board[newy][newx]; // we can make it track the number of pieces left by making the destructor body decrement a field. (I didn't implement yet)
 
 				board[newy][newx] = board[y][x];
 				board[y][x] = nullptr;
