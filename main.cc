@@ -12,6 +12,7 @@ int main(int argc, const char * argv[]) {
 	game->init(); // initialize the game
 
 	while (game->running()) { // the game loop
+
 		try {
 			// handle input commands
 			game->handleEvents(); 
@@ -20,6 +21,7 @@ int main(int argc, const char * argv[]) {
 		} catch (...) {
 			// fill in with runtime error
 		}
+
 	}
 
 	game->quit();

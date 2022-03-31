@@ -27,6 +27,7 @@ class Game {
     std::vector<std::string> history; 
 
     public:
+
         Game();
         ~Game();
         void reset();
@@ -46,6 +47,7 @@ class Game {
         void displayStalemate();
         void displayWin(bool isWhite);
         bool running();
+
 };
 
 #endif
