@@ -9,6 +9,9 @@ Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, up
 	board->setPiece(x, y, this);
 }
 
+
+Piece::~Piece() {}
+
 void Piece::setPos(int col, int row) {
 	x = col;
 	y = row;

@@ -33,7 +33,5 @@ int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
         }
     } 
     else
-    {
         return 0;
-    }
 }

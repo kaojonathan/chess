@@ -47,6 +47,7 @@ class Piece {
 
     public:
         Piece(int side, int x, int y, Board *);
+        virtual ~Piece();
         int getX();
         int getY();
         int getSide();

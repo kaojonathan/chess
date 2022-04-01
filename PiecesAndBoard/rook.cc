@@ -18,7 +18,7 @@ void Rook::nUpdate() {
 
 
 std::vector<Piece *> Rook::attackable(std::pair<int, int> at){
-	dScan(at, 2);
+	return dScan(at, 2);
 }
 
 
