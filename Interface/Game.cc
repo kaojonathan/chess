@@ -472,11 +472,13 @@ void Game::handleEvents()
 
 			// begin the game
 			mode = "game";
-			p1->init(board);
-			p2->init(board);
+			p1->init(board, p2);
+			p2->init(board, p1);
 
 			p1->claimPieces();
 			p2->claimPieces();
+			p1->print();
+			p2->print();
 			cout << "Started new game!" << endl;
 			return;
 		}

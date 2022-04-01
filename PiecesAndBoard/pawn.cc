@@ -11,7 +11,7 @@ Pawn::Pawn(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	representation = (side == 0) ? "P" : "p";
 }
 
-int Pawn::frDir(){ return (side == 0) ? 1 : -1; }
+int Pawn::frDir(){ return (side == 0) ? -1 : 1; }
 
 std::vector<Piece *> Pawn::attackable(std::pair<int, int> at) {
 	vector <Piece *> res {};
