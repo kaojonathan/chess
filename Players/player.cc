@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Player::Player(int side, int type) : side{side}, type{type} {}
+Player::Player(int side, int type) : side{side}, pieces{vector<Piece*>{}}, inactivePieces{vector<Piece*>{}}, type{type} {}
 
 
 // initial player, use only when there is no setup
@@ -57,7 +57,7 @@ void Player::kingCheckedBy(Piece *enemy)
 void Player::removePiece(std::pair<int, int> pos)
 { // removes the piece in position (x, y) and places it in inactivePieces.
 
-    for (int i = 0; i < pieces.size(); ++i)
+    for (size_t i = 0; i < pieces.size(); ++i)
     {
         if ((pieces[i]->getX() == pos.first) && (pieces[i]->getY() == pos.second))
         {
@@ -113,20 +113,14 @@ bool Player::canMove()
     }
     if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0))
         return true;
+    return false;
 }
 
-<<<<<<< HEAD
 // print players fields
-=======
->>>>>>> 4121343669b7168fdfae9b1b828b90ba15b83205
 void Player::print(){
     cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
     for (auto piece : pieces) {
         if (!piece) cout << "something is wrong in Player::claimPieces()" << endl; 
-<<<<<<< HEAD
-        cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
-=======
         else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
->>>>>>> 4121343669b7168fdfae9b1b828b90ba15b83205
     }
 }
