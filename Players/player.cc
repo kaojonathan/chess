@@ -8,6 +8,7 @@
 #include "../PiecesAndBoard/knight.h"
 #include "../PiecesAndBoard/pawn.h"
 #include <utility>
+#include <iostream>
 
 using namespace std;
 
@@ -15,8 +16,9 @@ Player::Player(int side, int type) : side{side}, type{type} {}
 
 
 // initial player, use only when there is no setup
-void Player::init(Board * board){
+void Player::init(Board * board, Player *player){
     gameBoard = board;
+    opponent = player;
 }
 
 // get Piece for each players, only use after setup
@@ -111,4 +113,12 @@ bool Player::canMove()
     }
     if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0))
         return true;
+}
+
+void Player::print(){
+    cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
+    for (auto piece : pieces) {
+        if (!piece) cout << "something is wrong in Player::claimPieces()" << endl; 
+        else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
+    }
 }

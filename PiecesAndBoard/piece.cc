@@ -5,7 +5,7 @@
 #include "../Players/player.h"
 using namespace std;
 
-Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, DNA{0} {
+Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, DNA{0}, gameBoard{board}  {
 	board->setPiece(x, y, this);
 }
 
