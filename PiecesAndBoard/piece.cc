@@ -159,7 +159,7 @@ void Piece::dirScan(int type) {
 							checkRoute = paths.at(j);
 							firstEncounter.at(j)->forcedBy(this);  // update the status of the forced piece.
 						}
-						dirs.at(j) == 0;	
+						dirs.at(j) = 0;	
 					}
 					else {
 						paths.at(j).emplace_back(curPos);
@@ -179,7 +179,7 @@ int Piece::move(int col, int row){
 		if (mv.first == col && mv.first == row) return 1;
 	}
 	for (auto pos : targets){
-		if (pos.first = col && pos.second == row) return 2;
+		if (pos.first == col && pos.second == row) return 2;
 	}
 	return 0;
 }
