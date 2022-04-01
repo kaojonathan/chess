@@ -7,8 +7,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "../PiecesAndBoard/Move/move.h"
 
 
+class twoPlayerBoard;
 class XWindow;
 class Board;
 class Score;
@@ -23,7 +25,7 @@ class Game {
     Player *p1; // white
     Player *p2; // black
     bool whitemoves; // true if it is white's turn
-    std::vector<std::string> history; // change to vector<Move *>
+    std::vector<Move *> history; // change to vector<Move *>
 
     void printBoard();
     void reset();
@@ -39,7 +41,7 @@ class Game {
 
     public:
         Game();
-        ~Game();
+        virtual ~Game();
         void init(); // starts a game window
         void handleEvents();
         void update();

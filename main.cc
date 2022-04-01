@@ -24,7 +24,6 @@ int main(int argc, const char * argv[]) {
 	}
 
 	game.quit();
-	delete game;
 	return 0;
 
 

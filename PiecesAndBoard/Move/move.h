@@ -25,6 +25,8 @@ class Move {
     int getPos1y();
     int getPos2x();
     int getPos2y();
+virtual std::string getPromoType() = 0;
+virtual std::string getCapType() = 0;
 
 };
 

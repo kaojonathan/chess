@@ -7,10 +7,16 @@
 #include <stdexcept>
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
-#include "Move/move.h"
+#include "../PiecesAndBoard/Move/move.h"
 #include "../Graphics/window.h"
 #include "../PiecesAndBoard/board.h"
 #include "../PiecesAndBoard/twoPlayerBoard.h"
+#include "../PiecesAndBoard/king.h"
+#include "../PiecesAndBoard/queen.h"
+#include "../PiecesAndBoard/rook.h"
+#include "../PiecesAndBoard/knight.h"
+#include "../PiecesAndBoard/bishop.h"
+#include "../PiecesAndBoard/pawn.h"
 #include "../Players/one.h"
 #include "../Players/two.h"
 #include "../Players/three.h"
@@ -133,7 +139,7 @@ void Game::printBoard()
 		cout << 8 - i << ' ';
 		for (int j = 0; j < 8; ++j)
 		{
-			if (board[i][j] == nullptr)
+			if (board->getPiece(i, j) == nullptr)
 			{ // empty tile
 				if ((i + j) % 2)
 				{ // if sum is odd it's a white tile
@@ -147,7 +153,7 @@ void Game::printBoard()
 			}
 			else
 			{ // piece is on it
-				cout << board[i][j]->getRep();
+				cout << board->getPiece(i, j)->getRep();
 			}
 		}
 		cout << endl;
@@ -281,7 +287,7 @@ void Game::init()
 		window->drawString(460, 27 + (50 * (9 - i)), s);
 	}
 
-	board->origSetup();
+	board->oSetup();
 	displayOrigSetup();
 }
 
@@ -302,14 +308,14 @@ void Game::update()
 	int newRow = move->getPos2y();
 
 	// extract type of move -
-	string type = move->getType()
+	string type = move->getType();
 
 				  // update graphics accordingly -
 				  if (type == "normal" || type == "capture")
 	{
 		fill(newCol, newRow); // erase both squares
 		fill(oldCol, oldRow);
-		string rep = board[newRow][newCol]->getRep();
+		string rep = board->getPiece(newCol, newRow)->getRep();
 		drawPiece(rep, newCol, newRow);
 	}
 	else if (type == "castle")
@@ -321,10 +327,10 @@ void Game::update()
 			fill(oldCol, oldRow);	  // erase original square
 
 			// draw king and rook in right positions
-			string king = board[newRow][newCol]->getRep();
+			string king = board->getPiece(newCol, newRow)->getRep();
 			drawPiece(king, newCol, newRow);
 
-			string rook = board[newRow][newCol - 1]->getRep();
+			string rook = board->getPiece(newCol - 1, newRow)->getRep();
 			drawPiece(rook, newCol, newRow);
 		}
 		else if ((newCol - oldCol) == -2)
@@ -334,10 +340,10 @@ void Game::update()
 			fill(oldCol, oldRow);	  // erase original square
 
 			// draw king and rook in right positions
-			string king = board[newRow][newCol]->getRep();
+			string king = board->getPiece(newCol, newRow)->getRep();
 			drawPiece(king, newCol, newRow);
 
-			string rook = board[newRow][newCol + 1]->getRep();
+			string rook = board->getPiece(newCol + 1, newRow)->getRep();
 			drawPiece(rook, newCol, newRow);
 		}
 		// distinguish between types of castles
@@ -359,7 +365,7 @@ void Game::update()
 		// erase at newPosx, oldPosy (location of capt pawn)
 		fill(newCol, oldRow);
 		// draw pawn in newPos
-		string rep = board[newRow][newCol]->getRep();
+		string rep = board->getPiece(newCol, newRow)->getRep();
 		drawPiece(rep, newCol, newRow);
 	}
 }
@@ -408,8 +414,7 @@ void Game::handleEvents()
 			int whiteLevel = isComputer(white);
 			int blackLevel = isComputer(black);
 
-			if (white == "human" || whiteLevel)
-				&&(black == "human" || blackLevel)
+			if ((white == "human" || whiteLevel) && (black == "human" || blackLevel))
 				{
 					if (white == "human")
 					{
@@ -417,21 +422,21 @@ void Game::handleEvents()
 					}
 					else
 					{
-						if (level == 1)
+						if (whiteLevel == 1)
 						{
-							p1 = new One{0, level};
+							p1 = new One{0, whiteLevel};
 						}
-						else if (level == 2)
+						else if (whiteLevel == 2)
 						{
-							p1 = new Two{0, level};
+							p1 = new Two{0, whiteLevel};
 						}
-						else if (level == 3)
+						else if (whiteLevel == 3)
 						{
-							p1 = new Three{0, level};
+							p1 = new Three{0, whiteLevel};
 						}
 						else
 						{
-							p1 = new Four{0, level};
+							p1 = new Four{0, whiteLevel};
 						}
 					}
 					if (black == "human")
@@ -440,28 +445,27 @@ void Game::handleEvents()
 					}
 					else
 					{
-						if (level == 1)
+						if (blackLevel == 1)
 						{
-							p2 = new One{1, level};
+							p2 = new One{1, blackLevel};
 						}
-						else if (level == 2)
+						else if (blackLevel == 2)
 						{
-							p2 = new Two{1, level};
+							p2 = new Two{1, blackLevel};
 						}
-						else if (level == 3)
+						else if (blackLevel == 3)
 						{
-							p2 = new Three{1, level};
+							p2 = new Three{1, blackLevel};
 						}
 						else
 						{
-							p2 = new Four{1, level};
+							p2 = new Four{1, blackLevel};
 						}
 					}
 				}
 			else
 			{
-				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\n" +
-									"Please re-enter game start command."};
+				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\nPlease re-enter game start command."};
 			}
 
 			// begin the game
@@ -633,8 +637,7 @@ void Game::handleEvents()
 			}
 			else
 			{
-				throw runtime_error{"ERROR: Invalid. Must be [a-h][1-8] and " +
-									"piece r, n, b, q, k, p, R, N, B, Q, K, P"};
+				throw runtime_error{"ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P"};
 			}
 		}
 		else if (command == "-")
@@ -685,8 +688,7 @@ void Game::handleEvents()
 			}
 			else
 			{
-				throw runtime_error{"ERROR: Setup conditions are not satisfied.\n" +
-									"Please continue set-up"};
+				throw runtime_error{"ERROR: Setup conditions are not satisfied.\nPlease continue set-up"};
 			}
 		}
 		else
