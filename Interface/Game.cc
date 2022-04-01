@@ -246,7 +246,7 @@ void Game::displayOrigSetup()
 
 ////////////////////////////////////////////////////////////////////
 
-// This program is the command interpreter for the chess game.
+// This program is the command interpreter for the chess game. 
 
 void Game::init()
 {
