@@ -112,3 +112,12 @@ bool Player::canMove()
     if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0))
         return true;
 }
+
+// print players fields
+void Player::print(){
+    cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
+    for (auto piece : pieces) {
+        if (!piece) cout << "something is wrong in Player::claimPieces()" << endl; 
+        cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
+    }
+}

@@ -30,6 +30,7 @@ class Player {
         int move(int oldCol, int oldRow, int newCol, int newRow) { 
             return playerMove(oldCol, oldRow, newCol, newRow);
         }
+        void print();
         int getType() {
             return type;
         }
