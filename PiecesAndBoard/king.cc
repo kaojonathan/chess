@@ -20,15 +20,6 @@ King::~King() {
 vector<Piece *> King::attackable(pair<int, int> at){
 	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second, 1, 3);	// all spaces around it
 	vector<Piece *> res {};
-<<<<<<< HEAD
-	pair<int, int> xbound {(side == 0) ? pair<int,int> {0, 3} : pair<int,int>{5,8}};
-	for (auto pos : possibleMoves){
-		// basic valid position
-		if (pos.second >= 8 || pos.second < 0 || pos.first < xbound.first || pos.first >= xbound.second){
-			continue;
-		}
-		Piece *target = gameBoard->getPiece(pos.first, pos.second);
-=======
 	pair<int, int> xbound {(side == 0) ? pair<int,int> {5, 8} : pair<int,int>{0,3}};
 	for (auto pos : possibleMoves){
 		// basic valid position
@@ -36,7 +27,6 @@ if (pos.first >= 8 || pos.first < 0 || pos.second < xbound.first || pos.second >
             continue;
         }		
 Piece *target = gameBoard->getPiece(pos.first, pos.second);
->>>>>>> 4121343669b7168fdfae9b1b828b90ba15b83205
 		if (target && side != target->getSide()) {
 			res.emplace_back(target);
 		}

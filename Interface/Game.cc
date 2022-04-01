@@ -70,7 +70,7 @@ bool isValidPosition(string position)
 {
 	if (position.length() == 2)
 	{
-		if (('a' <= position[0] <= 'h') && (1 <= position[1] <= 8))
+		if (('a' <= position[0] && position[0] <=  'h') && (1 <= position[1] && position[1] <= 8))
 		{
 			return true;
 		}
