@@ -39,9 +39,9 @@ void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y, 1, 3);
 	for (auto pos : possibleMoves){
 		// basic valid position
-		if (!validPos(pos) || enemy->canAttack(pos).size() > 0){
+		if (!validPos(pos) || opponent->canAttack(pos).size() > 0){
 			continue;
-		} // if pos not in the board or in the attack range of the enemy (not implemented)
+		} // if pos not in the board or in the attack range of the opponent (not implemented)
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
 		if (target){
 			if (side != target->getSide()) {
