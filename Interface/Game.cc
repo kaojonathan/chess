@@ -59,10 +59,7 @@ int isComputer(string player)
 			}
 		}
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 }
 
 // checks if given position is in bounds (ex. e4)
@@ -75,10 +72,7 @@ bool isValidPosition(string position)
 			return true;
 		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 // used for set up to check if a piece symbol is valid
@@ -91,6 +85,7 @@ bool isValidPiece(string piece)
 				(piece[0] == 'R') || (piece[0] == 'N') || (piece[0] == 'B') ||
 				(piece[0] == 'Q') || (piece[0] == 'K') || (piece[0] == 'P'));
 	}
+	return false;
 }
 
 // fills the graphic board at coordinate (x, y) with a blank tile (erases the piece)
@@ -246,7 +241,7 @@ void Game::displayOrigSetup()
 
 ////////////////////////////////////////////////////////////////////
 
-// This program is the command interpreter for the chess game. 
+// This program is the command interpreter for the chess game.
 
 void Game::init()
 {
@@ -272,19 +267,14 @@ void Game::init()
 	window->drawLine(450, 450, 50, 450);
 	for (int i = 1; i <= 8; ++i)
 	{
-		string s{'a' + i - 1};
-		window->drawString(22 + (50 * i), 40, s);
-	}
-	for (int i = 1; i <= 8; ++i)
-	{
-		string s{'a' + i - 1};
-		window->drawString(22 + (50 * i), 470, s);
-	}
-	for (int i = 1; i <= 8; ++i)
-	{
-		string s{i + '0'};
-		window->drawString(35, 27 + (50 * (9 - i)), s);
-		window->drawString(460, 27 + (50 * (9 - i)), s);
+		string s1{"a"};
+		s1[0] += i-1;
+		string s2{"0"};
+		s2[0] += i;
+		window->drawString(22 + (50 * i), 40, s1);
+		window->drawString(22 + (50 * i), 470, s1);
+		window->drawString(35, 27 + (50 * (9 - i)), s2);
+		window->drawString(460, 27 + (50 * (9 - i)), s2);
 	}
 
 	board->oSetup();
