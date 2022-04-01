@@ -49,7 +49,7 @@ void Knight::nUpdate()  {
 		if (target) {
 			if (enemyKing(target)) {
 				checkRoute.emplace_back(pair<int, int>{x,y});
-				enemy->kingCheckedBy(this);
+				opponent->kingCheckedBy(this);
 			}
 			else if (target->getSide() != side) targets.emplace_back(pos);
 		}
