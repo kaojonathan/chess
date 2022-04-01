@@ -139,7 +139,7 @@ void Game::printBoard()
 		cout << 8 - i << ' ';
 		for (int j = 0; j < 8; ++j)
 		{
-			if (board->getPiece(i, j) == nullptr)
+			if (board->getPiece(j, i) == nullptr)
 			{ // empty tile
 				if ((i + j) % 2)
 				{ // if sum is odd it's a white tile
@@ -153,7 +153,7 @@ void Game::printBoard()
 			}
 			else
 			{ // piece is on it
-				cout << board->getPiece(i, j)->getRep();
+				cout << board->getPiece(j, i)->getRep();
 			}
 		}
 		cout << endl;
