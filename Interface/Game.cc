@@ -297,10 +297,12 @@ void Game::update()
 	// display text
 	printBoard();
 	// update window grphics here...
-
+  
 	// extract most recent move from history -
+	if (history.size() == 0) {
+          return;
+        }
 	Move *move = history.back();
-
 	// extract position data pos1 to pos2 -
 	int oldCol = move->getPos1x();
 	int oldRow = move->getPos1y();
@@ -470,6 +472,8 @@ void Game::handleEvents()
 
 			// begin the game
 			mode = "game";
+			p1->init(board);
+			p2->init(board);
 
 			p1->claimPieces();
 			p2->claimPieces();

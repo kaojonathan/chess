@@ -11,7 +11,7 @@ class twoPlayerBoard : public Board {
 	Piece* getP(int x, int y) override; // getter
 	void movePiece(int x, int y, int newx, int newy) override; // setter
 	// setter
-	void set(int x, int y, Piece * p);
+	void set(int x, int y, Piece * p) override;
 
 	bool verifySetup() override;
 	void origSetup() override;
