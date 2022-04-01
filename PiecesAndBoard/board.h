@@ -16,6 +16,7 @@ class Board {
 		virtual void origSetup() = 0;
 
 	public:
+		Board();
 		virtual ~Board() = 0;
 		bool checkPos(int, int);
 		Piece* getPiece(int x , int y) {

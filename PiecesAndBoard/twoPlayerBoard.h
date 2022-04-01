@@ -18,6 +18,7 @@ class twoPlayerBoard : public Board {
 
 
 public:
+	twoPlayerBoard();
 	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
 };
 

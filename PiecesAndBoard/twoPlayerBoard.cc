@@ -11,6 +11,13 @@
 #include "pawn.h"
 using namespace std;
 
+twoPlayerBoard::twoPlayerBoard() : Board{} {
+	for (int i = 0; i < 8; i += 1){
+		for (int j = 0; j < 8; j += 1){
+			board[i][j] = nullptr;
+		}
+	}
+}
 
 Piece *twoPlayerBoard::getP(int x, int y)
 {
