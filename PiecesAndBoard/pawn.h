@@ -4,7 +4,6 @@
 #include "piece.h"
 
 class Pawn : public Piece {
-    int numMoves;
 
     // vectors extend from center of the piece
     // means down for black, up for white

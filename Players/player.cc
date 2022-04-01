@@ -28,6 +28,7 @@ void Player::claimPieces(){
             Piece *pc = gameBoard->getPiece(i, j);
 	    if (pc) {
             if (side == pc->getSide()) {
+                pc->setOpponent(opponent);
                 if (pc->isKing()) king = pc;
                 else pieces.emplace_back(pc);
             } 

@@ -30,7 +30,7 @@ std::vector<Piece *> Pawn::attackable(std::pair<int, int> at) {
 
 void Pawn::nUpdate() {
 	updateStatus = 1;
-	int dir = (side == 0) ? 1 : -1;	// forward dircection
+	int dir = (side == 0) ? -1 : 1;	// forward dircection
 	int fr = y + dir;
 	if (fr < 8 && fr >= 0) {
 		if (!gameBoard->getPiece(x, fr)) moves.emplace_back(pair<int, int>{x,fr});

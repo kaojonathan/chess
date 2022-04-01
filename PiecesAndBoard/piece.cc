@@ -5,7 +5,7 @@
 #include "../Players/player.h"
 using namespace std;
 
-Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, gameBoard{board}  {
+Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, numMoves{0}, gameBoard{board}  {
 	board->setPiece(x, y, this);
 }
 
@@ -136,7 +136,7 @@ void Piece::dirScan(int type) {
 							checkRoute = paths.at(j);
 							//notify the other player the king is checked
 							// in Player class, need a field Piece * enemyCheck and a set method checkBy(Piece) 
-							enemy->kingCheckedBy(this);
+							opponent->kingCheckedBy(this);
 						}
 						else if (target->getSide() != side){
 							// the piece is not king but belongs to enemy
@@ -222,6 +222,10 @@ void Piece::forcedBy(Piece * enemyPiece, bool check) {
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos){
 	return move(pos.first, pos.second) == 2;
+}
+
+void Piece::setOpponent(Player * o){
+	opponent = 0;
 }
 
 

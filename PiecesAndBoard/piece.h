@@ -20,10 +20,10 @@ class Piece {
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
-        int DNA;                                       // can't think of a name yet, but different in each type pieces. for castle, en passant etc.
+        int numMoves;                                       // can't think of a name yet, but different in each type pieces. for castle, en passant etc.
         std::string representation;
         Board* gameBoard;
-        Player* enemy;
+        Player* opponent;
         // updates possible moves and attack targets, not consider if the piece is forced or not
         virtual void nUpdate() = 0;
 
@@ -87,6 +87,9 @@ class Piece {
         void forcedBy(Piece *, bool check = false);
         // update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king.
         void statusUpdate();
+
+        // set the opponent player of the piece
+        void setOpponent(Player *);
 };
    
 // get the most valuable Piece
