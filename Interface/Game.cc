@@ -60,7 +60,7 @@ int isComputer(string player)
 		{
 			if ('1' <= player[9] && player[9] <= '4')
 			{
-				return player[9];
+				return player[9] - '0';
 			}
 		}
 	}
@@ -414,6 +414,7 @@ void Game::handleEvents()
 			// check player types
 			int whiteLevel = isComputer(white);
 			int blackLevel = isComputer(black);
+	 		cerr << whiteLevel << blackLevel;
 
 			if ((white == "human" || whiteLevel) && (black == "human" || blackLevel))
 				{

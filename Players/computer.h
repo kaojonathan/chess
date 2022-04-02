@@ -20,7 +20,9 @@ class Computer : public Player {
 # return 1 if move was successful (ask for next move)
 # return 2 if capture was sucessful (ask for next move)
 */
-        std::pair<int, std::string> playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow) override { 
+        
+std::pair<int, std::string> playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow) override { 
+std::cerr << "computer playermove";
 return move(oldCol, oldRow, newCol, newRow);
         }
 };
