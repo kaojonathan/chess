@@ -76,7 +76,7 @@ int Player::checkStatus()
         piece->statusUpdate();
     for (auto piece : pieces)
         piece->statusUpdate();
-    king->statusUpdate(); // not sure if we need to do this with two kings together
+    king->statusUpdate();
     if (canMove())
         return 0; // the player can move a piece
     if (opponentCheck)

@@ -12,8 +12,7 @@ Human::Human(int side) : Player{side, 0} {}
 */
 int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
 {
-    Piece *pieceToMove;
-    pieceToMove = gameBoard->getPiece(oldCol, oldRow);
+    Piece *pieceToMove = gameBoard->getPiece(oldCol, oldRow);
     if (pieceToMove)
     {
         if (pieceToMove->move(newCol, newRow) == 0)

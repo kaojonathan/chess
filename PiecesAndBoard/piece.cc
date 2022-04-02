@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <iostream>
 #include "piece.h"
 #include "board.h"
 #include "../Players/player.h"
@@ -204,6 +205,16 @@ void Piece::fUpdate(Piece * enemyPiece){
 // update status field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king.
 void Piece::statusUpdate() {
 	if (updateStatus == 0) nUpdate();
+	// for debugging
+	cout << "Piece " << representation << "at position " <<  "(" << x << "," << y << ")" << " can move to position:" << endl;
+	for (auto pos : moves) {
+		cout << "(" << pos.first << "," << pos.second << ")   " ;
+	}
+	cout << ";" << endl;
+	cout << "it can attack piece(s) in position(s):" << endl;
+	for (auto pos : targets) {
+		cout << "(" << pos.first << "," << pos.second << "), " << endl;
+	}
 }
 
 // update moves and targets field of a piece that is forced by enemyPiece

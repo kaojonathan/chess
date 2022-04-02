@@ -69,10 +69,10 @@ bool isValidPosition(string position)
 	{
 		if (('a' <= position[0] && position[0] <=  'h') && (1 <= position[1] && position[1] <= 8))
 		{
-			return true;
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 // used for set up to check if a piece symbol is valid
@@ -552,7 +552,7 @@ void Game::handleEvents()
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to))
 						{
-							int status = p1->move(from[0], from[1], to[0], to[1]);
+							int status = p1->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
 							if (status == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
