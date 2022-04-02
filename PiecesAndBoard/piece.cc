@@ -206,7 +206,7 @@ void Piece::fUpdate(Piece * enemyPiece){
 void Piece::statusUpdate() {
 	if (updateStatus == 0) nUpdate();
 	// for debugging
-	cout << "Piece " << representation << "at position " <<  "(" << x << "," << y << ")" << " can move to position:" << endl;
+	cout << "Piece " << representation << " at position " <<  "(" << x << "," << y << ")" << " can move to position:" << endl;
 	for (auto pos : moves) {
 		cout << "(" << pos.first << "," << pos.second << ")   " ;
 	}
