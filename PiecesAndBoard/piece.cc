@@ -38,12 +38,16 @@ vector<pair<int,int>> Piece::getMoves(){ return moves; }
 
 vector<pair<int,int>> Piece::getTargets(){ return targets; }
 
-void Piece::needsUpdate() { 
+void Piece::unsetStutus() { 
 	updateStatus = 0;
 	moves = vector<pair<int,int>> {};
 	targets = vector<pair<int,int>> {};
 	checkRoute = vector<pair<int,int>> {};
 	forced = nullptr;
+}
+
+void Piece::needsUpdate() {
+	unsetStutus();
 }
 
 bool Piece::isKing(){
@@ -186,6 +190,11 @@ int Piece::move(int col, int row){
 		if (pos.first == col && pos.second == row) return 2;
 	}
 	return 0;
+}
+
+// get the number of moves on this piece
+int Piece::getNumMoves() {
+	return numMoves;
 }
 
 // update a piece that is forced by enemPiece

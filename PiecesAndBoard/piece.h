@@ -44,6 +44,8 @@ class Piece {
          // return false if the position is the not valid one the piece can go
         bool validPos(std::pair<int,int>);
 
+        virtual void unsetStutus();
+
 
     public:
         Piece(int side, int x, int y, Board *);
@@ -92,6 +94,8 @@ class Piece {
 
         // set the opponent player of the piece
         void setOpponent(Player *);
+
+        int getNumMoves();
 };
    
 // get the most valuable Piece

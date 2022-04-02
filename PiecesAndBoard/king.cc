@@ -3,6 +3,7 @@
 #include <utility>
 #include "king.h"
 #include "board.h"
+#include "rook.h"
 #include "../Players/player.h"
 using namespace std;
 
@@ -40,6 +41,10 @@ vector<Piece *> King::attackable(pair<int, int> at){
 	return res;
 }
 
+void King::unsetStatus() {
+	Piece::unsetStutus();
+	castle = vector<pair<int,int>>{};
+}
 
 void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y);
@@ -55,6 +60,30 @@ void King::nUpdate() {
 			}
 		}
 		else moves.emplace_back(pos);
+	}
+
+	// check castle
+	if (numMoves == 0){
+		for (int i = 1; x - i >= 0; i++){
+			Piece * detacted = gameBoard->getPiece(x-i, y);
+			if (detacted) {
+				Rook * gr = dynamic_cast<Rook *>(detacted);
+				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x-2, y}).size() == 0 || opponent->canAttack(pair<int,int> {x-3, y}).size() == 0) {
+					castle.emplace_back(pair<int,int> {x-3, y});
+				}
+				break;
+			}
+		}
+		for (int i = 1; x + i < 8; i++){
+			Piece * detacted = gameBoard->getPiece(x+i, y);
+			if (detacted) {
+				Rook * gr = dynamic_cast<Rook *>(detacted);
+				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x+2, y}).size() == 0 || opponent->canAttack(pair<int,int> {x+3, y}).size() == 0) {
+					castle.emplace_back(pair<int,int> {x+3, y});
+				}
+				break;
+			}
+		}
 	}
 }
 

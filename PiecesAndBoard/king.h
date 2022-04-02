@@ -1,9 +1,10 @@
 #ifndef KING_H_
 #define KING_H_
 #include "piece.h"
+#include <vector>
 
 class King : public Piece {
-    bool cancastle;
+    std::vector<std::pair<int,int>> castle;
     /*
     // EITHER SIZE 0 or 1 (0 means no piece nor cell, null means empty square!)
     std::vector<Piece*> up; // positions that the piece can move to (null means empty square!)
@@ -23,6 +24,7 @@ public:
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
     King(int side, int x, int y, Board * board);
     std::vector<std::pair<int,int>> getPos(int x, int y);
+    void unsetStatus() override;
     ~King();
 };
 
