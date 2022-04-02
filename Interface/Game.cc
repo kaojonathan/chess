@@ -302,8 +302,8 @@ void Game::update()
 	// extract type of move -
 	string type = move->getType();
 
-				  // update graphics accordingly -
-				  if (type == "normal" || type == "capture")
+	// update graphics accordingly -
+	if (type == "normal" || type == "capture")
 	{
 		fill(newCol, newRow); // erase both squares
 		fill(oldCol, oldRow);
@@ -467,8 +467,11 @@ void Game::handleEvents()
 
 			p1->claimPieces();
 			p2->claimPieces();
+			// debug 
+			/*
 			p1->print();
 			p2->print();
+			*/
 			cout << "Started new game!" << endl;
 			return;
 		}
@@ -507,22 +510,16 @@ void Game::handleEvents()
 		{
 			// if the command is "move"
 			int end;
-			p1->unsetStatus();
-			p2->unsetStatus();
-			if (whitemoves)
-			{
-				end = p1->checkStatus();
-			}
-			else
-			{
-				end = p2->checkStatus();
-			}
+			Player * pa = whitemoves ? p1 : p2; // player moving this turn
+			Player * pn = whitemoves ? p2 : p1;	// player moving next turn
+			pa->unsetStatus();
+			pn->unsetStatus();
+			end = pa->checkStatus();
 			if (end == 1)
 			{
 				// the player that is about to move
 				// is checkmated
-				if (whitemoves)
-				{
+				if (whitemoves) {
 					score->blackWin();
 					displayWin(false);
 				}
@@ -540,63 +537,34 @@ void Game::handleEvents()
 				displayStalemate();
 				reset();
 			}
-			else
-			{ // moves available
-				if (whitemoves)
+			else { // moves available
+				cout << (whitemoves? "white" : "black") << "'s turn" << endl; 
+				if (pa->getType() == 0)
 				{
-					if (p1->getType() == 0)
+					// human
+					string from;
+					string to;
+					linestream >> from >> to;
+					if (isValidPosition(from) && isValidPosition(to))
 					{
-						// human
-						string from;
-						string to;
-						linestream >> from >> to;
-						if (isValidPosition(from) && isValidPosition(to))
+						int status = pa->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
+						if (status == 0)
 						{
-							int status = p1->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
-							if (status == 0)
-							{
-								throw runtime_error{"Illegal move attempted. Please try another."};
-							}
+							throw runtime_error{"Illegal move attempted. Please try another."};
 						}
-						else
-						{
-							throw runtime_error{"Unrecognized move. Please re-enter."};
-						}
+						else whitemoves = whitemoves ? false : true;
 					}
 					else
 					{
-						// computer
-						p1->move(0, 0, 0, 0);
-						return;
+						throw runtime_error{"Unrecognized move. Please re-enter."};
 					}
 				}
 				else
-				{ // black's turn
-					if (p2->getType() == 0)
-					{
-						// human
-						string from;
-						string to;
-						linestream >> from >> to;
-						if (isValidPosition(from) && isValidPosition(to))
-						{
-							int status = p2->move(from[0], from[1], to[0], to[1]);
-							if (status == 0)
-							{
-								throw runtime_error{"Illegal move attempted. Please try another."};
-							}
-						}
-						else
-						{
-							throw runtime_error{"Unrecognized move. Please re-enter."};
-						}
-					}
-					else
-					{
-						// computer
-						p2->move(0, 0, 0, 0);
-						return;
-					}
+				{
+					// computer
+					pa->move(0, 0, 0, 0);
+					whitemoves = whitemoves ? false : true;
+					return;
 				}
 			}
 		}
