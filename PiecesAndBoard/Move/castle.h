@@ -17,6 +17,8 @@ class Castle : public Move {
 
     Castle(int x1, int y1, int x2, int y2);
     ~Castle();
+        std::string getCapType() override {return "no";}
+        std::string getPromoType() override {return "no";}
 };
 
 #endif

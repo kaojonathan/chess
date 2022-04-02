@@ -20,14 +20,14 @@ class Player {
         Player *opponent;
         Piece *opponentCheck;
         int type; // 0 for human, 1 for computer 
-        virtual int playerMove(int oldCol, int oldRow, int newCol, int newRow) = 0;
+        virtual std::pair<int, std::string> playerMove(int oldCol, int oldRow, int newCol, int newRow) = 0;
 
     public:
         Player(int side, int type);
         virtual ~Player();
         void init(Board *, Player *player);
         void claimPieces();
-        int move(int oldCol, int oldRow, int newCol, int newRow) { 
+        std::pair<int, std::string> move(int oldCol, int oldRow, int newCol, int newRow) { 
             return playerMove(oldCol, oldRow, newCol, newRow);
         }
         void print();

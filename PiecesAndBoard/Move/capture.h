@@ -17,7 +17,8 @@ class Capture : public Move {
     public:
     Capture(int x1, int y1, int x2, int y2, std::string capType);
     ~Capture();
-    std::string getCapType();
+    std::string getCapType() override;
+        std::string getPromoType() override {return "no";}
 };
 
 #endif

@@ -5,7 +5,7 @@ using namespace std;
 
 Three::Three(int side, int level) : Computer{side, level} {}
 
-void Three::move()
+std::pair<int, std::string> Three::move()
 {
 
 	// AVOIDING MOVES CONDITION (this needs implement)
@@ -24,14 +24,39 @@ void Three::move()
 					if (!opponent->getPieces()[j]->canAttack(pieces[i]->getMoves()[k]))
 					{ // if the same enemy piece can't attack a current piece's move position
 
-						if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 2)
-						{
-							opponent->removePiece(std::pair<int, int>{pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second});
-						}
 
-						gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second); // move to that position
+			if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 1)
+			{
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second); // move to that position
+				return pair<int, std::string>{1, "normal"};
+			}
+			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 2)
+			{
 
-						return;
+				std::string capturedRep = gameBoard->getPiece(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second)->getRep();
+
+
+				opponent->removePiece(std::pair<int, int>{pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second});
+
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second); // move to that position
+				return pair<int, std::string>{2, capturedRep};
+			}
+			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 3)
+			{ // CASTLE CONDITION
+
+				return pair<int, std::string>{3, "castle"};
+			}
+			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 4)
+			{ // ENPASSANT CONDITION
+
+				return pair<int, std::string>{4, "enpassant"};
+			}
+			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 5)
+			{ // PROMOTION CONDITION
+
+				return pair<int, std::string>{5, "promotion"};
+			}
+
 					}
 				}
 			}
@@ -49,9 +74,10 @@ void Three::move()
 			{
 				if (pieces[i]->move(j, k) == 2)
 				{ // if the move is capture then move it
+				std::string capturedRep = gameBoard->getPiece(j, k)->getRep();
 					opponent->removePiece(std::pair<int, int>{j, k});
 					gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
-					return;
+					return pair<int, std::string>{2, capturedRep};
 				}
 			}
 		}
@@ -70,16 +96,36 @@ void Three::move()
 				if (pieces[i]->posInCheck(j, k))
 				{ // finds position of the piece that checks the king
 
-					if (pieces[i]->move(j, k) != 0)
-					{ // if the move is valid then move it
-						if (pieces[i]->move(j, k) == 2)
-						{
-							opponent->removePiece(std::pair<int, int>{j, k});
-						}
 
-						gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
-						return;
-					}
+			if (pieces[i]->move(j, k) == 1)
+			{
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+				return pair<int, std::string>{1, "normal"};
+			}
+			else if (pieces[i]->move(j, k) == 2)
+			{
+
+				std::string capturedRep = gameBoard->getPiece(j, k)->getRep();
+				opponent->removePiece(std::pair<int, int>{j, k});
+
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+				return pair<int, std::string>{2, capturedRep};
+			}
+			else if (pieces[i]->move(j, k) == 3)
+			{ // CASTLE CONDITION
+
+				return pair<int, std::string>{3, "castle"};
+			}
+			else if (pieces[i]->move(j, k) == 4)
+			{ // ENPASSANT CONDITION
+
+				return pair<int, std::string>{4, "enpassant"};
+			}
+			else if (pieces[i]->move(j, k) == 5)
+			{ // PROMOTION CONDITION
+
+				return pair<int, std::string>{5, "promotion"};
+			}
 				}
 			}
 		}
@@ -94,14 +140,42 @@ void Three::move()
 		int j = rand() % 8;						 // randomly give us a y-coordinate
 		if (pieces[pieceIndex]->move(i, j) != 0)
 		{ // if the move is valid then move it
-			if (pieces[pieceIndex]->move(i, j) == 2)
+
+			if (pieces[pieceIndex]->move(i, j) == 1)
 			{
+				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				return pair<int, std::string>{1, "normal"};
+			}
+			else if (pieces[pieceIndex]->move(i, j) == 2)
+			{
+
+				std::string capturedRep = gameBoard->getPiece(i, j)->getRep();
 				opponent->removePiece(std::pair<int, int>{i, j});
+
+				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				return pair<int, std::string>{2, capturedRep};
+			}
+			else if (pieces[pieceIndex]->move(i, j) == 3)
+			{ // CASTLE CONDITION
+
+				return pair<int, std::string>{3, "castle"};
+			}
+			else if (pieces[pieceIndex]->move(i, j) == 4)
+			{ // ENPASSANT CONDITION
+
+				return pair<int, std::string>{4, "enpassant"};
+			}
+			else if (pieces[pieceIndex]->move(i, j) == 5)
+			{ // PROMOTION CONDITION
+
+				return pair<int, std::string>{5, "promotion"};
 			}
 
-			gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
 			madeMove = true;
 		}
+
 		// otherwise keep looping (might be inefficient)
 	}
+
+	return pair<int, std::string>{0, "fail"};
 }

@@ -4,7 +4,7 @@
 
 class Two : public Computer {
 
-	void move() override;
+	std::pair<int, std::string> move() override;
 public:
 	Two(int side, int level);
 

@@ -8,6 +8,11 @@
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
 #include "../PiecesAndBoard/Move/move.h"
+#include "../PiecesAndBoard/Move/normal.h"
+#include "../PiecesAndBoard/Move/capture.h"
+#include "../PiecesAndBoard/Move/castle.h"
+#include "../PiecesAndBoard/Move/enpassant.h"
+#include "../PiecesAndBoard/Move/promotion.h"
 #include "../Graphics/window.h"
 #include "../PiecesAndBoard/board.h"
 #include "../PiecesAndBoard/twoPlayerBoard.h"
@@ -99,6 +104,10 @@ void Game::fill(int x, int y)
 	{
 		window->fillRectangle(50 * (x + 1), 50 * (y + 1), 50, 50, XWindow::White);
 	}
+	window->drawLine(50, 50, 450, 50);
+	window->drawLine(50, 50, 50, 450);
+	window->drawLine(450, 450, 450, 50);
+	window->drawLine(450, 450, 50, 450);
 }
 
 // draws a piece at coordinate (x, y) with piece string
@@ -552,20 +561,52 @@ void Game::handleEvents()
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to))
 						{
-							int status = p1->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
-							if (status == 0)
+							std::pair<int, std::string> status = p1->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
+							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
+							} else if (status.first == 1) { // basic move
+
+								history.emplace_back(new Normal{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+
+							} else if (status.first == 2) { // move is a capture
+
+								history.emplace_back(new Capture{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1], status.second});
+
+							} else if (status.first == 3) { // castle
+								// ADD CASTLE HERE
+
+								history.emplace_back(new Castle{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+
+							} else if (status.first == 4) { // enpassant
+
+								// ADD ENPASSANT HERE
+
+								history.emplace_back(new EnPassant{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+
+							} else if (status.first == 5) { // promotion
+
+								// ADD PROMOTION THING HERE
+								// string promoType;
+								// linestream >> promoType;
+								history.emplace_back(new Promotion{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1], "/*promoType*/"});
+
 							}
 						}
 						else
 						{
 							throw runtime_error{"Unrecognized move. Please re-enter."};
 						}
+
+					
 					}
 					else
 					{
 						// computer
+
+						// !!!! we need the computer to return the positions that it moved so that we can make a Move object with them
+
+						// history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
 						p1->move(0, 0, 0, 0);
 						return;
 					}
@@ -580,10 +621,40 @@ void Game::handleEvents()
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to))
 						{
-							int status = p2->move(from[0], from[1], to[0], to[1]);
-							if (status == 0)
+							std::pair<int, std::string> status = p2->move(from[0], from[1], to[0], to[1]);
+
+
+
+
+							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
+							} else if (status.first == 1) { // basic move
+
+								history.emplace_back(new Normal{from[0], from[1], to[0], to[1]});
+
+							} else if (status.first == 2) { // move is a capture
+
+								history.emplace_back(new Capture{from[0], from[1], to[0], to[1], status.second});
+
+							} else if (status.first == 3) { // castle
+								// ADD CASTLE HERE
+
+								history.emplace_back(new Castle{from[0], from[1], to[0], to[1]});
+
+							} else if (status.first == 4) { // enpassant
+
+								// ADD ENPASSANT HERE
+
+								history.emplace_back(new EnPassant{from[0], from[1], to[0], to[1]});
+
+							} else if (status.first == 5) { // promotion
+
+								// ADD PROMOTION THING HERE
+								// string promoType;
+								// linestream >> promoType;
+								history.emplace_back(new Promotion{from[0], from[1], to[0], to[1], "/*promoType*/"});
+
 							}
 						}
 						else
@@ -594,6 +665,10 @@ void Game::handleEvents()
 					else
 					{
 						// computer
+
+						// !!!! we need the computer to return the positions that it moved so that we can make a Move object with them
+
+						// history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
 						p2->move(0, 0, 0, 0);
 						return;
 					}
