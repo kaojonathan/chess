@@ -180,7 +180,7 @@ void Piece::dirScan(int type) {
 //	2: valid capture
 int Piece::move(int col, int row){
 	for (auto mv : moves) {
-		if (mv.first == col && mv.first == row) return 1;
+		if (mv.first == col && mv.second == row) return 1;
 	}
 	for (auto pos : targets){
 		if (pos.first == col && pos.second == row) return 2;
