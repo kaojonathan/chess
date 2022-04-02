@@ -35,23 +35,19 @@ void Pawn::nUpdate() {
 	int fr = y + dir;
 	if (fr < 8 && fr >= 0) {
 		if (!gameBoard->getPiece(x, fr)) moves.emplace_back(pair<int, int>{x,fr});
-		int sd = x - 1;
-		if (x < 8 && x >= 0) {
-			Piece * target = gameBoard->getPiece(sd, fr);
-			if (target) {
-				if (target->getSide() != side) {
-					if (enemyKing(target)) {
-						checkRoute.emplace_back(pair<int, int>{x,y});
-						opponent->kingCheckedBy(this);
+		for (int sd : vector<int> {x-1, x + 1}){
+			if (sd < 8 && sd >= 0) {
+				Piece * target = gameBoard->getPiece(sd, fr);
+				if (target) {
+					if (target->getSide() != side) {
+						if (enemyKing(target)) {
+							checkRoute.emplace_back(pair<int, int>{sd,fr});
+							opponent->kingCheckedBy(this);
+						}
+						targets.emplace_back(pair<int, int>{sd,fr});
 					}
-					targets.emplace_back();
 				}
 			}
-		}
-		sd = x + 1;
-		if (x < 8 && x >= 0) {
-			Piece * target = gameBoard->getPiece(sd, fr);
-			if (target && (target->getSide() != side)) targets.emplace_back();
 		}
 	}
 	fr += dir;

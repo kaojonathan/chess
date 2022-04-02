@@ -699,6 +699,8 @@ void Game::handleEvents()
 
 			if (isValidPiece(piece) && isValidPosition(position))
 			{
+
+
 				board->insertP(piece, position);
 				insertNewPiece(piece, position);
 				cout << "Inserted piece at: " << position;
