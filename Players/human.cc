@@ -15,7 +15,7 @@ int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
     Piece *pieceToMove = gameBoard->getPiece(oldCol, oldRow);
     if (pieceToMove)
     {
-        if (pieceToMove->move(newCol, newRow) == 0)
+        if (pieceToMove->getSide() != side || pieceToMove->move(newCol, newRow) == 0)
         {
             return 0;
         }
@@ -31,6 +31,5 @@ int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
             return 2;
         }
     } 
-    else
-        return 0;
+    return 0;
 }
