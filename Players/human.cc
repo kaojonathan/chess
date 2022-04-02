@@ -21,12 +21,12 @@ int Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
         }
         else if (pieceToMove->move(newCol, newRow) == 1)
         {
-            gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
+            gameBoard->moveP(oldCol, oldRow, newCol, newRow);
             return 1;
         }
         else if (pieceToMove->move(newCol, newRow) == 2)
         {
-            opponent->removePiece(std::pair<int, int>{pieceToMove->getX(), pieceToMove->getY()});
+            opponent->removePiece(std::pair<int, int>{newCol, newRow});
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
             return 2;
         }

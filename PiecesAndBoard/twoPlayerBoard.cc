@@ -32,49 +32,9 @@ bool twoPlayerBoard::validPos(int x, int y)
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 {
-	// check if piece is null
-	if (board[y][x])
-	{
-
-		int result = board[y][x]->move(newx, newy);
-
-		if (result == 2)
-		{
-
-			if ((("a" <= board[y][x]->getRep()) &&
-				 (board[y][x]->getRep() <= "z")) &&
-				(("A" <= board[newy][newx]->getRep()) &&
-				 (board[newy][newx]->getRep() <= "Z")))
-			{
-
-				board[newy][newx] = board[y][x];
-				board[y][x] = nullptr;
-				board[newy][newx]->setPos(newy, newx);
-			}
-			else if ((("A" <= board[y][x]->getRep()) &&
-					  (board[y][x]->getRep() <= "Z")) &&
-					 (("a" <= board[newy][newx]->getRep()) &&
-					  (board[newy][newx]->getRep() <= "z")))
-			{
-
-				board[newy][newx] = board[y][x];
-				board[y][x] = nullptr;
-				board[newy][newx]->setPos(newy, newx);
-			}
-		}
-		else if (result == 1)
-		{
-
-			board[newy][newx] = board[y][x];
-			board[y][x] = nullptr;
-			board[newy][newx]->setPos(newy, newx);
-		}
-		else if (result == 0)
-		{
-
-			// do nothing
-		}
-	}
+	board[y][x]->setPos(newx,newy);
+	board[newy][newx] = board[y][x];
+	board[y][x] = nullptr;
 }
 
 
