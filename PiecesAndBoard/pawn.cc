@@ -3,6 +3,7 @@
 #include <utility>
 #include "pawn.h"
 #include "board.h"
+#include "../Players/player.h"
 using namespace std;
 
 
@@ -37,7 +38,15 @@ void Pawn::nUpdate() {
 		int sd = x - 1;
 		if (x < 8 && x >= 0) {
 			Piece * target = gameBoard->getPiece(sd, fr);
-			if (target && (target->getSide() != side)) targets.emplace_back();
+			if (target) {
+				if (target->getSide() != side) {
+					if (enemyKing(target)) {
+						checkRoute.emplace_back(pair<int, int>{x,y});
+						opponent->kingCheckedBy(this);
+					}
+					targets.emplace_back();
+				}
+			}
 		}
 		sd = x + 1;
 		if (x < 8 && x >= 0) {

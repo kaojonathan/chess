@@ -225,9 +225,12 @@ bool Piece::canAttack(pair<int, int> pos){
 }
 
 void Piece::setOpponent(Player * o){
-	opponent = 0;
+	opponent = o;
 }
 
+bool Piece::isUpdated() {
+	return updateStatus != 0;
+}
 
 // return the most valuable Piece from a vector of Pieces, nullptr if the vector is empty
 //   comment: can be further changed to handle gain and cost with the guard field (not implemented yet)

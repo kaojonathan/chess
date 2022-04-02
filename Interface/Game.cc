@@ -512,12 +512,10 @@ void Game::handleEvents()
 			if (whitemoves)
 			{
 				end = p1->checkStatus();
-				p2->checkStatus();
 			}
 			else
 			{
 				end = p2->checkStatus();
-				p1->checkStatus();
 			}
 			if (end == 1)
 			{

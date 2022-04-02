@@ -72,6 +72,8 @@ void Player::removePiece(std::pair<int, int> pos)
 // update status of all pieces of the player, return 0 if there is avaliable move for player, 1 if it is a checkmate, 2 if it is a draw.
 int Player::checkStatus()
 {
+    for (auto piece : opponent->getPieces())
+        piece->statusUpdate();
     for (auto piece : pieces)
         piece->statusUpdate();
     king->statusUpdate(); // not sure if we need to do this with two kings together
@@ -94,7 +96,7 @@ void Player::unsetStatus()
 vector<Piece *> Player::canAttack(pair<int, int> pos)
 {
     vector<Piece *> res{};
-    if (king->canAttack(pos))
+    if (king->isUpdated() && king->canAttack(pos))
         res.emplace_back(king);
     for (auto piece : pieces)
     {

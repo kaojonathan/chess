@@ -82,6 +82,8 @@ class Piece {
         bool canAttack(std::pair<int, int>);
         // return true if this piece can attack the enemy piece in position (col, row)
         // may be useful
+
+        bool isUpdated();
         
         // for Pieces that is not king, set the forced field into the given pieces, for King, update the excape route of the king.
         void forcedBy(Piece *, bool check = false);
