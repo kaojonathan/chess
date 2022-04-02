@@ -58,7 +58,7 @@ int isComputer(string player)
 	{
 		if ((player[8] = '[') && (player[10] = ']'))
 		{
-			if ('1' <= player[9] && player[9] <= 4)
+			if ('1' <= player[9] && player[9] <= '4')
 			{
 				return player[9];
 			}
@@ -561,35 +561,43 @@ void Game::handleEvents()
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to))
 						{
-							std::pair<int, std::string> status = p1->move(from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]);
+
+							int oldCol = from[0]-'a';
+							int oldRow = '8'-from[1];
+							int newCol = to[0]-'a';
+							int newRow = '8'-to[1];
+
+
+
+							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
 							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
 							} else if (status.first == 1) { // basic move
 
-								history.emplace_back(new Normal{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 2) { // move is a capture
 
-								history.emplace_back(new Capture{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1], status.second});
+								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
 
 							} else if (status.first == 3) { // castle
 								// ADD CASTLE HERE
 
-								history.emplace_back(new Castle{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 4) { // enpassant
 
 								// ADD ENPASSANT HERE
 
-								history.emplace_back(new EnPassant{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1]});
+								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 5) { // promotion
 
 								// ADD PROMOTION THING HERE
 								// string promoType;
 								// linestream >> promoType;
-								history.emplace_back(new Promotion{from[0]-'a', '8'-from[1], to[0]-'a', '8'-to[1], "/*promoType*/"});
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
 
 							}
 						}
@@ -597,31 +605,73 @@ void Game::handleEvents()
 						{
 							throw runtime_error{"Unrecognized move. Please re-enter."};
 						}
-
-					
 					}
 					else
 					{
-						// computer
 
-						// !!!! we need the computer to return the positions that it moved so that we can make a Move object with them
+							int oldCol = 0;
+							int oldRow = 0;
+							int newCol = 0;
+							int newRow = 0;
 
-						// history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
-						p1->move(0, 0, 0, 0);
+
+							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
+							if (status.first == 0)
+							{
+								throw runtime_error{"Illegal move attempted. Please try another."};
+							} else if (status.first == 1) { // basic move
+
+								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 2) { // move is a capture
+
+								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+
+							} else if (status.first == 3) { // castle
+								// ADD CASTLE HERE
+
+								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 4) { // enpassant
+
+								// ADD ENPASSANT HERE
+
+								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 5) { // promotion
+
+								// ADD PROMOTION THING HERE
+								// string promoType;
+								// linestream >> promoType;
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+
+							}
 						return;
+
 					}
+					whitemoves = false;
 				}
 				else
 				{ // black's turn
 					if (p2->getType() == 0)
 					{
 						// human
+
+cerr << "DDDDD";
 						string from;
 						string to;
 						linestream >> from >> to;
 						if (isValidPosition(from) && isValidPosition(to))
 						{
-							std::pair<int, std::string> status = p2->move(from[0], from[1], to[0], to[1]);
+
+							int oldCol = from[0]-'a';
+							int oldRow = '8'-from[1];
+							int newCol = to[0]-'a';
+							int newRow = '8'-to[1];
+
+
+
+							std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
 
 
 
@@ -631,29 +681,29 @@ void Game::handleEvents()
 								throw runtime_error{"Illegal move attempted. Please try another."};
 							} else if (status.first == 1) { // basic move
 
-								history.emplace_back(new Normal{from[0], from[1], to[0], to[1]});
+								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 2) { // move is a capture
 
-								history.emplace_back(new Capture{from[0], from[1], to[0], to[1], status.second});
+								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
 
 							} else if (status.first == 3) { // castle
 								// ADD CASTLE HERE
 
-								history.emplace_back(new Castle{from[0], from[1], to[0], to[1]});
+								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 4) { // enpassant
 
 								// ADD ENPASSANT HERE
 
-								history.emplace_back(new EnPassant{from[0], from[1], to[0], to[1]});
+								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
 
 							} else if (status.first == 5) { // promotion
 
 								// ADD PROMOTION THING HERE
 								// string promoType;
 								// linestream >> promoType;
-								history.emplace_back(new Promotion{from[0], from[1], to[0], to[1], "/*promoType*/"});
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
 
 							}
 						}
@@ -664,14 +714,51 @@ void Game::handleEvents()
 					}
 					else
 					{
-						// computer
 
-						// !!!! we need the computer to return the positions that it moved so that we can make a Move object with them
 
-						// history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
-						p2->move(0, 0, 0, 0);
+							int oldCol = 0;
+							int oldRow = 0;
+							int newCol = 0;
+							int newRow = 0;
+
+
+							std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
+							if (status.first == 0)
+							{
+								throw runtime_error{"Illegal move attempted. Please try another."};
+							} else if (status.first == 1) { // basic move
+
+								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 2) { // move is a capture
+
+								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+
+							} else if (status.first == 3) { // castle
+								// ADD CASTLE HERE
+
+								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 4) { // enpassant
+
+								// ADD ENPASSANT HERE
+
+								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+
+							} else if (status.first == 5) { // promotion
+
+								// ADD PROMOTION THING HERE
+								// string promoType;
+								// linestream >> promoType;
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+
+							}
+
+
 						return;
 					}
+
+					whitemoves = true;
 				}
 			}
 		}

@@ -65,7 +65,7 @@ Four::Four(int side, int level) : Computer{ side, level } {}
 
 
 
-std::pair<int, std::string> Four::move()
+std::pair<int, std::string> Four::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 
 /*

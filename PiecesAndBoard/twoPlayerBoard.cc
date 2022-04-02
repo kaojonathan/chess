@@ -32,9 +32,11 @@ bool twoPlayerBoard::validPos(int x, int y)
 
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 {
+	board[y][x]->incNumMoves();
 	board[y][x]->setPos(newx,newy);
 	board[newy][newx] = board[y][x];
 	board[y][x] = nullptr;
+	
 }
 
 

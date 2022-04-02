@@ -1,5 +1,6 @@
 #include "human.h"
 #include "../PiecesAndBoard/board.h"
+#include <iostream>
 using namespace std;
 
 Human::Human(int side) : Player{side, 0} {}
@@ -18,8 +19,9 @@ Human::Human(int side) : Player{side, 0} {}
 THE STRING FIELD CONTAINS RELEVANT INFORMATION ABOUT THOSE MOVES (FOR MOVE OBJECT)
 */
 
-std::pair<int, std::string> Human::playerMove(int oldCol, int oldRow, int newCol, int newRow)
+std::pair<int, std::string> Human::playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
+std::cerr << "one::move called";
     Piece *pieceToMove = gameBoard->getPiece(oldCol, oldRow);
     if (pieceToMove)
     {

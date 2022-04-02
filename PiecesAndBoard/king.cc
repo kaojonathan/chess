@@ -42,7 +42,7 @@ vector<Piece *> King::attackable(pair<int, int> at){
 }
 
 void King::unsetStatus() {
-	Piece::unsetStutus();
+	Piece::unsetStatus();
 	castle = vector<pair<int,int>>{};
 }
 
