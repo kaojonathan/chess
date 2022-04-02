@@ -4,7 +4,6 @@
 #include <vector>
 
 class King : public Piece {
-    std::vector<std::pair<int,int>> castle;
     /*
     // EITHER SIZE 0 or 1 (0 means no piece nor cell, null means empty square!)
     std::vector<Piece*> up; // positions that the piece can move to (null means empty square!)

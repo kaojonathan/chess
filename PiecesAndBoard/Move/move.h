@@ -13,7 +13,7 @@ class Move {
     int pos1y;
     int pos2x;
     int pos2y;
-    std::string type; // normal, capture, castle, promotion, enpassant
+    std::string type; // normal, capture, castle, promotion, promocap
 
 
 

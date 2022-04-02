@@ -9,6 +9,11 @@ class Player;
 
 class Piece {
     protected:
+
+        std::vector<std::pair<int,int>> castle;
+
+
+
         // need to decide if x is a column or a row, now x is col
         int x;
         int y;

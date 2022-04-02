@@ -182,12 +182,36 @@ void Piece::dirScan(int type) {
 //  0: not valid
 //	1: valid move
 //	2: valid capture
+//  3: valid castle
+//  4: valid promotion (no capture)
+//  5: valid promotion (capture)
 int Piece::move(int col, int row){
 	for (auto mv : moves) {
-		if (mv.first == col && mv.second == row) return 1;
+		if (mv.first == col && mv.second == row) {
+			if (representation == "P" && row == 0) { // promotion condition
+				return 4;
+			} else if (representation == "p" && row == 7) {
+				return 4;
+			} else {
+				return 1;
+			}
+		}
 	}
 	for (auto pos : targets){
-		if (pos.first == col && pos.second == row) return 2;
+		if (pos.first == col && pos.second == row) {
+		if (representation == "P" && row == 0) { // promotion condition
+				return 5;
+			} else if (representation == "p" && row == 7) {
+				return 5;
+			} else {
+				return 2;
+			}
+		}
+	}
+	if (representation == "K" || representation == "k") {
+			for (auto pos : castle){
+		if (pos.first == col && pos.second == row) return 3;
+	}
 	}
 	return 0;
 }

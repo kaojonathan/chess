@@ -13,10 +13,8 @@ std::cerr << "two  playermove";
 	// CAPTURE CONDITION
 	for (int i = 0; i < pieces.size(); ++i)
 	{
-
 		for (int j = 0; j < 8; ++j)
 		{
-
 			for (int k = 0; k < 8; ++k)
 			{
 				if (pieces[i]->move(j, k) == 2)
@@ -33,13 +31,24 @@ std::cerr << "two  playermove";
 
 					gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 					return pair<int, std::string>{2, capturedRep};
+				} else if  (pieces[i]->move(j, k) == 5) {
+
+
+				std::string capturedRep = gameBoard->getPiece(j, k)->getRep();
+				opponent->removePiece(std::pair<int, int>{j, k});
+
+				oldCol = pieces[i]->getX();
+				oldRow = pieces[i]->getY();
+				newCol = j;
+				newRow = k;
+
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+				return pair<int, std::string>{5, capturedRep};
+
 				}
 			}
 		}
 	}
-
-
-
 
 	// CHECK CONDITION
 	for (int i = 0; i < pieces.size(); ++i)
@@ -89,40 +98,42 @@ std::cerr << "two  playermove";
 
 
 				return pair<int, std::string>{3, "castle"};
+
+
+
 			}
 			else if (pieces[i]->move(j, k) == 4)
-			{ // ENPASSANT CONDITION
-
-
-				oldCol = pieces[i]->getX();
-				oldRow = pieces[i]->getY();
-				newCol = j;
-				newRow = k;
-
-
-
-				return pair<int, std::string>{4, "enpassant"};
-			}
-			else if (pieces[i]->move(j, k) == 5)
-			{ // PROMOTION CONDITION
-
+			{ // promo CONDITION (no cap)
 
 				oldCol = pieces[i]->getX();
 				oldRow = pieces[i]->getY();
 				newCol = j;
 				newRow = k;
 
+	gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 
-				return pair<int, std::string>{5, "promotion"};
+				return pair<int, std::string>{4, "promotion"};
+			} else if (pieces[i]->move(j, k) == 5) { // promo condition with capture
+
+
+				std::string capturedRep = gameBoard->getPiece(j, k)->getRep();
+				opponent->removePiece(std::pair<int, int>{j, k});
+
+				oldCol = pieces[i]->getX();
+				oldRow = pieces[i]->getY();
+				newCol = j;
+				newRow = k;
+
+				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+				return pair<int, std::string>{5, capturedRep};
 			}
+
 				}
 			}
 		}
 	}
-
 	// otherwise random legal move
-bool madeMove = false;
-	while (!madeMove)
+	while (1)
 	{											 // keep looping if we haven't made a move
 		int pieceIndex = rand() % pieces.size(); // randomly give us an x-coordinate
 		int i = rand() % 8;						 // randomly give us an x-coordinate
@@ -160,28 +171,38 @@ bool madeMove = false;
 				oldRow = pieces[pieceIndex]->getY();
 				newCol = i;
 				newRow = j;
+
+				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
+
+
 				return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[pieceIndex]->move(i, j) == 4)
-			{ // ENPASSANT CONDITION
+			{ // Promo CONDITION (no cap)
+
 
 				oldCol = pieces[pieceIndex]->getX();
 				oldRow = pieces[pieceIndex]->getY();
 				newCol = i;
 				newRow = j;
-				return pair<int, std::string>{4, "enpassant"};
+
+
+				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				
+				return pair<int, std::string>{4, "promotion"};
 			}
 			else if (pieces[pieceIndex]->move(i, j) == 5)
-			{ // PROMOTION CONDITION
-
+			{ // PROMOTION CONDITION  (with cap)
+				std::string capturedRep = gameBoard->getPiece(i, j)->getRep();
+				opponent->removePiece(std::pair<int, int>{i, j});
 				oldCol = pieces[pieceIndex]->getX();
 				oldRow = pieces[pieceIndex]->getY();
 				newCol = i;
 				newRow = j;
-				return pair<int, std::string>{5, "promotion"};
+				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				return pair<int, std::string>{5, capturedRep};
 			}
 
-			madeMove = true;
 		}
 
 		// otherwise keep looping (might be inefficient)

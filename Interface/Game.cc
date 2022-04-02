@@ -13,6 +13,7 @@
 #include "../PiecesAndBoard/Move/castle.h"
 #include "../PiecesAndBoard/Move/enpassant.h"
 #include "../PiecesAndBoard/Move/promotion.h"
+#include "../PiecesAndBoard/Move/promotioncap.h"
 #include "../Graphics/window.h"
 #include "../PiecesAndBoard/board.h"
 #include "../PiecesAndBoard/twoPlayerBoard.h"
@@ -358,6 +359,18 @@ void Game::update()
 		drawPiece(rep, newCol, newRow);
 		// clear both squares
 		// redraw to promoted piece
+
+
+
+
+	} else if (type == "promocap") {
+
+		fill(newCol, newRow); // erase both squares
+		fill(oldCol, oldRow);
+		string rep = move->getPromoType();
+		drawPiece(rep, newCol, newRow);
+		// clear both squares
+		// redraw to promoted piece
 	}
 	else
 	{ // (type == "enpassant")
@@ -369,6 +382,7 @@ void Game::update()
 		string rep = board->getPiece(newCol, newRow)->getRep();
 		drawPiece(rep, newCol, newRow);
 	}
+
 }
 
 // resets the board to start a new game
@@ -571,6 +585,8 @@ void Game::handleEvents()
 
 
 							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
+
+
 							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
@@ -587,20 +603,36 @@ void Game::handleEvents()
 
 								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
-							} else if (status.first == 4) { // enpassant
+							} else if (status.first == 4) { // promo no cap
 
-								// ADD ENPASSANT HERE
+							string promoType;
+							linestream >> promoType;
 
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q") {
+
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});
+
+							} else {
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
+
 
 							} else if (status.first == 5) { // promotion
 
-								// ADD PROMOTION THING HERE
-								// string promoType;
-								// linestream >> promoType;
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+							string promoType;
+							linestream >> promoType;
+
+							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q") {
+
+								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second});
+
+							} else {
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
 
 							}
+
+
 						}
 						else
 						{
@@ -617,6 +649,7 @@ void Game::handleEvents()
 
 
 							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
+
 							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
@@ -633,21 +666,52 @@ void Game::handleEvents()
 
 								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
-							} else if (status.first == 4) { // enpassant
+							} else if (status.first == 4) { // promo no cap
 
-								// ADD ENPASSANT HERE
+		
 
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+									int i = rand() % 4;
+
+									if (i == 0) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "R"});
+
+									} else if (i == 1) {
+										
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "N"});
+										
+									} else if (i == 2) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "B"});
+
+									} else if (i == 3) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "Q"});
+									}
+
 
 							} else if (status.first == 5) { // promotion
 
-								// ADD PROMOTION THING HERE
-								// string promoType;
-								// linestream >> promoType;
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+									int i = rand() % 4;
+
+									if (i == 0) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second});
+
+									} else if (i == 1) {
+										
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second});
+										
+									} else if (i == 2) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second});
+
+									} else if (i == 3) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second});
+									}
 
 							}
-						return;
 
 					}
 					whitemoves = false;
@@ -674,9 +738,6 @@ cerr << "DDDDD";
 
 							std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
 
-
-
-
 							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
@@ -693,18 +754,32 @@ cerr << "DDDDD";
 
 								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
-							} else if (status.first == 4) { // enpassant
+							} else if (status.first == 4) { // promo no cap
 
-								// ADD ENPASSANT HERE
+							string promoType;
+							linestream >> promoType;
 
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+							if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q") {
+
+								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});
+
+							} else {
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
+
 
 							} else if (status.first == 5) { // promotion
 
-								// ADD PROMOTION THING HERE
-								// string promoType;
-								// linestream >> promoType;
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+							string promoType;
+							linestream >> promoType;
+
+							if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q") {
+
+								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second});
+
+							} else {
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
 
 							}
 						}
@@ -715,8 +790,6 @@ cerr << "DDDDD";
 					}
 					else
 					{
-
-
 							int oldCol = 0;
 							int oldRow = 0;
 							int newCol = 0;
@@ -724,6 +797,7 @@ cerr << "DDDDD";
 
 
 							std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
+
 							if (status.first == 0)
 							{
 								throw runtime_error{"Illegal move attempted. Please try another."};
@@ -740,25 +814,53 @@ cerr << "DDDDD";
 
 								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
 
-							} else if (status.first == 4) { // enpassant
+							} else if (status.first == 4) { // promo no cap
 
-								// ADD ENPASSANT HERE
+		
 
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+									int i = rand() % 4;
+
+									if (i == 0) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "r"});
+
+									} else if (i == 1) {
+										
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "n"});
+										
+									} else if (i == 2) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "b"});
+
+									} else if (i == 3) {
+
+history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "q"});
+									}
+
 
 							} else if (status.first == 5) { // promotion
 
-								// ADD PROMOTION THING HERE
-								// string promoType;
-								// linestream >> promoType;
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "/*promoType*/"});
+									int i = rand() % 4;
+
+									if (i == 0) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second});
+
+									} else if (i == 1) {
+										
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second});
+										
+									} else if (i == 2) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second});
+
+									} else if (i == 3) {
+
+history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second});
+									}
 
 							}
-
-
-						return;
 					}
-
 					whitemoves = true;
 				}
 			}

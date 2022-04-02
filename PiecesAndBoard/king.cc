@@ -62,6 +62,9 @@ void King::nUpdate() {
 		else moves.emplace_back(pos);
 	}
 
+
+
+	// idk if this right
 	// check castle
 	if (numMoves == 0){
 		for (int i = 1; x - i >= 0; i++){
@@ -85,6 +88,12 @@ void King::nUpdate() {
 			}
 		}
 	}
+
+	
+
+
+
+
 }
 
 

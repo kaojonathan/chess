@@ -12,9 +12,8 @@ Human::Human(int side) : Player{side, 0} {}
 # return 1 if move was successful (ask for next move) (NORMAL MOVE)
 # return 2 if capture was sucessful (ask for next move) (CAPTURE MOVE)
 # return 3 if move was CASTLE
-# return 4 if move was ENPASSANT
-# return 5 if move was PROMOTION
-
+# return 4 if move was PROMOTION (no capture)
+# 5 if promotion and capture
 
 THE STRING FIELD CONTAINS RELEVANT INFORMATION ABOUT THOSE MOVES (FOR MOVE OBJECT)
 */
@@ -45,17 +44,26 @@ std::cerr << "one::move called";
         else if (pieceToMove->move(newCol, newRow) == 3)
         { // CASTLE CONDITION
 
+
+            // gameBoard->moveP(oldCol, oldRow, newCol, newRow);
             return pair<int, std::string>{3, "castle"};
         }
         else if (pieceToMove->move(newCol, newRow) == 4)
-        { // ENPASSANT CONDITION
+        { // promo CONDITION
 
-            return pair<int, std::string>{4, "enpassant"};
+
+
+        gameBoard->moveP(oldCol, oldRow, newCol, newRow);
+             return pair<int, std::string>{4, "promotion"};
         }
         else if (pieceToMove->move(newCol, newRow) == 5)
-        { // PROMOTION CONDITION
+        { // promo CONDITION with capture
 
-            return pair<int, std::string>{5, "promotion"};
+            std::string capturedRep = gameBoard->getPiece(newCol, newRow)->getRep();
+            opponent->removePiece(std::pair<int, int>{newCol, newRow});
+            gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
+
+             return pair<int, std::string>{5, capturedRep};
         }
     }
     return pair<int, std::string>{0, "fail"};
