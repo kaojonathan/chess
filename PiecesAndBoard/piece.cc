@@ -6,8 +6,8 @@
 #include "../Players/player.h"
 using namespace std;
 
-Piece::Piece(int side, int x, int y, Board * board) : x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, numMoves{0}, gameBoard{board}  {
-	board->setPiece(x, y, this);
+Piece::Piece(int side, int x, int y, Board * board) :castle{vector<pair<int,int>>{}}, x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, numMoves{0}, gameBoard{board}  {
+	//board->setPiece(x, y, this);
 }
 
 

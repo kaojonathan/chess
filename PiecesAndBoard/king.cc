@@ -71,7 +71,7 @@ void King::nUpdate() {
 			Piece * detacted = gameBoard->getPiece(x-i, y);
 			if (detacted) {
 				Rook * gr = dynamic_cast<Rook *>(detacted);
-				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x-2, y}).size() == 0 || opponent->canAttack(pair<int,int> {x-3, y}).size() == 0) {
+				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x-2, y}).size() == 0 && opponent->canAttack(pair<int,int> {x-3, y}).size() == 0) {
 					castle.emplace_back(pair<int,int> {x-3, y});
 				}
 				break;
@@ -81,7 +81,7 @@ void King::nUpdate() {
 			Piece * detacted = gameBoard->getPiece(x+i, y);
 			if (detacted) {
 				Rook * gr = dynamic_cast<Rook *>(detacted);
-				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x+2, y}).size() == 0 || opponent->canAttack(pair<int,int> {x+3, y}).size() == 0) {
+				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x+2, y}).size() == 0 && opponent->canAttack(pair<int,int> {x+3, y}).size() == 0) {
 					castle.emplace_back(pair<int,int> {x+3, y});
 				}
 				break;
