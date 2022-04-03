@@ -2,10 +2,10 @@
 #include "capture.h"
 using namespace std;
 
-Capture::Capture(int x1, int y1, int x2, int y2, std::string capType): Move{x1, y1, x2, y2, "normal"}, capType{capType} {}
+Capture::Capture(int x1, int y1, int x2, int y2, string capType): Move{x1, y1, x2, y2, "normal"}, capType{capType} {}
 
-Capture::~Capture() {}
 
-std::string Capture::getCapType() {
+
+string Capture::getCapType() {
     return capType;
 }

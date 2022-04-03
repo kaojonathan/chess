@@ -12,11 +12,9 @@
 class Capture : public Move {
     std::string capType;  // the type of piece captured
 
-
-
     public:
-    Capture(int x1, int y1, int x2, int y2, std::string capType);
-    ~Capture();
+        Capture(int x1, int y1, int x2, int y2, std::string capType);
+
         std::string getCapType() override;
         std::string getPromoType() override {return "no";}
 };
