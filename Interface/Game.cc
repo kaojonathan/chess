@@ -48,6 +48,10 @@ Game::~Game()
 	delete score;
 	delete p1;
 	delete p2;
+	while (history.size() > 0) { // delete the history
+		delete history.back();
+		history.pop_back();
+	}
 }
 
 /////////// HELPER FUNCTIONS /////////////////
@@ -355,7 +359,7 @@ void Game::update()
 	{
 		fill(newCol, newRow); // erase both squares
 		fill(oldCol, oldRow);
-		string rep = move->getPromoType();
+		string rep = move->getPT();
 		drawPiece(rep, newCol, newRow);
 		// clear both squares
 		// redraw to promoted piece
@@ -367,7 +371,7 @@ void Game::update()
 
 		fill(newCol, newRow); // erase both squares
 		fill(oldCol, oldRow);
-		string rep = move->getPromoType();
+		string rep = move->getPT();
 		drawPiece(rep, newCol, newRow);
 		// clear both squares
 		// redraw to promoted piece
@@ -584,8 +588,9 @@ void Game::handleEvents()
 
 
 
-							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
 
+							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
+////////
 
 							if (status.first == 0)
 							{
@@ -611,6 +616,9 @@ void Game::handleEvents()
 							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q") {
 
 								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});
+								board->removeP(to);
+								board->insertP(promoType, to);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 							} else {
 								throw runtime_error{"Illegal promotion type attempted. Please try another."};
@@ -625,6 +633,9 @@ void Game::handleEvents()
 							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q") {
 
 								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second});
+								board->removeP(to);
+								board->insertP(promoType, to);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 							} else {
 								throw runtime_error{"Illegal promotion type attempted. Please try another."};
@@ -674,20 +685,53 @@ void Game::handleEvents()
 
 									if (i == 0) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+								
+
+								board->removeP(strPos);
+								board->insertP("R", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "R"});
 
 									} else if (i == 1) {
 										
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("N", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "N"});
 										
 									} else if (i == 2) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+								board->removeP(strPos);
+								board->insertP("B", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "B"});
 
 									} else if (i == 3) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("Q", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "Q"});
 									}
+
 
 
 							} else if (status.first == 5) { // promotion
@@ -695,18 +739,51 @@ history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "Q"});
 									int i = rand() % 4;
 
 									if (i == 0) {
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("R", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second});
 
 									} else if (i == 1) {
 										
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("N", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second});
 										
 									} else if (i == 2) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("B", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
+
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second});
 
 									} else if (i == 3) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("Q", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second});
 									}
@@ -822,17 +899,49 @@ cerr << "DDDDD";
 
 									if (i == 0) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("r", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "r"});
 
 									} else if (i == 1) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("n", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 										
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "n"});
 										
 									} else if (i == 2) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("b", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "b"});
 
 									} else if (i == 3) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("q", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "q"});
 									}
@@ -844,17 +953,49 @@ history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "q"});
 
 									if (i == 0) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("r", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second});
 
 									} else if (i == 1) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("n", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 										
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second});
 										
 									} else if (i == 2) {
 
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("b", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
+
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second});
 
 									} else if (i == 3) {
+
+								string xStr = string(1, newCol + 'a');
+								string yStr = to_string(8 - newRow);
+								string strPos = xStr + yStr;
+
+								board->removeP(strPos);
+								board->insertP("q", strPos);
+								p1->addToPieces(board->getPiece(newCol, newRow));
 
 history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second});
 									}

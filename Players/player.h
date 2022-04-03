@@ -39,6 +39,8 @@ class Player {
             return pieces;
         }
 
+        void addToPieces(Piece *p);
+
         void removePiece(std::pair<int,int>); // removes the piece in position (x, y) and places it in inactivePieces.
 
         // list all the Pieces that can attack the given position

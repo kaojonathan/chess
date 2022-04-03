@@ -79,10 +79,15 @@ vector<pair<int, int>> getPos(int col, int row, int i, int type){
 	return pos;
 }
 
+
+
 // helper function that determines of the piece in position (x, y) checks the king
 bool Piece::posInCheck(int col, int row) {
 	return !isKing() && enemyKing(mostVal(attackable(pair<int, int>{col, row})));
-}
+} // can I use this for computer level 2 and 3???
+
+
+
 
 // return true if all int in dir are 0
 bool checkEnd(vector<int> dir){

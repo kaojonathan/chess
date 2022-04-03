@@ -15,7 +15,8 @@ class Move {
     int pos2y;
     std::string type; // normal, capture, castle, promotion, promocap
 
-
+virtual std::string getPromoType() = 0;
+virtual std::string getCapType() = 0;
 
     public:
     Move(int x1, int y1, int x2, int y2, std::string type);
@@ -25,8 +26,13 @@ class Move {
     int getPos1y();
     int getPos2x();
     int getPos2y();
-virtual std::string getPromoType() = 0;
-virtual std::string getCapType() = 0;
+    std::string getPT() {
+        return getPromoType();
+    }
+    std::string getCT() {
+        return getCapType();
+    }
+
 
 };
 

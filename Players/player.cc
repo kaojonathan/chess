@@ -127,3 +127,10 @@ void Player::print(){
         else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
     }
 }
+
+void Player::addToPieces(Piece *p) {
+    
+pieces.emplace_back(p);
+
+
+}
