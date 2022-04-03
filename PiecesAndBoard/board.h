@@ -14,6 +14,7 @@ class Board {
 
 		virtual bool verifySetup() = 0;
 		virtual void origSetup() = 0;
+		virtual void capturePiece(int newx, int newy) = 0;
 
 	public:
 		Board();
@@ -39,6 +40,12 @@ class Board {
 		}
 		void oSetup() {
 			origSetup();
+		}
+
+		void captureP(int newx, int newy) {
+
+			capturePiece(newx, newy);
+
 		}
 };
 

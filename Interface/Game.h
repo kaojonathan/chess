@@ -47,6 +47,7 @@ class Game {
         void update();
         void quit(); // quits the game and deallocates memory
         bool running();
+        void resetRecents();
 
 };
 

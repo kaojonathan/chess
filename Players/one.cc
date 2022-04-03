@@ -90,7 +90,7 @@ std::cerr << "one playermove";
 				gameBoard->moveP(king->getX(), king->getY(), i, j);
 				return pair<int, std::string>{5, capturedRep};
 
-			}
+			} 
 		}
 		// otherwise keep looping (might be inefficient)
 	}
@@ -179,12 +179,35 @@ std::cerr << "one playermove";
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
 				return pair<int, std::string>{5, capturedRep};
 
-			}
+			} else if (pieces[pieceIndex]->move(i, j) == 6) {
+            // en passant
+
+        
+				oldCol = pieces[pieceIndex]->getX();
+				oldRow = pieces[pieceIndex]->getY();
+				newCol = i;
+				newRow = j;
+
+		if (pieces[pieceIndex]->getRep() == "P")
+		{
+opponent->removePiece(std::pair<int, int>{i, j + 1});
+gameBoard->captureP(i, j + 1);
+		}
+		else if (pieces[pieceIndex]->getRep() == "p")
+		{
+opponent->removePiece(std::pair<int, int>{i, j - 1});
+gameBoard->captureP(i, j - 1);
+		}
+
+gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+
+             return pair<int, std::string>{6, "enPassant"};
 		}
 		// otherwise keep looping (might be inefficient)
 	}
 
 
+	}
 	}
 	return pair<int, std::string>{0, "fail"};
 }

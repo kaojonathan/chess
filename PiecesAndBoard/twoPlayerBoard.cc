@@ -38,7 +38,10 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 	board[y][x] = nullptr;
 }
 
-
+void twoPlayerBoard::capturePiece(int newx, int newy)
+{
+	board[newy][newx] = nullptr;
+}
 
 void twoPlayerBoard::insertNewPiece(string name, string position)
 {
@@ -105,6 +108,7 @@ void twoPlayerBoard::removePiece(string position)
 	if (board[row][col])
 	{
 		delete board[row][col];
+		board[row][col] = nullptr;
 	}
 }
 

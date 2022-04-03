@@ -20,6 +20,9 @@ class Piece {
         int side; // 0 for white and 1 for black
         int value;  // the value of the Piece
         int updateStatus; // 0: not update, 1: normal update, 2: forced update
+
+        bool recent; // moved recently
+
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
         std::vector<std::pair<int,int>> targets;            // contains a list of position of enemy that the piece can capture.
         // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
@@ -58,6 +61,9 @@ class Piece {
         int getX();
         int getY();
         int getSide();
+        void setRecent();
+        void resetRecent();
+        bool getRecent();
         std::vector<std::pair<int,int>> getMoves();
         std::vector<std::pair<int,int>> getTargets();
         void setPos(int col, int row);  // make sure col first and row second

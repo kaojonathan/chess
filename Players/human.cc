@@ -64,6 +64,27 @@ std::cerr << "one::move called";
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
 
              return pair<int, std::string>{5, capturedRep};
+        } else if (pieceToMove->move(newCol, newRow) == 6) {
+            // en passant
+
+           
+    
+
+		if (pieceToMove->getRep() == "P")
+		{
+opponent->removePiece(std::pair<int, int>{newCol, newRow + 1});
+gameBoard->captureP(newCol, newRow + 1);
+		}
+		else if (pieceToMove->getRep() == "p")
+		{
+opponent->removePiece(std::pair<int, int>{newCol, newRow - 1});
+gameBoard->captureP(newCol, newRow - 1);
+		}
+
+gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
+
+             return pair<int, std::string>{6, "enPassant"};
+
         }
     }
     return pair<int, std::string>{0, "fail"};

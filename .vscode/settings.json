@@ -49,6 +49,20 @@
         "clocale": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "thread": "cpp",
+        "array": "cpp",
+        "charconv": "cpp",
+        "chrono": "cpp",
+        "format": "cpp",
+        "forward_list": "cpp",
+        "locale": "cpp",
+        "map": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "stop_token": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp",
+        "xtree": "cpp"
     }
 }

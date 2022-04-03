@@ -6,7 +6,7 @@
 #include "../Players/player.h"
 using namespace std;
 
-Piece::Piece(int side, int x, int y, Board * board) :castle{vector<pair<int,int>>{}}, x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, numMoves{0}, gameBoard{board}  {
+Piece::Piece(int side, int x, int y, Board * board) :castle{vector<pair<int,int>>{}}, x{x}, y{y}, side{side}, updateStatus{0}, moves{vector<pair<int,int>>{}}, targets{vector<pair<int,int>>{}}, numMoves{0}, gameBoard{board}, recent{false}  {
 	//board->setPiece(x, y, this);
 }
 
@@ -55,7 +55,11 @@ bool Piece::isKing(){
 }
 
 bool Piece::enemyKing(Piece * target) {
+	if (target == nullptr) {
+		return false;
+	} else {
 	return target->getSide() != side && target->isKing();
+	}
 }
 
 // generate the paths with direction based on type: 
@@ -190,6 +194,7 @@ void Piece::dirScan(int type) {
 //  3: valid castle
 //  4: valid promotion (no capture)
 //  5: valid promotion (capture)
+//  6: enPassant valid
 int Piece::move(int col, int row){
 	for (auto mv : moves) {
 		if (mv.first == col && mv.second == row) {
@@ -218,6 +223,123 @@ int Piece::move(int col, int row){
 		if (pos.first == col && pos.second == row) return 3;
 	}
 	}
+
+
+
+		if (this->getRep() == "P")
+		{
+			if (col == this->x + 1)
+			{
+				if (row == this->y - 1)
+				{
+					if (gameBoard->getPiece(this->x + 1, this->y))
+					{
+						Piece *e = gameBoard->getPiece(this->x + 1, this->y);
+						if (e->getRep() == "p")
+						{
+							if (e->getRecent()) // recent pawn that moved two
+							{
+								// perform enPassant
+
+								return 6;
+
+	
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+			else if (col == this->x - 1)
+			{
+				if (row == this->y - 1)
+				{
+
+					if (gameBoard->getPiece(this->x - 1, this->y))
+					{
+						Piece *e = gameBoard->getPiece(this->x - 1, this->y);
+						if (e->getRep() == "p")
+						{
+							if (e->getRecent()) // recent pawn that moved two
+							{
+								// perform enPassant
+
+								return 6;
+
+	
+
+							}
+
+						}
+
+					}
+
+				}
+			}
+		}
+		else if (this->getRep() == "p")
+		{
+
+			if (col == this->x + 1)
+			{
+				if (row == this->y + 1)
+				{
+					if (gameBoard->getPiece(this->x + 1, this->y))
+					{
+						Piece *e = gameBoard->getPiece(this->x + 1, this->y);
+						if (e->getRep() == "P")
+						{
+							if (e->getRecent()) // recent pawn that moved two
+							{
+								// perform enPassant
+
+								return 6;
+
+	
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+			else if (col == this->x - 1)
+			{
+				if (row == this->y + 1)
+				{
+
+					if (gameBoard->getPiece(this->x - 1, this->y))
+					{
+						Piece *e = gameBoard->getPiece(this->x - 1, this->y);
+						if (e->getRep() == "P")
+						{
+							if (e->getRecent()) // recent pawn that moved two
+							{
+								// perform enPassant
+
+								return 6;
+
+	
+
+							}
+
+						}
+
+					}
+
+				}
+			}
+
+
+		}
+
 	return 0;
 }
 
@@ -290,7 +412,11 @@ bool Piece::isUpdated() {
 Piece *mostVal(vector<Piece *> attackables){
 	Piece * res = nullptr;
 	for (auto enemy : attackables) {
+		if (res) {
 		if (enemy->getVal() > res->getVal()) res = enemy;
+		} else {
+			res = enemy;
+		}
 	}
 	return res;
 } 
@@ -298,4 +424,16 @@ Piece *mostVal(vector<Piece *> attackables){
 // true if the position is not out of the board
 bool Piece::validPos(pair<int, int> pos){
 	return !(pos.first >= 8 || pos.second >= 8 || pos.first < 0 || pos.second < 0);
+}
+
+void Piece::setRecent() {
+	recent = true;
+}
+
+void Piece::resetRecent() {
+	recent = false;
+}
+
+bool Piece::getRecent() {
+	return recent;
 }

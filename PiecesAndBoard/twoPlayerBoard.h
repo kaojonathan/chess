@@ -16,6 +16,8 @@ class twoPlayerBoard : public Board {
 	bool verifySetup() override;
 	void origSetup() override;
 
+	void capturePiece(int newx, int newy) override;
+
 
 public:
 	twoPlayerBoard();

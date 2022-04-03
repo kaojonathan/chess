@@ -45,6 +45,31 @@ std::cerr << "two  playermove";
 				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				return pair<int, std::string>{5, capturedRep};
 
+				} else if (pieces[i]->move(j, k) == 6) {
+
+				oldCol = pieces[i]->getX();
+				oldRow = pieces[i]->getY();
+				newCol = j;
+				newRow = k;
+
+            // en passant
+
+		if (pieces[i]->getRep() == "P")
+		{
+opponent->removePiece(std::pair<int, int>{j, k + 1});
+gameBoard->captureP(j, k + 1);
+		}
+		else if (pieces[i]->getRep() == "p")
+		{
+opponent->removePiece(std::pair<int, int>{j, k - 1});
+gameBoard->captureP(j, k - 1);
+		}
+
+gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+
+             return pair<int, std::string>{6, "enPassant"};
+		
+					
 				}
 			}
 		}
@@ -91,24 +116,15 @@ std::cerr << "two  playermove";
 
 
 
-
-
-
 	// CHECK CONDITION
 	for (int i = 0; i < pieces.size(); ++i)
 	{
-
 		for (int j = 0; j < 8; ++j)
 		{
-
 			for (int k = 0; k < 8; ++k)
 			{
-
-
 				if (pieces[i]->posInCheck(j, k))
 				{ // finds position of the piece that checks the king
-
-
 			if (pieces[i]->move(j, k) == 1)
 			{
 
@@ -134,18 +150,11 @@ std::cerr << "two  playermove";
 			}
 			else if (pieces[i]->move(j, k) == 3)
 			{ // CASTLE CONDITION
-
-
 				oldCol = pieces[i]->getX();
 				oldRow = pieces[i]->getY();
 				newCol = j;
 				newRow = k;
-
-
 				return pair<int, std::string>{3, "castle"};
-
-
-
 			}
 			else if (pieces[i]->move(j, k) == 4)
 			{ // promo CONDITION (no cap)
@@ -171,7 +180,31 @@ std::cerr << "two  playermove";
 
 				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				return pair<int, std::string>{5, capturedRep};
-			}
+			} else if (pieces[i]->move(j, k) == 6) {
+            // en passant
+
+				oldCol = pieces[i]->getX();
+				oldRow = pieces[i]->getY();
+				newCol = j;
+				newRow = k;
+
+
+		if (pieces[i]->getRep() == "P")
+		{
+opponent->removePiece(std::pair<int, int>{j, k + 1});
+gameBoard->captureP(j, k + 1);
+		}
+		else if (pieces[i]->getRep() == "p")
+		{
+opponent->removePiece(std::pair<int, int>{j, k - 1});
+gameBoard->captureP(j, k - 1);
+		}
+
+gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+
+             return pair<int, std::string>{6, "enPassant"};
+		}
+
 
 				}
 			}
@@ -370,7 +403,31 @@ int moveKing = rand() % pieces.size();
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
 				return pair<int, std::string>{5, capturedRep};
 
-			}
+			} else if (pieces[pieceIndex]->move(i, j) == 6) {
+            // en passant
+
+        
+				oldCol = pieces[pieceIndex]->getX();
+				oldRow = pieces[pieceIndex]->getY();
+				newCol = i;
+				newRow = j;
+
+		if (pieces[pieceIndex]->getRep() == "P")
+		{
+opponent->removePiece(std::pair<int, int>{i, j + 1});
+gameBoard->captureP(i, j + 1);
+		}
+		else if (pieces[pieceIndex]->getRep() == "p")
+		{
+opponent->removePiece(std::pair<int, int>{i, j - 1});
+gameBoard->captureP(i, j - 1);
+
+		}
+
+gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+
+             return pair<int, std::string>{6, "enPassant"};
+		}
 		}
 		// otherwise keep looping (might be inefficient)
 	}
