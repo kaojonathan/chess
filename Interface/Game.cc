@@ -652,9 +652,10 @@ void Game::handleEvents()
 								{
 									resetRecents();
 									history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});
-						
+
 									board->insertP(promoType, to);
 									p1->addToPieces(board->getPiece(newCol, newRow));
+									
 								}
 								else
 								{

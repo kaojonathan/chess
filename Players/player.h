@@ -43,6 +43,7 @@ class Player {
 
         void removePiece(std::pair<int,int>); // removes the piece in position (x, y) and places it in inactivePieces.
 
+        void deletePiece(std::pair<int,int>); // deletes the piece in position (x, y) DELETE
         // list all the Pieces that can attack the given position
         std::vector<Piece*> canAttack(std::pair<int, int>);
 

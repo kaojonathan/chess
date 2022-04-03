@@ -52,8 +52,9 @@ std::cerr << "one::move called";
         { // promo CONDITION
 
 
-
+            
         gameBoard->moveP(oldCol, oldRow, newCol, newRow);
+        deletePiece(std::pair<int, int>(newCol, newRow));
              return pair<int, std::string>{4, "promotion"};
         }
         else if (pieceToMove->move(newCol, newRow) == 5)
@@ -63,6 +64,8 @@ std::cerr << "one::move called";
             opponent->removePiece(std::pair<int, int>{newCol, newRow});
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
 
+            deletePiece(std::pair<int, int>(newCol, newRow));
+            
              return pair<int, std::string>{5, capturedRep};
         } else if (pieceToMove->move(newCol, newRow) == 6) {
             // en passant

@@ -69,6 +69,20 @@ void Player::removePiece(std::pair<int, int> pos)
     }
 }
 
+void Player::deletePiece(std::pair<int, int> pos)
+{ // removes the piece in position (x, y) and places it in inactivePieces.
+
+    for (size_t i = 0; i < pieces.size(); ++i)
+    {
+        if ((pieces[i]->getX() == pos.first) && (pieces[i]->getY() == pos.second))
+        {
+            auto it = pieces.begin() + i;
+            it = pieces.erase(it); // remove
+        }
+    }
+}
+
+
 // update status of all pieces of the player, return 0 if there is avaliable move for player, 1 if it is a checkmate, 2 if it is a draw.
 int Player::checkStatus()
 {

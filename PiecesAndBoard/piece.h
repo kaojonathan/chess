@@ -108,6 +108,13 @@ class Piece {
 
         int getNumMoves();
         void incNumMoves(); // ++numMoves
+
+        
+        std::vector<Piece *> getAttackable(std::pair<int, int> at) {
+    return attackable(at);
+}
+
+
 };
    
 // get the most valuable Piece
@@ -118,5 +125,7 @@ Piece * mostVal(std::vector<Piece *>);
 //	2: cross directions only
 //	3: both diagonal and cross directions
 std::vector<std::pair<int, int>> getPos(int col, int row, int i, int type);
+
+
 
 #endif

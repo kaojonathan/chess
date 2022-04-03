@@ -75,6 +75,7 @@ std::cerr << "one playermove";
 
 
 				gameBoard->moveP(king->getX(), king->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				
 				return pair<int, std::string>{4, "promotion"};
 			} else if (king->move(i, j) == 5) {
@@ -88,6 +89,7 @@ std::cerr << "one playermove";
 				newCol = i;
 				newRow = j;
 				gameBoard->moveP(king->getX(), king->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				return pair<int, std::string>{5, capturedRep};
 
 			} 
@@ -164,6 +166,7 @@ std::cerr << "one playermove";
 
 
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				
 				return pair<int, std::string>{4, "promotion"};
 			} else if (pieces[pieceIndex]->move(i, j) == 5) {
@@ -177,6 +180,7 @@ std::cerr << "one playermove";
 				newCol = i;
 				newRow = j;
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				return pair<int, std::string>{5, capturedRep};
 
 			} else if (pieces[pieceIndex]->move(i, j) == 6) {

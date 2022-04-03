@@ -176,30 +176,24 @@ bool twoPlayerBoard::verifySetup()
 				if (board[i][j])
 				{
 
-					if (board[i][j]->canAttack(std::pair<int, int>{whiteKing->getX(), whiteKing->getY()}))
-					{
-						return false;
+					std::vector<Piece *> attackablePieces = board[i][j]->getAttackable(std::pair<int, int>{board[i][j]->getX(), board[i][j]->getY()});
+
+					for (int i = 0; i < attackablePieces.size(); ++i) {
+						if (attackablePieces[i] == whiteKing) {
+							return false;
+
+
+						} else if (attackablePieces[i] == blackKing) {
+
+							return false;
+						}
+
+
 					}
+					
 				}
 			}
 		}
-
-		for (int i = 0; i < 8; ++i)
-		{
-			for (int j = 0; j < 8; ++j)
-			{
-
-				if (board[i][j])
-				{
-
-					if (board[i][j]->canAttack(std::pair<int, int>{blackKing->getX(), blackKing->getY()}))
-					{
-						return false;
-					}
-				}
-			}
-		}
-
 		return true;
 	}
 }

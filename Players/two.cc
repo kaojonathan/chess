@@ -43,6 +43,7 @@ std::cerr << "two  playermove";
 				newRow = k;
 
 				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+				deletePiece(std::pair<int, int>(j, k));
 				return pair<int, std::string>{5, capturedRep};
 
 				} else if (pieces[i]->move(j, k) == 6) {
@@ -105,6 +106,9 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				newRow = k;
 
 				gameBoard->moveP(king->getX(), king->getY(), j, k);
+				
+				deletePiece(std::pair<int, int>(j, k));
+
 				return pair<int, std::string>{5, capturedRep};
 
 				}
@@ -165,6 +169,7 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				newRow = k;
 
 	gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+	deletePiece(std::pair<int, int>(j, k));
 
 				return pair<int, std::string>{4, "promotion"};
 			} else if (pieces[i]->move(j, k) == 5) { // promo condition with capture
@@ -179,6 +184,9 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				newRow = k;
 
 				gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
+
+				deletePiece(std::pair<int, int>(j, k));
+
 				return pair<int, std::string>{5, capturedRep};
 			} else if (pieces[i]->move(j, k) == 6) {
             // en passant
@@ -299,6 +307,7 @@ int moveKing = rand() % pieces.size();
 
 
 				gameBoard->moveP(king->getX(), king->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				
 				return pair<int, std::string>{4, "promotion"};
 			} else if (king->move(i, j) == 5) {
@@ -312,6 +321,7 @@ int moveKing = rand() % pieces.size();
 				newCol = i;
 				newRow = j;
 				gameBoard->moveP(king->getX(), king->getY(), i, j);
+				deletePiece(std::pair<int, int>(i, j));
 				return pair<int, std::string>{5, capturedRep};
 
 			}
@@ -388,7 +398,9 @@ int moveKing = rand() % pieces.size();
 
 
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
-				
+
+				deletePiece(std::pair<int, int>(i, j));
+
 				return pair<int, std::string>{4, "promotion"};
 			} else if (pieces[pieceIndex]->move(i, j) == 5) {
 				// Promo CONDITION (with cap)
@@ -401,6 +413,9 @@ int moveKing = rand() % pieces.size();
 				newCol = i;
 				newRow = j;
 				gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j);
+
+				deletePiece(std::pair<int, int>(i, j));
+
 				return pair<int, std::string>{5, capturedRep};
 
 			} else if (pieces[pieceIndex]->move(i, j) == 6) {
