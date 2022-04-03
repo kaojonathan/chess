@@ -13,7 +13,7 @@ class Rook : public Piece {
     std::vector<Piece*> down; // positions that the piece can move to
     std::vector<Piece*> left; // positions that the piece can move to
 */
-
+void nUpdate() override;
 public:
     Rook(int side, int x, int y, Board * board);
     // edit: show be implemented in player/board class, which contain the position of the king and the rook
@@ -21,7 +21,7 @@ public:
     // for the computer level 2 and 3 class
     // edit: may not be useful anymore
     /* std::pair<int, int> getCheckCoords() override; */
-    void nUpdate() override;
+    
     std::vector<Piece *> attackable(std::pair<int, int>) override;
 };
 

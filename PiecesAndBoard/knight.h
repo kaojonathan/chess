@@ -14,10 +14,11 @@ class Knight : public Piece {
     std::vector<Piece*> downonelefttwo; // positions that the piece can move to
     std::vector<Piece*> uponelefttwo; // positions that the piece can move to
     */
+   void nUpdate() override;
 
 public:
     Knight(int side, int x, int y, Board * board);
-    void nUpdate() override;
+    
     // get a list of positions that he knight at (col, row) can move to, positions cannot be out of bound 
     std::vector<std::pair<int,int>> getPos(int col, int row);
 

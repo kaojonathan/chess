@@ -16,10 +16,10 @@ class Queen : public Piece {
     std::vector<Piece*> down; // positions that the piece can move to
     std::vector<Piece*> left; // positions that the piece can move to
 */
-    
+    void nUpdate() override;
 public:
     Queen(int side, int x, int y, Board * board);
-    void nUpdate() override;
+    
     std::vector<Piece *> attackable(std::pair<int, int>) override;
 };
 
