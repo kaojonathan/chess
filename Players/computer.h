@@ -13,7 +13,7 @@ class Computer : public Player {
         virtual std::pair<int, std::string> move(int &oldCol, int &oldRow, int &newCol, int &newRow) = 0;
     public:
         Computer(int side, int level);
-        virtual ~Computer();
+        virtual ~Computer() = 0;
         // asks computer player to make a move
         /*
 # return 0 if ask for different move (move failed) (NEVER GONNA HAPPEN)
