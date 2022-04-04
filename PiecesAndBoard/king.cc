@@ -63,7 +63,7 @@ void King::nUpdate() {
 	}
 
 
-
+	/*
 	// idk if this right
 	// check castle
 	if (numMoves == 0){
@@ -87,7 +87,7 @@ void King::nUpdate() {
 				break;
 			}
 		}
-	}
+	}*/
 
 	
 
