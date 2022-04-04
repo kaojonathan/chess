@@ -11,9 +11,12 @@
 #include "pawn.h"
 using namespace std;
 
-twoPlayerBoard::twoPlayerBoard() : Board{} {
-	for (int i = 0; i < 8; i += 1){
-		for (int j = 0; j < 8; j += 1){
+twoPlayerBoard::twoPlayerBoard() : Board{}
+{
+	for (int i = 0; i < 8; i += 1)
+	{
+		for (int j = 0; j < 8; j += 1)
+		{
 			board[i][j] = nullptr;
 		}
 	}
@@ -33,9 +36,76 @@ bool twoPlayerBoard::validPos(int x, int y)
 void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 {
 	board[y][x]->incNumMoves();
-	board[y][x]->setPos(newx,newy);
+	board[y][x]->setPos(newx, newy);
 	board[newy][newx] = board[y][x];
 	board[y][x] = nullptr;
+}
+
+void twoPlayerBoard::castle(int col, int row)
+{
+	if (col == 6 && row == 7)
+	{
+		// move king
+		board[7][4]->incNumMoves();
+		board[7][4]->setPos(6, 7);
+		board[7][6] = board[7][4];
+		board[7][4] = nullptr;
+
+		// move rook
+
+		board[7][7]->incNumMoves();
+		board[7][7]->setPos(5, 7);
+		board[7][5] = board[7][7];
+		board[7][7] = nullptr;
+	}
+	else if (col == 2 && row == 7)
+	{
+
+		// move king
+		board[7][4]->incNumMoves();
+		board[7][4]->setPos(2, 7);
+		board[7][2] = board[7][4];
+		board[7][4] = nullptr;
+
+		// move rook
+
+		board[7][0]->incNumMoves();
+		board[7][0]->setPos(3, 7);
+		board[7][3] = board[7][0];
+		board[7][0] = nullptr;
+	}
+	else if (col == 6 && row == 0)
+	{
+
+		// move king
+		board[0][4]->incNumMoves();
+		board[0][4]->setPos(6, 0);
+		board[0][6] = board[0][4];
+		board[0][4] = nullptr;
+
+		// move rook
+
+		board[0][7]->incNumMoves();
+		board[0][7]->setPos(5, 0);
+		board[0][5] = board[0][7];
+		board[0][7] = nullptr;
+	}
+	else if (col == 2 && row == 0)
+	{
+
+		// move king
+		board[0][4]->incNumMoves();
+		board[0][4]->setPos(2, 0);
+		board[0][2] = board[0][4];
+		board[0][4] = nullptr;
+
+		// move rook
+
+		board[0][0]->incNumMoves();
+		board[0][0]->setPos(3, 0);
+		board[0][3] = board[0][0];
+		board[0][0] = nullptr;
+	}
 }
 
 void twoPlayerBoard::capturePiece(int newx, int newy)
@@ -178,19 +248,18 @@ bool twoPlayerBoard::verifySetup()
 
 					std::vector<Piece *> attackablePieces = board[i][j]->getAttackable(std::pair<int, int>{board[i][j]->getX(), board[i][j]->getY()});
 
-					for (int i = 0; i < attackablePieces.size(); ++i) {
-						if (attackablePieces[i] == whiteKing) {
+					for (int i = 0; i < attackablePieces.size(); ++i)
+					{
+						if (attackablePieces[i] == whiteKing)
+						{
 							return false;
-
-
-						} else if (attackablePieces[i] == blackKing) {
+						}
+						else if (attackablePieces[i] == blackKing)
+						{
 
 							return false;
 						}
-
-
 					}
-					
 				}
 			}
 		}

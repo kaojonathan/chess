@@ -106,7 +106,7 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				newRow = k;
 
 				gameBoard->moveP(king->getX(), king->getY(), j, k);
-				
+
 				deletePiece(std::pair<int, int>(j, k));
 
 				return pair<int, std::string>{5, capturedRep};
@@ -158,7 +158,8 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				oldRow = pieces[i]->getY();
 				newCol = j;
 				newRow = k;
-				return pair<int, std::string>{3, "castle"};
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[i]->move(j, k) == 4)
 			{ // promo CONDITION (no cap)
@@ -289,12 +290,11 @@ int moveKing = rand() % pieces.size();
 
 
 				
+				
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 
 
-				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
-
-
-				return pair<int, std::string>{3, "castle"};
 			}
 			else if (king->move(i, j) == 4)
 			{ // Promo CONDITION (no cap)
@@ -379,13 +379,11 @@ int moveKing = rand() % pieces.size();
 				newRow = j;
 
 
-				
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 
 
-				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
 
-
-				return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[pieceIndex]->move(i, j) == 4)
 			{ // Promo CONDITION (no cap)

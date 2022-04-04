@@ -16,6 +16,8 @@ class Board {
 		virtual void origSetup() = 0;
 		virtual void capturePiece(int newx, int newy) = 0;
 
+		virtual void castle(int col, int row) = 0;
+
 	public:
 		Board();
 		virtual ~Board() = 0;
@@ -46,6 +48,10 @@ class Board {
 
 			capturePiece(newx, newy);
 
+		}
+
+		void doCastle(int col, int row) {
+			castle(col, row);
 		}
 };
 

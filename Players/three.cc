@@ -61,7 +61,8 @@ std::cerr << "three  playermove";
 				oldRow = pieces[i]->getY();
 				newCol = pieces[i]->getMoves()[k].first;
 				newRow = pieces[i]->getMoves()[k].second;
-				return pair<int, std::string>{3, "castle"};
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 4)
 			{ // promo CONDITION
@@ -74,7 +75,7 @@ std::cerr << "three  playermove";
 
 				deletePiece(std::pair<int, int>(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second));
 
-				
+
 				return pair<int, std::string>{4, "promotion"};
 			}
 			else if (pieces[i]->move(pieces[i]->getMoves()[k].first, pieces[i]->getMoves()[k].second) == 5)
@@ -184,7 +185,8 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), pieces[i]->getMoves()[k].
 				oldRow = king->getY();
 				newCol = king->getMoves()[k].first;
 				newRow = king->getMoves()[k].second;
-				return pair<int, std::string>{3, "castle"};
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 			}
 			else if (king->move(king->getMoves()[k].first, king->getMoves()[k].second) == 4)
 			{ // promo CONDITION
@@ -385,7 +387,8 @@ gameBoard->moveP(pieces[i]->getX(), pieces[i]->getY(), j, k);
 				oldRow = pieces[i]->getY();
 				newCol = j;
 				newRow = k;
-				return pair<int, std::string>{3, "castle"};
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[i]->move(j, k) == 4)
 			{ // promo CONDITION
@@ -503,11 +506,8 @@ int moveKing = rand() % pieces.size();
 
 				
 
-
-				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
-
-
-				return pair<int, std::string>{3, "castle"};
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 			}
 			else if (king->move(i, j) == 4)
 			{ // Promo CONDITION (no cap)
@@ -598,12 +598,10 @@ int moveKing = rand() % pieces.size();
 
 
 				
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 
 
-				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
-
-
-				return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[pieceIndex]->move(i, j) == 4)
 			{ // Promo CONDITION (no cap)

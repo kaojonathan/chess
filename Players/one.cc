@@ -56,7 +56,8 @@ std::cerr << "one playermove";
 				newRow = j;
 
 
-				
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 
 
 				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
@@ -148,12 +149,9 @@ std::cerr << "one playermove";
 
 
 				
+			gameBoard->doCastle(newCol, newRow);
+            return pair<int, std::string>{3, "castle"};
 
-
-				// gameBoard->moveP(pieces[pieceIndex]->getX(), pieces[pieceIndex]->getY(), i, j); ???
-
-
-				return pair<int, std::string>{3, "castle"};
 			}
 			else if (pieces[pieceIndex]->move(i, j) == 4)
 			{ // Promo CONDITION (no cap)

@@ -93,7 +93,7 @@ int Player::checkStatus()
     king->statusUpdate();
     if (canMove())
         return 0; // the player can move a piece
-    if (opponentCheck)
+    if (opponentCheck) // when does this get updated?
         return 1; // checkmate
     return 2;
 }

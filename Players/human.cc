@@ -44,9 +44,9 @@ std::cerr << "one::move called";
         else if (pieceToMove->move(newCol, newRow) == 3)
         { // CASTLE CONDITION
 
-
-            // gameBoard->moveP(oldCol, oldRow, newCol, newRow);
+        gameBoard->doCastle(newCol, newRow);
             return pair<int, std::string>{3, "castle"};
+            
         }
         else if (pieceToMove->move(newCol, newRow) == 4)
         { // promo CONDITION
@@ -65,7 +65,7 @@ std::cerr << "one::move called";
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow);
 
             deletePiece(std::pair<int, int>(newCol, newRow));
-            
+
              return pair<int, std::string>{5, capturedRep};
         } else if (pieceToMove->move(newCol, newRow) == 6) {
             // en passant

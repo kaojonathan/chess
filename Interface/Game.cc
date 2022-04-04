@@ -355,7 +355,7 @@ void Game::update()
 			drawPiece(king, newCol, newRow);
 
 			string rook = board->getPiece(newCol - 1, newRow)->getRep();
-			drawPiece(rook, newCol, newRow);
+			drawPiece(rook, newCol - 1, newRow);
 		}
 		else if ((newCol - oldCol) == -2)
 		{ // if the king moved left
@@ -368,7 +368,7 @@ void Game::update()
 			drawPiece(king, newCol, newRow);
 
 			string rook = board->getPiece(newCol + 1, newRow)->getRep();
-			drawPiece(rook, newCol, newRow);
+			drawPiece(rook, newCol + 1, newRow);
 		}
 		// distinguish between types of castles
 		// based off positiong info
