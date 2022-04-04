@@ -9,7 +9,7 @@ class XWindow {
 	XWindowImpl* pImpl;
 
  public:
-	 XWindow(int width=500, int height=500);  // Constructor; displays the window.
+	XWindow(int width=500, int height=500);  // Constructor; displays the window.
   ~XWindow();                              // Destructor; destroys the window.
   XWindow(const XWindow&) = delete;
   XWindow&operator=(const XWindow&) = delete;
