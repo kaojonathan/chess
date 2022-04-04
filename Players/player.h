@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <string>
+#include <memory>
 
 class Piece;
 class Board;
@@ -11,12 +12,12 @@ class Player {
     protected:
         int side; // 0 for white and 1 for black
         Board* gameBoard;
-        Piece * king;            // may change type to King
+        std::unique_ptr<Piece> king;            // may change type to King
         // PLAYER OWNS THE PIECES
         // the player's pieces
-        std::vector<Piece*> pieces; 
+        std::vector<std::unique_ptr<Piece>> pieces; 
         // the pieces not on the board
-        std::vector<Piece*> inactivePieces; 
+        std::vector<std::unique_ptr<Piece>> inactivePieces; 
         // the opponent
         Player *opponent;
         Piece *opponentCheck;
@@ -35,7 +36,7 @@ class Player {
         int getType() {
             return type;
         }
-        std::vector<Piece*> getPieces() {
+        std::vector<std::unique_ptr<Piece>> const& getPieces() {
             return pieces;
         }
 

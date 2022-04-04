@@ -3,10 +3,11 @@
 #include <X11/Xlib.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
 class XWindowImpl; // used the pImpl Idiom
 class XWindow {
-	XWindowImpl* pImpl;
+	std::unique_ptr<XWindowImpl> pImpl;
 
  public:
 	XWindow(int width=500, int height=500);  // Constructor; displays the window.

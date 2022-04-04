@@ -17,15 +17,15 @@ class Score;
 class Player;
 
 class Game {
-    XWindow *window;
-    Board *board;
-    Score *score;
+    std::unique_ptr<XWindow> window;
+    std::unique_ptr<Board> board;
+    std::unique_ptr<Score> score;
     bool isRunning;
     std::string mode; // game, setup, menu, etc.
-    Player *p1; // white
-    Player *p2; // black
+    std::unique_ptr<Player> p1; // white
+    std::unique_ptr<Player> p2; // black
     bool whitemoves; // true if it is white's turn
-    std::vector<Move *> history; // change to vector<Move *>
+    std::vector<std::unique_ptr<Move>> history; // change to vector<Move *>
 
     void printBoard();
     void reset();
