@@ -415,6 +415,10 @@ void Game::reset()
 	delete p2;
 	p2 = nullptr;
 	history.clear();
+	delete board;
+	board = new twoPlayerBoard;
+	board->oSetup();
+	displayOrigSetup();
 	cout << "Board reset. Please enter set-up or start a new game!" << endl;
 }
 
@@ -536,16 +540,13 @@ void Game::handleEvents()
 			{
 				score->blackWin();
 				displayWin(false);
-			reset();
-			throw runtime_error{""};
 			}
 			else
 			{
 				score->whiteWin();
 				displayWin(true);
-							reset();
-			throw runtime_error{""};
 			}
+			reset();
 
 		}
 		else if (command == "move")
@@ -570,15 +571,15 @@ void Game::handleEvents()
 				{
 					score->blackWin();
 					displayWin(false);
-												reset();
-			throw runtime_error{""};
+					reset();
+					return;
 				}
 				else
 				{
 					score->whiteWin();
 					displayWin(true);
-												reset();
-			throw runtime_error{""};
+					reset();
+					return;
 				}
 			}
 			else if (end == 2)
@@ -586,8 +587,8 @@ void Game::handleEvents()
 				// stalemate
 				score->tie();
 				displayStalemate();
-																reset();
-			throw runtime_error{""};
+				reset();
+				return;
 			}
 			else
 			{ // moves available
