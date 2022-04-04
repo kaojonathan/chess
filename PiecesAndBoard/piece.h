@@ -111,8 +111,8 @@ class Piece {
 
         
         std::vector<Piece *> getAttackable(std::pair<int, int> at) {
-    return attackable(at);
-}
+            return attackable(at);
+        }
 
 
 };
