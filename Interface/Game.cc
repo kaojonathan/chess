@@ -7,6 +7,7 @@
 #include <thread>
 #include <unistd.h>
 #include <stdexcept>
+#include <memory>
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
 #include "../PiecesAndBoard/Move/move.h"
@@ -34,28 +35,16 @@
 #include "../Players/computer.h"
 using namespace std;
 
-Game::Game() : window{new XWindow},
-			   board{new twoPlayerBoard},
-			   score{new Score},
+Game::Game() : window{unique_ptr<XWindow> {new XWindow}},
+			   board{unique_ptr<twoPlayerBoard> {new twoPlayerBoard}},
+			   score{unique_ptr<Score> {new Score}},
 			   isRunning{true}
 {
 	mode = "menu";
 	whitemoves = true;
 }
 
-Game::~Game()
-{
-	delete window;
-	delete board;
-	delete score;
-	delete p1;
-	delete p2;
-	while (history.size() > 0)
-	{ // delete the history
-		delete history.back();
-		history.pop_back();
-	}
-}
+Game::~Game() {}
 
 /////////// HELPER FUNCTIONS /////////////////
 
@@ -324,7 +313,7 @@ void Game::update()
 	{
 		return;
 	}
-	Move *move = history.back();
+	Move *move = (history.back()).get();
 	// extract position data pos1 to pos2 -
 	int oldCol = move->getPos1x();
 	int oldRow = move->getPos1y();
@@ -410,13 +399,10 @@ void Game::reset()
 {
 	mode = "menu";
 	whitemoves = true;
-	delete p1;
 	p1 = nullptr;
-	delete p2;
 	p2 = nullptr;
 	history.clear();
-	delete board;
-	board = new twoPlayerBoard;
+	board = unique_ptr<twoPlayerBoard> {new twoPlayerBoard};
 	board->oSetup();
 	displayOrigSetup();
 	cout << "Board reset. Please enter set-up or start a new game!" << endl;
@@ -457,48 +443,48 @@ void Game::handleEvents()
 			{
 				if (white == "human")
 				{
-					p1 = new Human{0};
+					p1 = unique_ptr<Human> {new Human{0}};
 				}
 				else
 				{
 					if (whiteLevel == 1)
 					{
-						p1 = new One{0, whiteLevel};
+						p1 = unique_ptr<One> {new One{0, whiteLevel}};
 					}
 					else if (whiteLevel == 2)
 					{
-						p1 = new Two{0, whiteLevel};
+						p1 = unique_ptr<Two> {new Two{0, whiteLevel}};
 					}
 					else if (whiteLevel == 3)
 					{
-						p1 = new Three{0, whiteLevel};
+						p1 = unique_ptr<Three> {new Three{0, whiteLevel}};
 					}
 					else
 					{
-						p1 = new Four{0, whiteLevel};
+						p1 = unique_ptr<Four> {new Four{0, whiteLevel}};
 					}
 				}
 				if (black == "human")
 				{
-					p2 = new Human{1};
+					p2 = unique_ptr<Human> {new Human{1}};
 				}
 				else
 				{
 					if (blackLevel == 1)
 					{
-						p2 = new One{1, blackLevel};
+						p2 = unique_ptr<One> {new One{1, blackLevel}};
 					}
 					else if (blackLevel == 2)
 					{
-						p2 = new Two{1, blackLevel};
+						p2 = unique_ptr<Two> {new Two{1, blackLevel}};
 					}
 					else if (blackLevel == 3)
 					{
-						p2 = new Three{1, blackLevel};
+						p2 = unique_ptr<Three> {new Three{1, blackLevel}};
 					}
 					else
 					{
-						p2 = new Four{1, blackLevel};
+						p2 = unique_ptr<Four> {new Four{1, blackLevel}};
 					}
 				}
 			}
@@ -509,8 +495,8 @@ void Game::handleEvents()
 
 			// begin the game
 			mode = "game";
-			p1->init(board, p2);
-			p2->init(board, p1);
+			p1->init(board.get(), p2.get());
+			p2->init(board.get(), p1.get());
 
 			p1->claimPieces();
 			p2->claimPieces();
@@ -608,7 +594,7 @@ void Game::handleEvents()
 							int newCol = to[0] - 'a';
 							int newRow = '8' - to[1];
 
-							std::pair<int, std::string> status = p1->move(oldCol, oldRow, newCol, newRow);
+							pair<int, string> status = p1->move(oldCol, oldRow, newCol, newRow);
 							////////
 
 							if (status.first == 0)
@@ -627,21 +613,21 @@ void Game::handleEvents()
 										board->getPiece(newCol, newRow)->setRecent();
 									}
 								}
-
-								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+								
+								history.emplace_back(unique_ptr<Normal>{ new Normal{oldCol, oldRow, newCol, newRow}});
 							}
 							else if (status.first == 2)
 							{ // move is a capture
 
 								resetRecents();
-
-								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+								
+								history.emplace_back(unique_ptr<Capture>{ new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 							}
 							else if (status.first == 3)
 							{	// castle
-								// ADD CASTLE HERE
+
 								resetRecents();
-								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<Castle>{ new Castle{oldCol, oldRow, newCol, newRow}});
 							}
 							else if (status.first == 4)
 							{ // promo no cap
@@ -652,7 +638,7 @@ void Game::handleEvents()
 								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
 								{
 									resetRecents();
-									history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});
+									history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
 
 									board->insertP(promoType, to);
 									p1->addToPieces(board->getPiece(newCol, newRow));
@@ -672,7 +658,7 @@ void Game::handleEvents()
 								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
 								{
 									resetRecents();
-									history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second});
+									history.emplace_back(unique_ptr<PromotionCapture>{ new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
 									board->insertP(promoType, to);
 									p1->addToPieces(board->getPiece(newCol, newRow));
 								}
@@ -683,7 +669,8 @@ void Game::handleEvents()
 							} else if (status.first == 6) {
 
 								resetRecents();
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+								
+								history.emplace_back(unique_ptr<EnPassant>{ new EnPassant{oldCol, oldRow, newCol, newRow}});
 
 							}
 						}
@@ -719,18 +706,18 @@ void Game::handleEvents()
 								}
 							}
 
-							history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+							history.emplace_back(unique_ptr<Normal>{ new Normal{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 2)
 						{ // move is a capture
 							resetRecents();
-							history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+							history.emplace_back(unique_ptr<Capture>{ new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 						}
 						else if (status.first == 3)
 						{	// castle
 							// ADD CASTLE HERE
 							resetRecents();
-							history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+							history.emplace_back(unique_ptr<Castle>{ new Castle{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 4)
 						{ // promo no cap
@@ -749,7 +736,7 @@ void Game::handleEvents()
 								board->insertP("R", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "R"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "R"}});
 							}
 							else if (i == 1)
 							{
@@ -762,7 +749,7 @@ void Game::handleEvents()
 								board->insertP("N", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "N"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "N"}});
 							}
 							else if (i == 2)
 							{
@@ -777,7 +764,7 @@ void Game::handleEvents()
 								board->insertP("B", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "B"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "B"}});
 							}
 							else if (i == 3)
 							{
@@ -790,7 +777,7 @@ void Game::handleEvents()
 								board->insertP("Q", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "Q"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "Q"}});
 							}
 						}
 						else if (status.first == 5)
@@ -808,7 +795,8 @@ void Game::handleEvents()
 								board->insertP("R", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second}});
 							}
 							else if (i == 1)
 							{
@@ -821,7 +809,8 @@ void Game::handleEvents()
 								board->insertP("N", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second}});
 							}
 							else if (i == 2)
 							{
@@ -834,7 +823,8 @@ void Game::handleEvents()
 								board->insertP("B", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second}});
 							}
 							else if (i == 3)
 							{
@@ -847,12 +837,13 @@ void Game::handleEvents()
 								board->insertP("Q", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second}});
 							}
 						} else if (status.first == 6) {
 
 								resetRecents();
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<EnPassant>{ new EnPassant{oldCol, oldRow, newCol, newRow}});
 
 							}
 					}
@@ -863,8 +854,6 @@ void Game::handleEvents()
 					if (p2->getType() == 0)
 					{
 						// human
-
-						cerr << "DDDDD";
 						string from;
 						string to;
 						linestream >> from >> to;
@@ -895,18 +884,18 @@ void Game::handleEvents()
 									}
 								}
 
-								history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<Normal>{ new Normal{oldCol, oldRow, newCol, newRow}});
 							}
 							else if (status.first == 2)
 							{ // move is a capture
 								resetRecents();
-								history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+								history.emplace_back(unique_ptr<Capture>{ new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 							}
 							else if (status.first == 3)
 							{	// castle
 								// ADD CASTLE HERE
 								resetRecents();
-								history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<Castle>{ new Castle{oldCol, oldRow, newCol, newRow}});
 							}
 							else if (status.first == 4)
 							{ // promo no cap
@@ -917,7 +906,7 @@ void Game::handleEvents()
 								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
 								{
 									resetRecents();
-									history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, promoType});	
+									history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, promoType}});	
 									board->insertP(promoType, to);
 									p1->addToPieces(board->getPiece(newCol, newRow));							}
 								else
@@ -934,7 +923,7 @@ void Game::handleEvents()
 								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
 								{
 												resetRecents();
-									history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second});
+									history.emplace_back(unique_ptr<PromotionCapture>{ new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
 									board->insertP(promoType, to);
 									p1->addToPieces(board->getPiece(newCol, newRow));								}
 								else
@@ -944,7 +933,7 @@ void Game::handleEvents()
 							} else if (status.first == 6) {
 
 								resetRecents();
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<EnPassant>{ new EnPassant{oldCol, oldRow, newCol, newRow}});
 
 							}
 						}
@@ -979,18 +968,18 @@ void Game::handleEvents()
 								}
 							}
 
-							history.emplace_back(new Normal{oldCol, oldRow, newCol, newRow});
+							history.emplace_back(unique_ptr<Normal>{ new Normal{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 2)
 						{ // move is a capture
 							resetRecents();
-							history.emplace_back(new Capture{oldCol, oldRow, newCol, newRow, status.second});
+							history.emplace_back(unique_ptr<Capture>{ new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 						}
 						else if (status.first == 3)
 						{	// castle
 							// ADD CASTLE HERE
 							resetRecents();
-							history.emplace_back(new Castle{oldCol, oldRow, newCol, newRow});
+							history.emplace_back(unique_ptr<Castle>{ new Castle{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 4)
 						{ // promo no cap
@@ -1008,7 +997,7 @@ void Game::handleEvents()
 								board->insertP("r", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "r"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "r"}});
 							}
 							else if (i == 1)
 							{
@@ -1021,7 +1010,7 @@ void Game::handleEvents()
 								board->insertP("n", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "n"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "n"}});
 							}
 							else if (i == 2)
 							{
@@ -1034,7 +1023,7 @@ void Game::handleEvents()
 								board->insertP("b", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "b"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "b"}});
 							}
 							else if (i == 3)
 							{
@@ -1047,7 +1036,7 @@ void Game::handleEvents()
 								board->insertP("q", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new Promotion{oldCol, oldRow, newCol, newRow, "q"});
+								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "q"}});
 							}
 						}
 						else if (status.first == 5)
@@ -1066,7 +1055,8 @@ void Game::handleEvents()
 								board->insertP("r", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second}});
 							}
 							else if (i == 1)
 							{
@@ -1079,7 +1069,8 @@ void Game::handleEvents()
 								board->insertP("n", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second}});
 							}
 							else if (i == 2)
 							{
@@ -1092,7 +1083,8 @@ void Game::handleEvents()
 								board->insertP("b", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second}});
 							}
 							else if (i == 3)
 							{
@@ -1105,12 +1097,13 @@ void Game::handleEvents()
 								board->insertP("q", strPos);
 								p1->addToPieces(board->getPiece(newCol, newRow));
 
-								history.emplace_back(new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second});
+								history.emplace_back(unique_ptr<PromotionCapture>{ 
+									new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second}});
 							}
 						} else if (status.first == 6) {
 
 								resetRecents();
-								history.emplace_back(new EnPassant{oldCol, oldRow, newCol, newRow});
+								history.emplace_back(unique_ptr<EnPassant>{ new EnPassant{oldCol, oldRow, newCol, newRow}});
 
 						}
 					}
