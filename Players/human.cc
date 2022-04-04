@@ -30,6 +30,7 @@ std::pair<int, std::string> Human::playerMove(int &oldCol, int &oldRow, int &new
         else if (pieceToMove->move(newCol, newRow) == 1)
         {
             gameBoard->moveP(oldCol, oldRow, newCol, newRow);
+
             return pair<int, std::string>{1, "normal"};
         }
         else if (pieceToMove->move(newCol, newRow) == 2)

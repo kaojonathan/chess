@@ -39,6 +39,7 @@ void twoPlayerBoard::movePiece(int x, int y, int newx, int newy)
 	board[y][x]->setPos(newx, newy);
 	board[newy][newx] = board[y][x];
 	board[y][x] = nullptr;
+	
 }
 
 void twoPlayerBoard::castle(int col, int row)
@@ -105,6 +106,75 @@ void twoPlayerBoard::castle(int col, int row)
 		board[0][0]->setPos(3, 0);
 		board[0][3] = board[0][0];
 		board[0][0] = nullptr;
+	}
+}
+
+void twoPlayerBoard::undoCastle(int col, int row)
+{
+	if (col == 6 && row == 7)
+	{
+				// move king
+		board[7][6]->decNumMoves();
+		board[7][6]->setPos(4, 7);
+		board[7][4] = board[7][6];
+		board[7][6] = nullptr;
+
+		// move rook
+
+		board[7][5]->decNumMoves();
+		board[7][5]->setPos(7, 7);
+		board[7][7] = board[7][5];
+		board[7][5] = nullptr;
+
+	}
+	else if (col == 2 && row == 7)
+	{
+
+		// move king
+		board[7][2]->decNumMoves();
+		board[7][2]->setPos(4, 7);
+		board[7][4] = board[7][2];
+		board[7][2] = nullptr;
+
+		// move rook
+
+		board[7][3]->incNumMoves();
+		board[7][3]->setPos(0, 7);
+		board[7][0] = board[7][3];
+		board[7][3] = nullptr;
+
+	}
+	else if (col == 6 && row == 0)
+	{
+
+		// move king
+		board[0][6]->decNumMoves();
+		board[0][6]->setPos(4, 0);
+		board[0][4] = board[0][6];
+		board[0][6] = nullptr;
+
+		// move rook
+
+		board[0][5]->decNumMoves();
+		board[0][5]->setPos(7, 0);
+		board[0][7] = board[0][5];
+		board[0][5] = nullptr;
+
+	}
+	else if (col == 2 && row == 0)
+	{
+
+		// move king
+		board[0][2]->incNumMoves();
+		board[0][2]->setPos(4, 0);
+		board[0][4] = board[0][2];
+		board[0][2] = nullptr;
+
+		// move rook
+		board[0][3]->incNumMoves();
+		board[0][3]->setPos(0, 0);
+		board[0][0] = board[0][3];
+		board[0][3] = nullptr;
 	}
 }
 

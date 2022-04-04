@@ -1,4 +1,5 @@
 #include "Interface/Game.h"
+#include "undo.h"
 #include <stdexcept>
 using namespace std;
 
@@ -19,6 +20,11 @@ int main(int argc, const char * argv[]) {
 			game.update(); 
 		} catch (runtime_error &e) {
 			cout << e.what() << endl;
+		} catch (Undo &e) {
+			cout << e.what() << endl;
+
+
+
 		}
 
 	}

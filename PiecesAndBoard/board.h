@@ -17,6 +17,7 @@ class Board {
 		virtual void capturePiece(int newx, int newy) = 0;
 
 		virtual void castle(int col, int row) = 0;
+		virtual void undoCastle(int col, int row) = 0;
 
 	public:
 		Board();
@@ -52,6 +53,10 @@ class Board {
 
 		void doCastle(int col, int row) {
 			castle(col, row);
+		}
+
+		void doUnCastle(int col, int row) {
+			undoCastle(col, row);
 		}
 };
 

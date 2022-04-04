@@ -14,6 +14,7 @@ class Normal : public Move {
         Normal(int x1, int y1, int x2, int y2);
         std::string getCapType() override {return "no";}
         std::string getPromoType() override {return "no";}
+        Piece * getCapPiece() override {return nullptr;}
 
 };
 

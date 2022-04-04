@@ -108,6 +108,7 @@ class Piece {
 
         int getNumMoves();
         void incNumMoves(); // ++numMoves
+        void decNumMoves(); // --numMoves
 
         
         std::vector<Piece *> getAttackable(std::pair<int, int> at) {

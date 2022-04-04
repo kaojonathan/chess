@@ -27,6 +27,9 @@ class Game {
     bool whitemoves; // true if it is white's turn
     std::vector<Move *> history; // change to vector<Move *>
 
+
+    std::vector<Move *> redoStack; // redo stack
+
     void printBoard();
     void reset();
     void fill(int x, int y);

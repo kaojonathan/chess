@@ -10,11 +10,12 @@
 
 class EnPassant : public Move
 {
-
+    Piece *captured;
     public:
-        EnPassant(int x1, int y1, int x2, int y2);
+        EnPassant(int x1, int y1, int x2, int y2, Piece *cap);
         std::string getCapType() override {return "no";}
         std::string getPromoType() override {return "no";}
+        Piece * getCapPiece() override;
 };
 
 #endif

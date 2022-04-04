@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
+#include "undo.h"
 #include "../PiecesAndBoard/Move/move.h"
 #include "../PiecesAndBoard/Move/normal.h"
 #include "../PiecesAndBoard/Move/capture.h"
@@ -1117,6 +1118,102 @@ void Game::handleEvents()
 					whitemoves = true;
 				}
 			}
+		} else if (command == "undo") {
+
+			if (history.size() == 0) {
+
+
+				throw runtime_error{"ERROR: You have already undone the oldest command."};
+
+
+			} else {
+			string msg = "Undone";
+			Move * undoCommand = history.back();
+
+
+			string xStrOld = string(1, undoCommand->getPos1x() + 'a');
+			string yStrOld = to_string(8 - undoCommand->getPos1y());
+			string strPosOld = xStrOld + yStrOld;
+
+			string xStrNew = string(1, undoCommand->getPos2x() + 'a');
+			string yStrNew = to_string(8 - undoCommand->getPos2y());
+			string strPosNew = xStrNew + yStrNew;
+
+			
+			history.back();
+
+			if (undoCommand->getType() == "normal") {
+				msg += (" move " + strPosOld + " " + strPosNew);
+
+				std::pair<int, std::string> status = p1->move(xStrNew, yStrNew, xStrOld, yStrOld); // undo action
+
+
+			} else if (undoCommand->getType() == "capture") {
+				msg += (" move " + strPosOld + " " + strPosNew);
+
+				std::pair<int, std::string> status = p1->move(xStrNew, yStrNew, xStrOld, yStrOld); // undo action
+												
+								board->insertP(undoCommand->getCT, strPosNew);
+								p1->addToPieces(board->getPiece(xStrNew, yStrNew));
+
+			} else if (undoCommand->getType() == "castle") {
+
+				msg += (" move " + strPosOld + " " + strPosNew);
+
+
+				board->doUnCastle(strPosOld, strPosNew);
+
+
+			} else if (undoCommand->getType() == "enpassant") {
+				msg += (" move " + strPosOld + " " + strPosNew);
+
+				std::pair<int, std::string> status = p1->move(xStrNew, yStrNew, xStrOld, yStrOld); // undo action
+
+
+			} else if (undoCommand->getType() == "promotion") {
+				msg += (" move " + strPosOld + " " + strPosNew + " " + undoCommand->getPT());
+
+				std::pair<int, std::string> status = p1->move(xStrNew, yStrNew, xStrOld, yStrOld); // undo action
+
+
+			} else if (undoCommand->getType() == "promocap") {
+				msg += (" move " + strPosOld + " " + strPosNew + " " + undoCommand->getPT());
+
+				std::pair<int, std::string> status = p1->move(xStrNew, yStrNew, xStrOld, yStrOld); // undo action
+
+
+			}
+
+
+
+
+
+			redoStack.emplace_back(undoCommand);
+
+			throw Undo{msg};
+
+
+
+
+			}
+
+
+
+		} else if (command == "redo") {
+
+			if (redoStack.size() == 0) {
+
+				throw runtime_error{"ERROR: You have already redone the most recent new command."};
+
+			} else {
+
+
+
+			}
+
+
+
+
 		}
 		else if (command == "setup")
 		{

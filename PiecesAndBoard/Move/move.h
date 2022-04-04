@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "piece.h"
 
 
 class Move {
@@ -13,10 +14,11 @@ class Move {
     int pos1y;
     int pos2x;
     int pos2y;
-    std::string type; // normal, capture, castle, promotion, promocap
+    std::string type; // normal, capture, castle, promotion, promocap, enpassant
 
 virtual std::string getPromoType() = 0;
 virtual std::string getCapType() = 0;
+virtual std::string getCapPiece() = 0;
 
     public:
     Move(int x1, int y1, int x2, int y2, std::string type);
@@ -32,8 +34,9 @@ virtual std::string getCapType() = 0;
     std::string getCT() {
         return getCapType();
     }
-
-
+    Piece* getCP() {
+        return getCapPiece();
+    }
 };
 
 #endif

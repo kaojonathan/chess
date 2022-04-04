@@ -525,6 +525,10 @@ void Piece::incNumMoves()
 	++numMoves;
 }
 
+void Piece::decNumMoves() {
+	--numMoves;
+}
+
 // update a piece that is forced by enemPiece
 void Piece::fUpdate(Piece *enemyPiece)
 {

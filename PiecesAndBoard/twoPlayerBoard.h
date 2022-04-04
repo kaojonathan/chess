@@ -19,6 +19,7 @@ class twoPlayerBoard : public Board {
 	void capturePiece(int newx, int newy) override;
 
 	void castle(int col, int row) override;
+	void undoCastle(int col, int row) override;
 
 
 public:
