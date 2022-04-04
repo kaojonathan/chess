@@ -20,7 +20,6 @@ THE STRING FIELD CONTAINS RELEVANT INFORMATION ABOUT THOSE MOVES (FOR MOVE OBJEC
 
 std::pair<int, std::string> Human::playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
-std::cerr << "one::move called";
     Piece *pieceToMove = gameBoard->getPiece(oldCol, oldRow);
     if (pieceToMove)
     {
