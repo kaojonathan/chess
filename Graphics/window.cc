@@ -9,7 +9,7 @@
 
 using namespace std;
 
-XWindow::XWindow(int width, int height) : pImpl{ new XWindowImpl } {
+XWindow::XWindow(int width, int height) : pImpl{ unique_ptr<XWindowImpl> {new XWindowImpl} } {
 
   pImpl->d = XOpenDisplay(NULL);
   if (pImpl->d == NULL) {
@@ -58,7 +58,6 @@ XWindow::XWindow(int width, int height) : pImpl{ new XWindowImpl } {
 XWindow::~XWindow() {
   XFreeGC(pImpl->d, pImpl->gc);
   XCloseDisplay(pImpl->d);
-  delete pImpl;
 }
 
 void XWindow::fillRectangle(int x, int y, int width, int height, int colour) {
