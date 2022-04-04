@@ -24,17 +24,17 @@ void Player::init(Board * board, Player *player){
 
 // get Piece for each players, only use after setup
 void Player::claimPieces(){
-    for (int i = 0; i < 8; i += 1) {
-        for (int j = 0; j < 8; j += 1) {
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
             Piece *pc = gameBoard->getPiece(i, j);
-            unique_ptr<Piece> upc{pc};
-	    if (upc) {
-            if (side == upc->getSide()) {
-                upc->setOpponent(opponent);
-                if (upc->isKing()) king = std::move(upc);
-                else pieces.emplace_back(std::move(upc));
-            } 
-          }
+            if (pc) {
+                if (side == pc->getSide()) {
+                    unique_ptr<Piece> upc{pc};
+                    upc.get()->setOpponent(opponent);
+                    if (pc->isKing()) king = std::move(upc);
+                    else pieces.emplace_back(std::move(upc));
+                } 
+            }
         }
     }
 }
@@ -105,7 +105,7 @@ vector<Piece *> Player::canAttack(pair<int, int> pos)
 {
     vector<Piece *> res{};
     if (king->isUpdated() && king->canAttack(pos))
-        res.emplace_back(king);
+        res.emplace_back(king.get());
     for (auto&& piece : pieces)
     {
         if (piece.get()->canAttack(pos))
