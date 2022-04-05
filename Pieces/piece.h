@@ -55,8 +55,6 @@ public:
     void attach(Board *board);
     // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
     int move(int col, int row);
-    // true if the piece is checking the king  still use it?
-    // bool kingCheck();
 
     std::vector<std::pair<int, int>> getCheckRoute(); // return the checkRoute field
     int getVal();                                     // return the value of a piece

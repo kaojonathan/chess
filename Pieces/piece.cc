@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "piece.h"
+#include "pawn.h"
 #include "../Board/board.h"
 #include "../Players/player.h"
 using namespace std;
@@ -576,6 +577,10 @@ void Piece::forcedBy(Piece *enemyPiece, bool check)
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos)
 {
+	Pawn *p = dynamic_cast<Pawn *>(this);
+	if (p) {
+		return (pos.first == x + 1 || pos.first == x - 1) && pos.second == y + p->frDir() && !forced;
+	}
 	return move(pos.first, pos.second) == 1 || move(pos.first, pos.second) == 2;
 }
 
