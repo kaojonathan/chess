@@ -43,7 +43,7 @@ class Piece {
         // constructor and destructor
         Piece(int side, int x, int y, Board *);
         virtual ~Piece();
-        // getter of fields
+        // getters of fields
         int getX();
         int getY();
         int getSide();
@@ -54,10 +54,13 @@ class Piece {
         std::vector<std::pair<int,int>> getTargets();
         std::vector<std::pair<int,int>> getProtects();
         std::vector<std::pair<int, int>> getCheckRoute();
+        int getNumMoves();
+        // setters of fields:
         // set recent to true
         void setRecent();
         // set recent to false
         void resetRecent();
+        
         // set x and y
         void setPos(int col, int row);  // make sure col first and row second
         // set updateStatus to 0; set moves, targets, protects, castle and checkRoute to empty
@@ -66,44 +69,36 @@ class Piece {
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
         int move(int col, int row);
+        // set the opponent player of the piece
+        void setOpponent(Player *);
+
         //  Scan the each direction base on type, return a list of attackable enemies, if any
         //  type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         std::vector<Piece *> dScan(std::pair<int,int>, int type);
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
         //  type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         void dirScan(int type);
-
-        bool isKing();                      //  true if the target is a king
-        bool enemyKing(Piece * target);     //  true if the target is the enemy king
-
+        //  true if the target is a king
+        bool isKing();
+        //  true if the target is the enemy king
+        bool enemyKing(Piece * target);
          // determines if the piece in position (col, row) checks the king,
         bool posInCheck(int col, int row);
-
-                // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
+        // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
         // note that this can be use to determine a position is controled by the enemy
         bool canAttack(std::pair<int, int>);
-        // return true if this piece can attack the enemy piece in position (col, row)
-        // may be useful
-
+        // return the update status
         bool isUpdated();
-        
         // for Pieces that is not king, set the forced field into the given pieces, for King, update the excape route of the king.
         void forcedBy(Piece *, bool check = false);
         // update moves and targets field, notify any enemy piece when forcing it, or notify the opponent when this piece is checking the king.
         void statusUpdate();
-
-        // set the opponent player of the piece
-        void setOpponent(Player *);
-
-        int getNumMoves();
-        void incNumMoves(); // ++numMoves
-
-        
+        // number of move ++
+        void incNumMoves();
+        // public method for attackable()
         std::vector<Piece *> getAttackable(std::pair<int, int> at) {
             return attackable(at);
         }
-
-
 };
    
 // get the most valuable Piece
@@ -114,7 +109,4 @@ Piece * mostVal(std::vector<Piece *>);
 //	2: cross directions only
 //	3: both diagonal and cross directions
 std::vector<std::pair<int, int>> getPos(int col, int row, int i, int type);
-
-
-
 #endif
