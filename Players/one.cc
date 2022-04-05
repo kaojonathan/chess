@@ -1,5 +1,5 @@
 #include "one.h"
-#include "../PiecesAndBoard/board.h"
+#include "../Board/board.h"
 #include <iostream>
 using namespace std;
 

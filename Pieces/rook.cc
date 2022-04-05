@@ -2,7 +2,7 @@
 #include <vector>
 #include <utility>
 #include "rook.h"
-#include "board.h"
+#include "../Board/board.h"
 using namespace std;
 
 Rook::Rook(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {

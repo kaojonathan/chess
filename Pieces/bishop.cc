@@ -1,223 +1,36 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "queen.h"
-#include "board.h"
+#include "bishop.h"
+#include "../Board/board.h"
 #include "piece.h"
 using namespace std;
 
-Queen::Queen(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
-	value = 9;
-	representation = (side == 0) ? "Q" : "q";
+Bishop::Bishop(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
+	value = 3;
+	representation = (side == 0) ? "B" : "b";
 }
-// normal status update
-void Queen::nUpdate()  {
+
+
+// normal status update, assuming it is not forced
+void Bishop::nUpdate() {
 	updateStatus = 1;
-	dirScan(3);
+	dirScan(1);
 }
 
+// check if the emeny king is checked
+// edit now it is not pure virtual
 
-std::vector<Piece *> Queen::attackable(std::pair<int, int> at){
-	return dScan(at, 3);
+// attempts to move the bishop
+// if successful, will update the position 
+// [Edit: updating the position should be implemented by a board/player/main method, so that the board can check if the move is invalid and ask player to enter the correct comment. This method can only return the validity of the move, cannot move the piece. edit2: now it is not pure virtual]
+
+std::vector<Piece *> Bishop::attackable(std::pair<int, int> at) {
+	return dScan(at, 1);
 }
 
 /*
-pair<int, int> Queen::getCheckCoords() {
-
-	for (int i = 0; i < up.size(); ++i) {
-
-		// for queen, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
-
-
-		if (up[i]) {
-			if (side == 0) { // capital letter (white)
-				if (up[i]->getSide() == 1) { // if black piece
-
-
-					if (posInCheck(x, y - i)) { // if the queen in position (x, y - i) checks the king
-
-						pair<int, int> coords = { x, y - i };
-						return coords;
-					}
-
-
-				}
-			}
-			else { // lower case letter (black)
-				if (up[i]->getSide() == 0) { // if white piece
-
-
-					if (posInCheck(x, y - i)) { // if the queen in position (x, y - i) checks the king
-
-						pair<int, int> coords = { x, y - i };
-						return coords;
-					}
-
-
-				}
-			}
-			break;
-		}
-		else { // open square
-
-			if (posInCheck(x, y - i)) { // if the queen in position (x, y - i) checks the king
-
-				pair<int, int> coords = { x, y - i };
-				return coords;
-			}
-
-
-		}
-	}
-
-
-
-	for (int i = 0; i < right.size(); ++i) {
-
-		// for queen, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
-
-
-		if (right[i]) {
-			if (side == 0) { // capital letter (white)
-				if (right[i]->getSide() == 1) { // if black piece
-
-
-					if (posInCheck(x + i, y)) { // if the queen in position (x + i, y) checks the king
-
-						pair<int, int> coords = { x + i, y };
-						return coords;
-					}
-
-
-				}
-			}
-			else { // lower case letter (black)
-				if (right[i]->getSide() == 0) { // if white piece
-
-
-					if (posInCheck(x + i, y)) { // if the bishop in position (x + i, y) checks the king
-
-						pair<int, int> coords = { x + i, y };
-						return coords;
-					}
-
-
-				}
-			}
-			break;
-		}
-		else { // open square
-
-			if (posInCheck(x + i, y)) { // if the bishop in position (x + i, y) checks the king
-
-				pair<int, int> coords = { x + i, y };
-				return coords;
-			}
-
-
-		}
-	}
-
-
-
-	for (int i = 0; i < down.size(); ++i) {
-
-		// for queen, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
-
-
-		if (down[i]) {
-			if (side == 0) { // capital letter (white)
-				if (down[i]->getSide() == 1) { // if black piece
-
-
-					if (posInCheck(x, y + i)) { // if the bishop in position (x, y + i) checks the king
-
-						pair<int, int> coords = { x, y + i };
-						return coords;
-					}
-
-
-				}
-			}
-			else { // lower case letter (black)
-				if (down[i]->getSide() == 0) { // if white piece
-
-
-					if (posInCheck(x, y + i)) { // if the queen in position (x, y + i) checks the king
-
-						pair<int, int> coords = { x, y + i };
-						return coords;
-					}
-
-
-				}
-			}
-			break;
-		}
-		else { // open square
-
-			if (posInCheck(x, y + i)) { // if the queen in position (x, y + i) checks the king
-
-				pair<int, int> coords = { x, y + i };
-				return coords;
-			}
-
-
-		}
-	}
-
-
-
-
-	for (int i = 0; i < left.size(); ++i) {
-
-		// for queen, if we hit a non-null pointer, then we stop the loop, since that piece will block its path. 
-
-
-		if (left[i]) {
-			if (side == 0) { // capital letter (white)
-				if (left[i]->getSide() == 1) { // if black piece
-
-
-					if (posInCheck(x - i, y)) { // if the queen in position (x - i, y) checks the king
-
-						pair<int, int> coords = { x - i, y };
-						return coords;
-					}
-
-
-				}
-			}
-			else { // lower case letter (black)
-				if (left[i]->getSide() == 0) { // if white piece
-
-
-					if (posInCheck(x - i, y)) { // if the bishop in position (x - i, y) checks the king
-
-						pair<int, int> coords = { x - i, y };
-						return coords;
-					}
-
-
-				}
-			}
-			break;
-		}
-		else { // open square
-
-			if (posInCheck(x - i, y)) { // if the bishop in position (x - i, y) checks the king
-
-				pair<int, int> coords = { x - i, y };
-				return coords;
-			}
-
-
-		}
-	}
-
-
-	///////////// now check diagonals /////////////////
-
+pair<int, int> Bishop::getCheckCoords() {
 
 	for (int i = 0; i < upperLeftDiag.size(); ++i) {
 
@@ -409,7 +222,6 @@ pair<int, int> Queen::getCheckCoords() {
 
 		}
 	}
-
 
 	// if there are no possible move positions that check the king
 

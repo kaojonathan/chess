@@ -1,6 +1,6 @@
 #ifndef BOARD_H_
 #define BOARD_H_
-#include "piece.h"
+#include "../Pieces/piece.h"
 #include <string>
 #include <memory>
 

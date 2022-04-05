@@ -1,4 +1,4 @@
-# move history needs implementation
+General Notes
 
 game player1 player2
     origSetup

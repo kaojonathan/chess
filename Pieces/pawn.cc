@@ -2,7 +2,7 @@
 #include <vector>
 #include <utility>
 #include "pawn.h"
-#include "board.h"
+#include "../Board/board.h"
 #include "../Players/player.h"
 using namespace std;
 

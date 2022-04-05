@@ -1,15 +1,15 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include "piece.h"
+#include "../Pieces/piece.h"
 #include "twoPlayerBoard.h"
 #include "board.h"
-#include "rook.h"
-#include "bishop.h"
-#include "king.h"
-#include "queen.h"
-#include "knight.h"
-#include "pawn.h"
+#include "../Pieces/rook.h"
+#include "../Pieces/bishop.h"
+#include "../Pieces/king.h"
+#include "../Pieces/queen.h"
+#include "../Pieces/knight.h"
+#include "../Pieces/pawn.h"
 using namespace std;
 
 twoPlayerBoard::twoPlayerBoard() : Board{} {}

@@ -7,7 +7,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "../PiecesAndBoard/Move/move.h"
+#include <memory>
+#include "../Pieces/Move/move.h"
 
 
 class twoPlayerBoard;

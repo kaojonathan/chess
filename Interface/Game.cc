@@ -10,26 +10,26 @@
 #include <memory>
 #include "../Graphics/XWindowImpl.h"
 #include "Game.h"
-#include "../PiecesAndBoard/Move/move.h"
-#include "../PiecesAndBoard/Move/normal.h"
-#include "../PiecesAndBoard/Move/capture.h"
-#include "../PiecesAndBoard/Move/castle.h"
-#include "../PiecesAndBoard/Move/enpassant.h"
-#include "../PiecesAndBoard/Move/promotion.h"
-#include "../PiecesAndBoard/Move/promotioncap.h"
+#include "../Pieces/Move/move.h"
+#include "../Pieces/Move/normal.h"
+#include "../Pieces/Move/capture.h"
+#include "../Pieces/Move/castle.h"
+#include "../Pieces/Move/enpassant.h"
+#include "../Pieces/Move/promotion.h"
+#include "../Pieces/Move/promotioncap.h"
 #include "../Graphics/window.h"
-#include "../PiecesAndBoard/board.h"
-#include "../PiecesAndBoard/twoPlayerBoard.h"
-#include "../PiecesAndBoard/king.h"
-#include "../PiecesAndBoard/queen.h"
-#include "../PiecesAndBoard/rook.h"
-#include "../PiecesAndBoard/knight.h"
-#include "../PiecesAndBoard/bishop.h"
-#include "../PiecesAndBoard/pawn.h"
+#include "../Board/board.h"
+#include "../Board/twoPlayerBoard.h"
+#include "../Pieces/king.h"
+#include "../Pieces/queen.h"
+#include "../Pieces/rook.h"
+#include "../Pieces/knight.h"
+#include "../Pieces/bishop.h"
+#include "../Pieces/pawn.h"
 #include "../Players/one.h"
 #include "../Players/two.h"
 #include "../Players/three.h"
-#include "../score.h"
+#include "score.h"
 #include "../Players/human.h"
 #include "../Players/computer.h"
 using namespace std;
@@ -491,7 +491,7 @@ void Game::handleEvents()
 
 			p1->claimPieces();
 			p2->claimPieces();
-			p1->print();
+			p1->print(); // DEBUG
 			p2->print();
 			cout << "Started new game!" << endl;
 			return;

@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "piece.h"
-#include "board.h"
+#include "../Board/board.h"
 #include "../Players/player.h"
 using namespace std;
 
@@ -548,7 +548,7 @@ void Piece::statusUpdate()
 {
 	if (updateStatus == 0)
 		nUpdate();
-	// for debugging
+	// for DEBUG
 	cout << "Piece " << representation << " at position "
 		 << "(" << x << "," << y << ")"
 		 << " can move to position:" << endl;

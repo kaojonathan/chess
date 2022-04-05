@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "knight.h"
-#include "board.h"
+#include "../Board/board.h"
 #include "../Players/player.h"
 using namespace std;
 

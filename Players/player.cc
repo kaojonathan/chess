@@ -1,12 +1,12 @@
 #include "player.h"
-#include "../PiecesAndBoard/board.h"
-#include "../PiecesAndBoard/piece.h"
-#include "../PiecesAndBoard/rook.h"
-#include "../PiecesAndBoard/bishop.h"
-#include "../PiecesAndBoard/king.h"
-#include "../PiecesAndBoard/queen.h"
-#include "../PiecesAndBoard/knight.h"
-#include "../PiecesAndBoard/pawn.h"
+#include "../Board/board.h"
+#include "../Pieces/piece.h"
+#include "../Pieces/rook.h"
+#include "../Pieces/bishop.h"
+#include "../Pieces/king.h"
+#include "../Pieces/queen.h"
+#include "../Pieces/knight.h"
+#include "../Pieces/pawn.h"
 #include <utility>
 #include <iostream>
 #include <memory>
@@ -125,7 +125,7 @@ bool Player::canMove()
     return false;
 }
 
-// print players fields
+// print players fields DEBUG
 void Player::print(){
     cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
     for (auto&& piece : pieces) {

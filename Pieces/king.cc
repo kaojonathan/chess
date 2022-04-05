@@ -2,7 +2,7 @@
 #include <vector>
 #include <utility>
 #include "king.h"
-#include "board.h"
+#include "../Board/board.h"
 #include "rook.h"
 #include "../Players/player.h"
 using namespace std;
