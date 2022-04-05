@@ -1041,6 +1041,9 @@ void Game::handleEvents()
 				displayStalemate();
 				reset(); // reset the board
 				return;
+			} else if (end == 3)
+			{
+				displayCheck(whitemoves);
 			}
 		}
 		else if (command == "setup")
