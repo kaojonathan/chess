@@ -192,14 +192,14 @@ void Game::displayCheck(bool isWhite)
 {
 	if (isWhite)
 	{													  // if white King is in check
-		cout << "White is in check." << endl;			  // output
+		cout << "White is in check." << endl;			  
 		window->drawString(10, 10, "White is in check."); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
 	}
 	else
 	{													  // if black King is in check
-		cout << "Black is in check." << endl;			  // output
+		cout << "Black is in check." << endl;			 
 		window->drawString(10, 10, "Black is in check."); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -209,7 +209,7 @@ void Game::displayCheck(bool isWhite)
 // display a stalemate on the graphic window
 void Game::displayStalemate()
 {
-	cout << "Stalemate!" << endl;			  // output
+	cout << "Stalemate! Resetting board..." << endl;			  
 	window->drawString(10, 10, "Stalemate!"); // show on graphic
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -220,14 +220,14 @@ void Game::displayWin(bool isWhite)
 {
 	if (isWhite)
 	{											   // if white King is in check
-		cout << "White wins!" << endl;			   // output
+		cout << "White wins! Resetting board..." << endl;			
 		window->drawString(10, 10, "White wins!"); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
 	}
 	else
 	{ // if black King is in check
-		cout << "Black wins!" << endl;
+		cout << "Black wins! Resetting board..." << endl;
 		window->drawString(10, 10, "Black wins!"); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -1011,9 +1011,10 @@ void Game::handleEvents()
 					// white now moves
 					whitemoves = true;
 				}
-			int  end = updateSt();
+			int end = updateSt();
 			if (end == 1)
 			{
+				this->update();
 				// if the player that is about to move
 				// is checkmated
 				if (whitemoves)
@@ -1033,6 +1034,7 @@ void Game::handleEvents()
 			}
 			else if (end == 2)
 			{
+				this->update();
 				// if a stalemate occured
 				score->tie(); // set the score a tie
 				displayStalemate();
@@ -1052,7 +1054,7 @@ void Game::handleEvents()
 	else if (mode == "setup")
 	{ 
 		cout << "Current Board Configuration:" << endl;
-		this->update(); // update the graphics and text display
+		//this->update(); // update the graphics and text display DEBUG
 		if (command == "+")
 		{ // if command is +
 			string piece;
