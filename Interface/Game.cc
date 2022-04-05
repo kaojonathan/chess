@@ -237,6 +237,17 @@ void Game::displayWin(bool isWhite)
 // display the original board on the graphic window; if reset, then clear out middle slots
 void Game::displayOrigSetup(bool reset)
 {
+	// clear out if board resets
+	if (reset)
+	{
+		for (int y = 0; y < 8; ++y)
+		{
+			for (int x = 0; x < 8; ++x)
+			{
+				fill(x, y);
+			}
+		}
+	}
 	// the black pieces
 	window->drawString(72, 77, "r");
 	window->drawString(122, 77, "n");
@@ -260,17 +271,7 @@ void Game::displayOrigSetup(bool reset)
 	window->drawString(322, 427, "B");
 	window->drawString(372, 427, "N");
 	window->drawString(422, 427, "R");
-	// clear out middle slots if board resets
-	if (reset)
-	{
-		for (int y = 2; y < 6; ++y)
-		{
-			for (int x = 0; x < 8; ++x)
-			{
-				fill(x, y);
-			}
-		}
-	}
+	
 }
 ////////////////////////////////////////////////////////////////////
 
