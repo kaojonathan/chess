@@ -586,7 +586,25 @@ void Game::handleEvents()
 								}
 								else
 								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
+									string pType;
+									while (true) {
+										if (!getline(cin, line))
+											{
+												// crtl+D to quit program
+												isRunning = false;
+												return;
+											}
+											stringstream linestream(line);
+										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
+										if (cin >> pType) {
+											if (pType == "R" || pType == "N" || pType == "B" || pType == "Q") break;
+										}
+									}
+									resetRecents(); // reset the recency of the pieces
+									// store the Promotion in history
+									history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, pType}});
+									board->insertP(pType, to); // insert the promotype piece into board
+									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								}
 							}
 						else if (status.first == 5)
@@ -603,7 +621,18 @@ void Game::handleEvents()
 								}
 								else
 								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
+									string pType;
+									while (true) {
+										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
+										if (cin >> pType) {
+											if (pType == "R" || pType == "N" || pType == "B" || pType == "Q") break;
+										}
+									}
+									resetRecents(); // reset the recency of the pieces
+									// store the PromotionCapture in history
+									history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, pType, status.second}});
+									board->insertP(pType, to); // insert the promotype piece into board
+									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								}
 							}
 						else if (status.first == 6)
@@ -827,8 +856,19 @@ void Game::handleEvents()
 									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								}
 								else
-								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
+								{	
+									string pType;
+									while (true) {
+										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
+										if (cin >> pType) {
+											if (pType == "r" || pType == "n" || pType == "b" || pType == "q") break;
+										}
+									}
+									resetRecents(); // reset the recency of the pieces
+									// store the Promotion in history
+									history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, pType}});
+									board->insertP(pType, to); // insert the promotype piece into board
+									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								}
 							}
 							else if (status.first == 5)
@@ -845,7 +885,18 @@ void Game::handleEvents()
 								}
 								else
 								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
+									string pType;
+									while (true) {
+										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
+										if (cin >> pType) {
+											if (pType == "r" || pType == "n" || pType == "b" || pType == "q") break;
+										}
+									}
+									resetRecents(); // reset the recency of the pieces
+									// store the PromotionCapture in history
+									history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, pType, status.second}});
+									board->insertP(pType, to); // insert the promotype piece into board
+									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								}
 							}
 							else if (status.first == 6)
