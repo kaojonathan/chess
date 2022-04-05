@@ -22,8 +22,17 @@ protected:
     // the piece that checks the opponent
     Piece *opponentCheck;
     int type; // 0 for human, 1 for computer
-    // moves a piece from (oldCol, oldRow) to (newCol, newRow), and updates them if computer moves (since random).
-    // returns a pair (int, string) where int is type of move and string is piece captured (if necessary)
+              // moves a piece from (oldCol, oldRow) to (newCol, newRow), and updates them if computer moves (since random).
+              // returns a pair (int, string) where int is type of move and string is piece captured (if necessary)
+              /*
+              0: fail
+              1: normal
+              2: capture
+              3: castle
+              4: promotion
+              5: promotion with capture
+              6: enPassant
+              */
     virtual std::pair<int, std::string> playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow) = 0;
 
 public:
