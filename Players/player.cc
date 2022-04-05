@@ -84,15 +84,74 @@ void Player::deletePiece(std::pair<int, int> pos)
 // update status of all pieces of the player, return 0 if there is avaliable move for player, 1 if it is a checkmate, 2 if it is a draw.
 int Player::checkStatus()
 {
-    for (auto &&piece : opponent->getPieces())
-        piece->statusUpdate(); // update the status of the opponent's pieces
-    for (auto &&piece : pieces)
-        piece->statusUpdate(); // update the status of this's pieces
-    king->statusUpdate();      // update king status
-    if (canMove())             // if the player can move
-        return 0;
-    if (opponentCheck) // if the opponent is in check
-        return 1;      // checkmate
+    for (auto&& piece : opponent->getPieces())
+        piece->statusUpdate();
+    for (auto&& piece : pieces)
+        piece->statusUpdate();
+    opponent->king->statusUpdate();
+    king->statusUpdate();
+    // for DEBUG
+    cout << (side == 0 ? "white" : "black") << "'s turn :" << endl;
+    cout << (side == 1 ? "white" : "black") << "'s pieces and king:" << endl;
+
+    for (auto pos : opponent->king->getMoves())
+    {
+	    cout << "(" << pos.first << "," << pos.second << ")   ";
+    }
+    cout << ";" << endl << "targets: ";
+    for (auto pos : opponent->king->getTargets())
+	{
+	    cout << "(" << pos.first << "," << pos.second << ")    ";
+    }
+	cout << endl << endl;
+
+    for (auto && piece :opponent->getPieces()){
+	    cout << "Piece: " << piece->getRep() << endl <<
+		    "position: " << "(" << piece->getX() << "," << piece->getY() << ")" << endl << "moves:" ;
+    	for (auto pos : piece->getMoves())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")   ";
+	    }
+	    cout << ";" << endl << "targets: ";
+	    for (auto pos : piece->getTargets())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")    ";
+	    }
+	    cout << endl << endl;
+    }
+    cout << (side == 0 ? "white" : "black") << "'s pieces and king:" << endl;
+    cout << "king:" << endl;
+    for (auto pos : king->getMoves())
+    {
+	    cout << "(" << pos.first << "," << pos.second << ")   ";
+    }
+    cout << ";" << endl << "targets: ";
+    for (auto pos : king->getTargets())
+	{
+	    cout << "(" << pos.first << "," << pos.second << ")    ";
+    }
+	cout << endl << endl;
+
+    for (auto && piece :getPieces()){
+	    cout << "Piece: " << piece->getRep() << endl <<
+		    "position: " << "(" << piece->getX() << "," << piece->getY() << ")" << endl << "moves:" ;
+    	for (auto pos : piece->getMoves())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")   ";
+	    }
+	    cout << ";" << endl << "targets: ";
+	    for (auto pos : piece->getTargets())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")    ";
+	    }
+	    cout << endl << endl;
+    }
+    // end DEBUG
+
+    if (canMove())
+        return 0; // the player can move a piece
+    if (opponentCheck) // when does this get updated?
+        return 1; // checkmate
     return 2;
 }
 
