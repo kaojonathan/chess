@@ -52,7 +52,7 @@ Game::~Game() {}
 // returns the level of the computer, otherwise returns 0
 int isComputer(string player)
 {
-	if (player.substr(0, 8) == "computer")
+	if (player.size() == 11 && player.substr(0, 8) == "computer")
 	{
 		if ((player[8] = '[') && (player[10] = ']'))
 		{
@@ -417,16 +417,13 @@ void Game::reset()
 // game, move, setup, or resign
 void Game::handleEvents()
 {
-	string line;
-	if (!getline(cin, line))
+	string command;
+	if (!(cin >> command))
 	{
 		// crtl+D to quit program
 		isRunning = false;
 		return;
 	}
-	stringstream linestream(line);
-	string command;
-	linestream >> command; // read a command
 	// initial mode
 	if (mode == "menu")
 	{ 
@@ -434,7 +431,7 @@ void Game::handleEvents()
 		{ 
 			string white;
 			string black;
-			linestream >> white >> black; // read in "human" or "computer[#]" types
+			if (cin >> white >> black); // read in "human" or "computer[#]" types
 			// check player types
 			int whiteLevel = isComputer(white); // get computer levels or 0
 			int blackLevel = isComputer(black);
@@ -534,7 +531,7 @@ void Game::handleEvents()
 					// human case
 					string from;
 					string to;
-					linestream >> from >> to; // get "from" and "to" move positions
+					if (cin >> from >> to); // get "from" and "to" move positions
 					if (isValidPosition(from) && isValidPosition(to))
 					{
 						int oldCol = from[0] - 'a';
@@ -575,7 +572,7 @@ void Game::handleEvents()
 						else if (status.first == 4)
 							{ // move is a promotion w/o capture
 								string promoType;
-								linestream >> promoType; // read the promotion type
+								if( cin >> promoType); // read the promotion type
 								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
 								{ // check if valid type
 									resetRecents(); // reset the recency of the pieces
@@ -588,16 +585,14 @@ void Game::handleEvents()
 								{
 									string pType;
 									while (true) {
-										string line;
-										if (!getline(cin, line))
-											{
-												// crtl+D to quit program
-												isRunning = false;
-												return;
-											}
-										stringstream linestream(line);
 										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
-										if (cin >> pType) {
+										if (!(cin >> pType))
+										{
+											isRunning = false;
+											return;
+										}
+										else 
+										{
 											if (pType == "R" || pType == "N" || pType == "B" || pType == "Q") break;
 										}
 									}
@@ -611,7 +606,7 @@ void Game::handleEvents()
 						else if (status.first == 5)
 							{ // move is a promotion w/ capture
 								string promoType;
-								linestream >> promoType; // read the promotion type
+								if (cin >> promoType); // read the promotion type
 								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
 								{ // check if valid type
 									resetRecents(); // reset the recency of the pieces
@@ -625,7 +620,13 @@ void Game::handleEvents()
 									string pType;
 									while (true) {
 										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
-										if (cin >> pType) {
+										if (!(cin >> pType))
+										{
+											isRunning = false;
+											return;
+										}
+										else 
+										{ 
 											if (pType == "R" || pType == "N" || pType == "B" || pType == "Q") break;
 										}
 									}
@@ -806,7 +807,7 @@ void Game::handleEvents()
 						// human case
 						string from;
 						string to;
-						linestream >> from >> to; // get "from" and "to" move positions
+						if (cin >> from >> to); // get "from" and "to" move positions
 						if (isValidPosition(from) && isValidPosition(to))
 						{
 							int oldCol = from[0] - 'a';
@@ -847,7 +848,7 @@ void Game::handleEvents()
 							else if (status.first == 4)
 							{ // move is a promotion w/o capture
 								string promoType;
-								linestream >> promoType; // read the promotion type
+								if (cin >> promoType); // read the promotion type
 								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
 								{ // check if valid type
 									resetRecents(); // reset the recency of the pieces
@@ -861,7 +862,13 @@ void Game::handleEvents()
 									string pType;
 									while (true) {
 										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
-										if (cin >> pType) {
+										if (!(cin >> pType))
+										{
+											isRunning = false;
+											return;
+										}
+										else 
+										{
 											if (pType == "r" || pType == "n" || pType == "b" || pType == "q") break;
 										}
 									}
@@ -875,7 +882,7 @@ void Game::handleEvents()
 							else if (status.first == 5)
 							{ // move is a promotion w/ capture
 								string promoType;
-								linestream >> promoType; // read the promotion type
+								if (cin >> promoType); // read the promotion type
 								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
 								{ // check if valid type
 									resetRecents(); // reset the recency of the pieces
@@ -889,7 +896,13 @@ void Game::handleEvents()
 									string pType;
 									while (true) {
 										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
-										if (cin >> pType) {
+										if (!(cin >> pType))
+										{
+											isRunning = false;
+											return;
+										}
+										else 
+										{
 											if (pType == "r" || pType == "n" || pType == "b" || pType == "q") break;
 										}
 									}
@@ -1115,7 +1128,7 @@ void Game::handleEvents()
 		{ // if command is +
 			string piece;
 			string position;
-			if (linestream >> piece >> position) // read piece and position
+			if (cin >> piece >> position) // read piece and position
 				;
 			if (isValidPiece(piece) && isValidPosition(position))
 			{ // if piece and position are valid
@@ -1132,7 +1145,7 @@ void Game::handleEvents()
 		else if (command == "-")
 		{ 
 			string position;
-			if (linestream >> position);
+			if (cin >> position);
 			if (isValidPosition(position))
 			{ // if position is valid
 				board->removeP(position); // remove it on board
@@ -1149,8 +1162,7 @@ void Game::handleEvents()
 		{ 
 		  // set starting mover to color
 			string color;
-			if (linestream >> color)
-				;
+			if (cin >> color);
 			if (color == "white")
 			{
 				whitemoves = true;

@@ -13,7 +13,7 @@
 using namespace std;
 
 // constructor
-Player::Player(int side, int type) : side{side}, type{type} {}
+Player::Player(int side, int type) : side{side}, opponentCheck{nullptr}, type{type} {}
 
 // initialize player fields once setup is complete
 void Player::init(Board *board, Player *player)
@@ -97,7 +97,7 @@ int Player::checkStatus()
         } else {
             return 0; // the player can move a piece
         }
-    }   
+    }
     if (opponentCheck) // when does this get updated?
         return 1; // checkmate
     return 2;
