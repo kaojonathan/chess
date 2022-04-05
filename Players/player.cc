@@ -91,8 +91,10 @@ int Player::checkStatus()
     opponent->king->statusUpdate();
     king->statusUpdate();
     // for DEBUG
+    /*
     cout << (side == 0 ? "white" : "black") << "'s turn :" << endl;
     cout << (side == 1 ? "white" : "black") << "'s pieces and king:" << endl;
+    */
 
     for (auto pos : opponent->king->getMoves())
     {
@@ -193,7 +195,7 @@ bool Player::canMove()
 // print players fields DEBUG
 void Player::print()
 {
-    cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl;
+    cout << king->getRep() << " at position (" << king->getX() << "," << king->getY()  << ")" << endl;
     for (auto &&piece : pieces)
     {
         if (!piece)
