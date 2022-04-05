@@ -1163,6 +1163,7 @@ void Game::resetRecents()
 	}
 }
 
+// return the move status: 0: next player can move, 1: checkmate, 2: draw 
 int Game::updateSt() {
 	int end;
 	p1->unsetStatus(); // unset the status fields of each piece
