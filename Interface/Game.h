@@ -35,7 +35,7 @@ class Game {
     void insertNewPiece(std::string validpiece, std::string position);
     void removePiece(std::string position);
 
-    void displayOrigSetup();
+    void displayOrigSetup(bool reset);
     void displayCheck(bool isWhite);
     void displayStalemate();
     void displayWin(bool isWhite);

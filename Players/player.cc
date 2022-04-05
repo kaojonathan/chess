@@ -130,7 +130,7 @@ void Player::print(){
     cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
     for (auto&& piece : pieces) {
         if (!piece) cout << "something is wrong in Player::claimPieces()" << endl; 
-        else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
+        else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << ")" << endl; 
     }
 }
 

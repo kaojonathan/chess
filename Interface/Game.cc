@@ -230,7 +230,7 @@ void Game::displayWin(bool isWhite)
 	}
 }
 
-void Game::displayOrigSetup()
+void Game::displayOrigSetup(bool reset)
 {
 
 	window->drawString(72, 77, "r");
@@ -256,6 +256,15 @@ void Game::displayOrigSetup()
 	window->drawString(322, 427, "B");
 	window->drawString(372, 427, "N");
 	window->drawString(422, 427, "R");
+
+	// clear out middle slots if board resets
+	if (reset) {
+		for (int y = 2; y < 6; ++y) {
+			for (int x = 0; x < 8; ++ x) {
+				fill(x,y);
+			}
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -297,7 +306,7 @@ void Game::init()
 	}
 
 	board->oSetup();
-	displayOrigSetup();
+	displayOrigSetup(false);
 }
 
 // updates the graphics and text display
@@ -403,7 +412,7 @@ void Game::reset()
 	history.clear();
 	board = unique_ptr<twoPlayerBoard> {new twoPlayerBoard};
 	board->oSetup();
-	displayOrigSetup();
+	displayOrigSetup(true);
 	cout << "Board reset. Please enter set-up mode, start a new game, ";
 	cout << "or press Crtl + D to quit." << endl;
 }
