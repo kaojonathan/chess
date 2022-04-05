@@ -7,15 +7,13 @@
 #include "../Players/player.h"
 using namespace std;
 
-
+// constructor
 King::King(int side, int x, int y, Board * board) : Piece{ side, x, y, board} {
 	value = 10;
 	representation = (side == 0) ? "K" : "k";
 }
 
-King::~King() {
-}
-
+// get all basic positions on the board that the king can move to, don't check if the move is valid or not
 vector<pair<int,int>> King::getPos(int col, int row){
 	pair<int, int> ybound {(side == 0) ? pair<int,int> {5, 8} : pair<int,int>{0, 3}};
 	vector<pair<int,int>> res {};
@@ -34,14 +32,12 @@ vector<Piece *> King::attackable(pair<int, int> at){
 	vector<Piece *> res {};
 	for (auto pos : possibleMoves){ 
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
-		if (target && side != target->getSide()) {
-			res.emplace_back(target);
-		}
+		if (target && side != target->getSide()) res.emplace_back(target);
 	}
 	return res;
 }
 
-
+// normal update
 void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y);
 	for (auto pos : possibleMoves){
@@ -57,40 +53,4 @@ void King::nUpdate() {
 		}
 		else moves.emplace_back(pos);
 	}
-
-
-	/*
-	// idk if this right
-	// check castle
-	if (numMoves == 0){
-		for (int i = 1; x - i >= 0; i++){
-			Piece * detacted = gameBoard->getPiece(x-i, y);
-			if (detacted) {
-				Rook * gr = dynamic_cast<Rook *>(detacted);
-				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x-2, y}).size() == 0 && opponent->canAttack(pair<int,int> {x-3, y}).size() == 0) {
-					castle.emplace_back(pair<int,int> {x-3, y});
-				}
-				break;
-			}
-		}
-		for (int i = 1; x + i < 8; i++){
-			Piece * detacted = gameBoard->getPiece(x+i, y);
-			if (detacted) {
-				Rook * gr = dynamic_cast<Rook *>(detacted);
-				if (gr && gr->getNumMoves() == 0 && i > 4 && opponent->canAttack(pair<int,int> {x+2, y}).size() == 0 && opponent->canAttack(pair<int,int> {x+3, y}).size() == 0) {
-					castle.emplace_back(pair<int,int> {x+3, y});
-				}
-				break;
-			}
-		}
-	}*/
-
-	
-
-
-
-
 }
-
-
-/* pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */

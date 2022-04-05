@@ -23,34 +23,21 @@ Piece::Piece(int side, int x, int y, Board *board) : x{x},
 // destructor
 Piece::~Piece() {}
 
-// set x, y fields
-void Piece::setPos(int col, int row)
-{
-	x = col;
-	y = row;
-}
-
 // field getters
 string Piece::getRep() { return representation; }
 int Piece::getSide() { return side; }
-
-void Piece::attach(Board *board) { gameBoard = board; }
-
-
 int Piece::getX() { return x; }
-
 int Piece::getY() { return y; }
-
-vector<pair<int, int>> Piece::getCheckRoute() { return checkRoute; }
-
 int Piece::getVal() { return value; }
-
+vector<pair<int, int>> Piece::getCheckRoute() { return checkRoute; }
 vector<pair<int, int>> Piece::getMoves() { return moves; }
-
 vector<pair<int, int>> Piece::getTargets() { return targets; }
-
 vector<pair<int, int>> Piece::getProtects() { return protects; }
+int Piece::getNumMoves(){ return numMoves; }
+bool Piece::getRecent() { return recent; }
 
+// setters
+void Piece::attach(Board *board) { gameBoard = board; }
 void Piece::needsUpdate()
 {
 	updateStatus = 0;
@@ -61,12 +48,25 @@ void Piece::needsUpdate()
 	castle = vector<pair<int, int>>{};
 	forced = nullptr;
 }
+void Piece::setOpponent(Player *o) { opponent = o; }
+void Piece::setPos(int col, int row) { x = col; y = row; }
+void Piece::setRecent() { recent = true; }
+void Piece::resetRecent() { recent = false; }
 
+// ++numMoves
+void Piece::incNumMoves() { ++numMoves; }
+
+// bus
+// check if the piece is updated by nupdate()
+bool Piece::isUpdated() { return updateStatus != 0; }
+
+// return true if the piece is king 
 bool Piece::isKing()
 {
 	return representation == "k" || representation == "K";
 }
 
+// return true if target is the emeny king
 bool Piece::enemyKing(Piece *target)
 {
 	if (target == nullptr)
@@ -103,11 +103,11 @@ vector<pair<int, int>> getPos(int col, int row, int i, int type)
 	return pos;
 }
 
-// helper function that determines of the piece in position (x, y) checks the king
+// determines of the piece in position (x, y) checks the king
 bool Piece::posInCheck(int col, int row)
 {
 	return !isKing() && enemyKing(mostVal(attackable(pair<int, int>{col, row})));
-} // can I use this for computer level 2 and 3???
+}
 
 // return true if all int in dir are 0
 bool checkEnd(vector<int> dir)
@@ -514,17 +514,7 @@ int Piece::move(int col, int row)
 	return 0;
 }
 
-// get the number of moves on this piece
-int Piece::getNumMoves()
-{
-	return numMoves;
-}
 
-// ++numMoves
-void Piece::incNumMoves()
-{
-	++numMoves;
-}
 
 // update a piece that is forced by enemPiece
 void Piece::fUpdate(Piece *enemyPiece)
@@ -578,16 +568,6 @@ bool Piece::canAttack(pair<int, int> pos)
 	return moveStatus == 1 || moveStatus == 2;
 }
 
-void Piece::setOpponent(Player *o)
-{
-	opponent = o;
-}
-
-bool Piece::isUpdated()
-{
-	return updateStatus != 0;
-}
-
 // return the most valuable Piece from a vector of Pieces, nullptr if the vector is empty
 //   comment: can be further changed to handle gain and cost with the guard field (not implemented yet)
 Piece *mostVal(vector<Piece *> attackables)
@@ -612,19 +592,4 @@ Piece *mostVal(vector<Piece *> attackables)
 bool Piece::validPos(pair<int, int> pos)
 {
 	return !(pos.first >= 8 || pos.second >= 8 || pos.first < 0 || pos.second < 0);
-}
-
-void Piece::setRecent()
-{
-	recent = true;
-}
-
-void Piece::resetRecent()
-{
-	recent = false;
-}
-
-bool Piece::getRecent()
-{
-	return recent;
 }
