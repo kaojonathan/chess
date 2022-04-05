@@ -576,7 +576,7 @@ void Piece::forcedBy(Piece *enemyPiece, bool check)
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos)
 {
-	return move(pos.first, pos.second) > 0;
+	return move(pos.first, pos.second) == 1 || move(pos.first, pos.second) == 2;
 }
 
 void Piece::setOpponent(Player *o)
