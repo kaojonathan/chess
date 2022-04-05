@@ -8,7 +8,7 @@ Players/one.o Players/player.o Players/three.o Players/two.o main.o Interface/sc
 Pieces/Move/promotion.o Pieces/Move/normal.o Pieces/Move/move.o \
 Pieces/Move/enpassant.o Pieces/Move/castle.o Pieces/Move/capture.o Pieces/Move/promotioncap.o 
 DEPENDS = ${OBJECTS:.o=.d}
-EXEC = play
+EXEC = chess
 
 ${EXEC}: ${OBJECTS}
 	${CXX} ${OBJECTS} ${CXXFLAGS} -o ${EXEC}
