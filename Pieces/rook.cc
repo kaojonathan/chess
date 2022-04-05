@@ -22,7 +22,7 @@ std::vector<Piece *> Rook::attackable(std::pair<int, int> at){
 }
 
 
-/* DEBUG
+/*
 pair<int, int> Rook::getCheckCoords() {
 
 	for (int i = 0; i < up.size(); ++i) {

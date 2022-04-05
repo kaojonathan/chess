@@ -41,7 +41,7 @@ vector<Piece *> Knight::attackable(pair<int, int> position){
 }
 
 
-
+// normal update
 void Knight::nUpdate()  {
 	updateStatus = 1;
 	for (auto pos : getPos(x, y)){
@@ -50,8 +50,10 @@ void Knight::nUpdate()  {
 			if (enemyKing(target)) {
 				checkRoute.emplace_back(pair<int, int>{x,y});
 				opponent->kingCheckedBy(this);
+				targets.emplace_back(pos);
 			}
-			if (side != target->getSide()) targets.emplace_back(pos);
+			else if (side != target->getSide()) targets.emplace_back(pos);
+			else protects.emplace_back(pos);
 		}
 		else {
 			moves.emplace_back(pos);
@@ -59,7 +61,7 @@ void Knight::nUpdate()  {
 	}
 }
 
-/* DEBUG
+/*
 pair<int, int> Knight::getCheckCoords() {
 
 	if (rightoneuptwo.size() == 1) {

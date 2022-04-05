@@ -16,6 +16,7 @@ Piece::Piece(int side, int x, int y, Board *board) : castle{vector<pair<int, int
 													 recent{false},
 													 moves{vector<pair<int, int>>{}},
 													 targets{vector<pair<int, int>>{}},
+													 protects{vector<pair<int, int>>{}},
 													 numMoves{0},
 													 gameBoard{board} {}
 
@@ -48,18 +49,17 @@ vector<pair<int, int>> Piece::getMoves() { return moves; }
 
 vector<pair<int, int>> Piece::getTargets() { return targets; }
 
-void Piece::unsetStatus()
+vector<pair<int, int>> Piece::getProtects() { return protects; }
+
+void Piece::needsUpdate()
 {
 	updateStatus = 0;
 	moves = vector<pair<int, int>>{};
 	targets = vector<pair<int, int>>{};
+	protects = vector<pair<int, int>>{};
 	checkRoute = vector<pair<int, int>>{};
+	castle = vector<pair<int, int>>{};
 	forced = nullptr;
-}
-
-void Piece::needsUpdate()
-{
-	unsetStatus();
 }
 
 bool Piece::isKing()
@@ -196,6 +196,7 @@ void Piece::dirScan(int type)
 						}
 						else
 						{ // blocked by mate, path stops
+							protects.emplace_back(pos.at(j));
 							dirs.at(j) = 0;
 						}
 					}
@@ -230,7 +231,7 @@ void Piece::dirScan(int type)
 }
 
 // return the validity of an attempt to move:
-//  0: not valid
+//  0: not valid (not protect)
 //	1: valid move
 //	2: valid capture
 //  3: valid castle
@@ -274,7 +275,7 @@ int Piece::move(int col, int row)
 				return 2;
 			}
 		}
-	}
+	}	
 
 	// castling condition
 	if (this->getRep() == "K")
@@ -531,12 +532,13 @@ void Piece::fUpdate(Piece *enemyPiece)
 	updateStatus = 2;
 	vector<pair<int, int>> newMoves{};
 	vector<pair<int, int>> newtargets{};
+	protects = vector<pair<int, int>>{};
 	for (auto possibleMove : forced->getCheckRoute())
 	{
 		int c = move(possibleMove.first, possibleMove.second);
-		if (c == 1)
+		if (c == 1 || c == 3 || c == 4)
 			newMoves.emplace_back(possibleMove);
-		else if (c == 2)
+		else if (c == 2 || c == 5 || c == 6)
 			newtargets.emplace_back(possibleMove);
 	} // the piece can move only if the move still block the opposite piece from checking.
 	moves = newMoves;
@@ -567,7 +569,13 @@ bool Piece::canAttack(pair<int, int> pos)
 	if (p) {
 		return (pos.first == x + 1 || pos.first == x - 1) && pos.second == y + p->frDir() && !forced;
 	}
-	return move(pos.first, pos.second) == 1 || move(pos.first, pos.second) == 2;
+	cout << "piece: " << representation << endl;
+	for (auto pt : protects) {
+		if (pt.first == pos.first && pt.second == pos.second) 
+			return true;
+	} 
+	int moveStatus = move(pos.first, pos.second);
+	return moveStatus == 1 || moveStatus == 2;
 }
 
 void Piece::setOpponent(Player *o)

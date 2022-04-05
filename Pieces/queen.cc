@@ -21,7 +21,7 @@ std::vector<Piece *> Queen::attackable(std::pair<int, int> at){
 	return dScan(at, 3);
 }
 
-/* DEBUG
+/*
 pair<int, int> Queen::getCheckCoords() {
 
 	for (int i = 0; i < up.size(); ++i) {

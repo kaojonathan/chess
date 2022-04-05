@@ -46,6 +46,7 @@ void Pawn::nUpdate() {
 						}
 						targets.emplace_back(pair<int, int>{sd,fr});
 					}
+					else protects.emplace_back(pair<int, int>{sd,fr});
 				}
 			}
 		}
@@ -57,7 +58,7 @@ void Pawn::nUpdate() {
 
 
 
-/* DEBUG
+/*
 pair<int, int> Pawn::getCheckCoords() {
 
 	if (getSide() == 0) { // white case

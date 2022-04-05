@@ -23,7 +23,6 @@ public:
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
     King(int side, int x, int y, Board * board);
     std::vector<std::pair<int,int>> getPos(int x, int y);
-    void unsetStatus() override;
     ~King();
 };
 

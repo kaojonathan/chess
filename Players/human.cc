@@ -13,34 +13,35 @@ std::pair<int, std::string> Human::playerMove(int &oldCol, int &oldRow, int &new
     Piece *pieceToMove = gameBoard->getPiece(oldCol, oldRow); // get the piece to move
     if (pieceToMove)
     { // if there is a piece there
-        if (pieceToMove->getSide() != side || pieceToMove->move(newCol, newRow) == 0)
+        int moveStatus = pieceToMove->move(newCol, newRow);
+        if (pieceToMove->getSide() != side || moveStatus == 0)
         { // if the piece is wrong side or it's move returns 0, return pair with (0, "fail")
             return pair<int, std::string>{0, "fail"};
         }
-        else if (pieceToMove->move(newCol, newRow) == 1)
+        else if (moveStatus == 1)
         {                                                     // if it's move returns 1 (normal)
             gameBoard->moveP(oldCol, oldRow, newCol, newRow); // move the piece on the board; return pair with (1, "normal")
             return pair<int, std::string>{1, "normal"};
         }
-        else if (pieceToMove->move(newCol, newRow) == 2)
+        else if (moveStatus == 2)
         {                                                                               // if it's move returns 2 (capture)
             std::string capturedRep = gameBoard->getPiece(newCol, newRow)->getRep();    // get the captured type
             opponent->removePiece(std::pair<int, int>{newCol, newRow});                 // remove the piece from opponent
             gameBoard->moveP(pieceToMove->getX(), pieceToMove->getY(), newCol, newRow); // move the piece on the board; return pair with (2, capturedRep)
             return pair<int, std::string>{2, capturedRep};
         }
-        else if (pieceToMove->move(newCol, newRow) == 3)
+        else if (moveStatus == 3)
         {                                        // if it's move returns 3 (castle)
             gameBoard->doCastle(newCol, newRow); // do castle on game board; return pair with (3, "castle")
             return pair<int, std::string>{3, "castle"};
         }
-        else if (pieceToMove->move(newCol, newRow) == 4)
+        else if (moveStatus == 4)
         {                                                     // if it's move returns 4 (promotion)
             gameBoard->moveP(oldCol, oldRow, newCol, newRow); // move the piece on the board
             deletePiece(std::pair<int, int>(newCol, newRow)); // delete piece from player; return pair with (4, "promotion")
             return pair<int, std::string>{4, "promotion"};
         }
-        else if (pieceToMove->move(newCol, newRow) == 5)
+        else if (moveStatus == 5)
         {                                                                               // if it's move returns 5 (promotion with capture)
             std::string capturedRep = gameBoard->getPiece(newCol, newRow)->getRep();    // get the captured type
             opponent->removePiece(std::pair<int, int>{newCol, newRow});                 // remove the piece from opponent
@@ -48,7 +49,7 @@ std::pair<int, std::string> Human::playerMove(int &oldCol, int &oldRow, int &new
             deletePiece(std::pair<int, int>(newCol, newRow));                           // delete piece from player; return pair with (5, capturedRep)
             return pair<int, std::string>{5, capturedRep};
         }
-        else if (pieceToMove->move(newCol, newRow) == 6)
+        else if (moveStatus == 6)
         { // if it's move returns 6 (enpassant)
             if (pieceToMove->getRep() == "P")
             {                                                                   // if white pawn

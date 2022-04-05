@@ -41,10 +41,6 @@ vector<Piece *> King::attackable(pair<int, int> at){
 	return res;
 }
 
-void King::unsetStatus() {
-	Piece::unsetStatus();
-	castle = vector<pair<int,int>>{};
-}
 
 void King::nUpdate() {
 	vector<pair<int, int>> possibleMoves = getPos(x, y);
@@ -55,15 +51,15 @@ void King::nUpdate() {
 		} // if pos not in the board or in the attack range of the opponent (not implemented)
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
 		if (target){
-			if (side != target->getSide()) {
+			if (side != target->getSide())
 				targets.emplace_back(pos); 
-			}
+			else protects.emplace_back(pos);
 		}
 		else moves.emplace_back(pos);
 	}
 
 
-	/* DEBUG
+	/*
 	// idk if this right
 	// check castle
 	if (numMoves == 0){
@@ -97,4 +93,4 @@ void King::nUpdate() {
 }
 
 
-/* DEBUG pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */
+/* pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */

@@ -90,11 +90,10 @@ int Player::checkStatus()
         piece->statusUpdate();
     opponent->king->statusUpdate();
     king->statusUpdate();
-    // for DEBUG
     /*
+    // for DEBUG
     cout << (side == 0 ? "white" : "black") << "'s turn :" << endl;
     cout << (side == 1 ? "white" : "black") << "'s pieces and king:" << endl;
-    */
 
     for (auto pos : opponent->king->getMoves())
     {
@@ -102,6 +101,11 @@ int Player::checkStatus()
     }
     cout << ";" << endl << "targets: ";
     for (auto pos : opponent->king->getTargets())
+	{
+	    cout << "(" << pos.first << "," << pos.second << ")    ";
+    }
+    cout << ";" << endl << "protects: ";
+    for (auto pos : opponent->king->getProtects())
 	{
 	    cout << "(" << pos.first << "," << pos.second << ")    ";
     }
@@ -119,6 +123,11 @@ int Player::checkStatus()
 	    {
 		    cout << "(" << pos.first << "," << pos.second << ")    ";
 	    }
+        cout << ";" << endl << "protects: ";
+	    for (auto pos : piece->getProtects())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")    ";
+	    }
 	    cout << endl << endl;
     }
     cout << (side == 0 ? "white" : "black") << "'s pieces and king:" << endl;
@@ -132,6 +141,12 @@ int Player::checkStatus()
 	{
 	    cout << "(" << pos.first << "," << pos.second << ")    ";
     }
+    cout << ";" << endl << "protects: ";
+    for (auto pos : king->getProtects())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")    ";
+	    }
+	    cout << endl << endl;
 	cout << endl << endl;
 
     for (auto && piece :getPieces()){
@@ -146,9 +161,16 @@ int Player::checkStatus()
 	    {
 		    cout << "(" << pos.first << "," << pos.second << ")    ";
 	    }
+        cout << ";" << endl << "protects: ";
+        for (auto pos : piece->getProtects())
+	    {
+		    cout << "(" << pos.first << "," << pos.second << ")    ";
+	    }
+	    cout << endl << endl;
 	    cout << endl << endl;
     }
     // end DEBUG
+     */
 
     if (canMove())
         return 0; // the player can move a piece
@@ -176,7 +198,17 @@ vector<Piece *> Player::canAttack(pair<int, int> pos)
         if (piece->canAttack(pos))  // if a piece is updated and can attack
             res.emplace_back(piece.get()); // emplace it into res
     }
+    // DEBUG
+    /*
+    cout << "canAttack() run on (" << pos.first << " " << pos.second << ")" << endl;
+    for (auto p : res) {
+        cout << " " << p->getRep();
+    }
+    cout << endl;
+    // END DEBUG
+    */
     return res; // return res
+
 }
 
 // true if there is any pieces that the player can move
