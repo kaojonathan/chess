@@ -52,13 +52,16 @@ Game::~Game() {}
 // returns the level of the computer, otherwise returns 0
 int isComputer(string player)
 {
-	if (player.substr(0, 8) == "computer")
+	if (player.size() == 11)
 	{
-		if ((player[8] = '[') && (player[10] = ']'))
+		if (player.substr(0, 8) == "computer")
 		{
-			if ('1' <= player[9] && player[9] <= '4')
+			if ((player[8] = '[') && (player[10] = ']'))
 			{
-				return player[9] - '0';
+				if ('1' <= player[9] && player[9] <= '4')
+				{
+					return player[9] - '0';
+				}
 			}
 		}
 	}
@@ -191,15 +194,15 @@ void Game::printBoard()
 void Game::displayCheck(bool isWhite)
 {
 	if (isWhite)
-	{													  // if white King is in check
-		cout << "White is in check." << endl;			  
+	{ // if white King is in check
+		cout << "White is in check." << endl;
 		window->drawString(10, 10, "White is in check."); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
 	}
 	else
-	{													  // if black King is in check
-		cout << "Black is in check." << endl;			 
+	{ // if black King is in check
+		cout << "Black is in check." << endl;
 		window->drawString(10, 10, "Black is in check."); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -209,7 +212,7 @@ void Game::displayCheck(bool isWhite)
 // display a stalemate on the graphic window
 void Game::displayStalemate()
 {
-	cout << "Stalemate! Resetting board..." << endl;			  
+	cout << "Stalemate! Resetting board..." << endl;
 	window->drawString(10, 10, "Stalemate!"); // show on graphic
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -219,8 +222,8 @@ void Game::displayStalemate()
 void Game::displayWin(bool isWhite)
 {
 	if (isWhite)
-	{											   // if white King is in check
-		cout << "White wins! Resetting board..." << endl;			
+	{ // if white King is in check
+		cout << "White wins! Resetting board..." << endl;
 		window->drawString(10, 10, "White wins!"); // show on graphic
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		window->fillRectangle(-5, -5, 200, 30, XWindow::White); // erase it after 3 secs
@@ -271,7 +274,6 @@ void Game::displayOrigSetup(bool reset)
 	window->drawString(322, 427, "B");
 	window->drawString(372, 427, "N");
 	window->drawString(422, 427, "R");
-	
 }
 ////////////////////////////////////////////////////////////////////
 
@@ -355,7 +357,7 @@ void Game::update()
 			drawPiece(rook, newCol - 1, newRow);
 		}
 		else if ((newCol - oldCol) == -2)
-		{ 							  // if the king moved left
+		{							  // if the king moved left
 			fill(newCol - 2, newRow); // erase corner square
 			fill(oldCol, oldRow);	  // erase original square
 			// draw king and rook in right positions
@@ -401,14 +403,14 @@ void Game::update()
 // occurs after resign, checkmate, stalemate
 void Game::reset()
 {
-	mode = "menu"; // go to menu mode
+	mode = "menu";	   // go to menu mode
 	whitemoves = true; // white moves first
-	p1 = nullptr; // players are uninitalized
+	p1 = nullptr;	   // players are uninitalized
 	p2 = nullptr;
-	history.clear(); // clear the move history
+	history.clear();										// clear the move history
 	board = unique_ptr<twoPlayerBoard>{new twoPlayerBoard}; // make a new board
-	board->oSetup(); // "original-setup" the board
-	displayOrigSetup(true); // display it on graphics and output
+	board->oSetup();										// "original-setup" the board
+	displayOrigSetup(true);									// display it on graphics and output
 	cout << "Board reset. Please enter set-up mode, start a new game, ";
 	cout << "or press Crtl + D to quit." << endl; // output info
 }
@@ -429,9 +431,9 @@ void Game::handleEvents()
 	linestream >> command; // read a command
 	// initial mode
 	if (mode == "menu")
-	{ 
+	{
 		if (command == "game")
-		{ 
+		{
 			string white;
 			string black;
 			linestream >> white >> black; // read in "human" or "computer[#]" types
@@ -480,7 +482,7 @@ void Game::handleEvents()
 				}
 			}
 			else
-			{ 
+			{
 				throw runtime_error{"Invalid player type. Must be 'human' or 'computer[1-4]'\nPlease re-enter game start command."};
 			}
 			// begin the game
@@ -498,21 +500,21 @@ void Game::handleEvents()
 			return; // return
 		}
 		else if (command == "setup")
-		{ 
+		{
 			mode = "setup"; // set mode to setup
 			cout << "Entered set up mode..." << endl;
 			return;
 		}
 		else
-		{ 
+		{
 			throw runtime_error{"Unrecognized command. Please try again."};
 		}
 		// assumes that game has started and board has been set up
 	}
 	else if (mode == "game")
-	{ 
+	{
 		if (command == "resign")
-		{ 
+		{
 			if (whitemoves)
 			{ // if white moves, black wins
 				score->blackWin();
@@ -527,7 +529,7 @@ void Game::handleEvents()
 		}
 		else if (command == "move")
 		{ // if the command is "move"
-		if (whitemoves)
+			if (whitemoves)
 			{ // white's turn
 				if (p1->getType() == 0)
 				{
@@ -548,7 +550,7 @@ void Game::handleEvents()
 							throw runtime_error{"Illegal move attempted. Please try another."};
 						}
 						else if (status.first == 1)
-						{ // basic move
+						{					// basic move
 							resetRecents(); // reset the recency of the pieces
 							if (board->getPiece(newCol, newRow)->getRep() == "P")
 							{
@@ -561,57 +563,57 @@ void Game::handleEvents()
 							history.emplace_back(unique_ptr<Normal>{new Normal{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 2)
-							{ // move is a capture
-								resetRecents(); // reset the recency of the pieces
-								// store the Capture in history
-								history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
-							}
+						{					// move is a capture
+							resetRecents(); // reset the recency of the pieces
+							// store the Capture in history
+							history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
+						}
 						else if (status.first == 3)
-							{ // move is a castle
-								resetRecents(); // reset the recency of the pieces
-								// store the Castle in history
-								history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
-							}
+						{					// move is a castle
+							resetRecents(); // reset the recency of the pieces
+							// store the Castle in history
+							history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
+						}
 						else if (status.first == 4)
-							{ // move is a promotion w/o capture
-								string promoType;
-								linestream >> promoType; // read the promotion type
-								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
-								{ // check if valid type
-									resetRecents(); // reset the recency of the pieces
-									// store the Promotion in history
-									history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
-									board->insertP(promoType, to); // insert the promotype piece into board
-									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								}
-								else
-								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
-								}
-							}
-						else if (status.first == 5)
-							{ // move is a promotion w/ capture
-								string promoType;
-								linestream >> promoType; // read the promotion type
-								if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
-								{ // check if valid type
-									resetRecents(); // reset the recency of the pieces
-									// store the PromotionCapture in history
-									history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
-									board->insertP(promoType, to); // insert the promotype piece into board
-									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								}
-								else
-								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
-								}
-							}
-						else if (status.first == 6)
-						{ // move is enpassant
+						{ // move is a promotion w/o capture
+							string promoType;
+							linestream >> promoType; // read the promotion type
+							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
+							{					// check if valid type
 								resetRecents(); // reset the recency of the pieces
-								// store the EnPassant in history
-								history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
+								// store the Promotion in history
+								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
+								board->insertP(promoType, to);						// insert the promotype piece into board
+								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 							}
+							else
+							{
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
+						}
+						else if (status.first == 5)
+						{ // move is a promotion w/ capture
+							string promoType;
+							linestream >> promoType; // read the promotion type
+							if (promoType == "R" || promoType == "N" || promoType == "B" || promoType == "Q")
+							{					// check if valid type
+								resetRecents(); // reset the recency of the pieces
+								// store the PromotionCapture in history
+								history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
+								board->insertP(promoType, to);						// insert the promotype piece into board
+								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							}
+							else
+							{
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
+							}
+						}
+						else if (status.first == 6)
+						{					// move is enpassant
+							resetRecents(); // reset the recency of the pieces
+							// store the EnPassant in history
+							history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
+						}
 					}
 					else
 					{ // move unrecognized
@@ -631,7 +633,7 @@ void Game::handleEvents()
 						throw runtime_error{"Illegal move attempted. Please try another."};
 					}
 					else if (status.first == 1)
-					{ // basic move
+					{					// basic move
 						resetRecents(); // reset the recency of the pieces
 						if (board->getPiece(newCol, newRow)->getRep() == "P")
 						{
@@ -644,13 +646,13 @@ void Game::handleEvents()
 						history.emplace_back(unique_ptr<Normal>{new Normal{oldCol, oldRow, newCol, newRow}});
 					}
 					else if (status.first == 2)
-					{ // move is a capture
+					{					// move is a capture
 						resetRecents(); // reset the recency of the pieces
 						// store the Capture in history
 						history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 					}
 					else if (status.first == 3)
-					{ // move is a castle
+					{					// move is a castle
 						resetRecents(); // reset the recency of the pieces
 						// store the Castle in history
 						history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
@@ -664,8 +666,8 @@ void Game::handleEvents()
 							string xStr = string(1, newCol + 'a');
 							string yStr = to_string(8 - newRow);
 							string strPos = xStr + yStr;
-							resetRecents(); // reset the recency of the pieces
-							board->insertP("R", strPos); // insert the promotype piece into board
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("R", strPos);						// insert the promotype piece into board
 							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 							// store the Promotion in history
 							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "R"}});
@@ -675,205 +677,122 @@ void Game::handleEvents()
 							string xStr = string(1, newCol + 'a');
 							string yStr = to_string(8 - newRow);
 							string strPos = xStr + yStr;
-							resetRecents(); // reset the recency of the pieces
-							board->insertP("N", strPos); // insert the promotype piece into board
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("N", strPos);						// insert the promotype piece into board
 							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 							// store the Promotion in history
 							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "N"}});
 						}
 						else if (i == 2)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("B", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "B"}});
-							}
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("B", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "B"}});
+						}
 						else if (i == 3)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("Q", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "Q"}});
-							}
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("Q", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "Q"}});
+						}
 					}
 					else if (status.first == 5)
-						{ // move is a promotion w/ capture
-							int i = rand() % 4;
-							// randomize which type to promote to
-							if (i == 0)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("R", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second}});
-							}
-							else if (i == 1)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("N", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second}});
-							}
-							else if (i == 2)
-							{
-
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("B", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second}});
-							}
-							else if (i == 3)
-							{
-
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("Q", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second}});
-							}
+					{ // move is a promotion w/ capture
+						int i = rand() % 4;
+						// randomize which type to promote to
+						if (i == 0)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("R", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second}});
 						}
+						else if (i == 1)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("N", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second}});
+						}
+						else if (i == 2)
+						{
+
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("B", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second}});
+						}
+						else if (i == 3)
+						{
+
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("Q", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second}});
+						}
+					}
 					else if (status.first == 6)
-						{ // move is enpassant
-							resetRecents(); // reset the recency of the pieces
-							// store the EnPassant in history
-							history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
-						}
+					{					// move is enpassant
+						resetRecents(); // reset the recency of the pieces
+						// store the EnPassant in history
+						history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
+					}
 				}
 				// black now moves
 				whitemoves = false;
 			}
 			else
-				{ // black's turn
-					if (p2->getType() == 0)
+			{ // black's turn
+				if (p2->getType() == 0)
+				{
+					// human case
+					string from;
+					string to;
+					linestream >> from >> to; // get "from" and "to" move positions
+					if (isValidPosition(from) && isValidPosition(to))
 					{
-						// human case
-						string from;
-						string to;
-						linestream >> from >> to; // get "from" and "to" move positions
-						if (isValidPosition(from) && isValidPosition(to))
-						{
-							int oldCol = from[0] - 'a';
-							int oldRow = '8' - from[1];
-							int newCol = to[0] - 'a';
-							int newRow = '8' - to[1];
-							std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
-							// determine what kind of move it is, and move it if it is valid
-							if (status.first == 0)
-							{ // if it's invalid
-								throw runtime_error{"Illegal move attempted. Please try another."};
-							}
-							else if (status.first == 1)
-							{ // basic move
-								resetRecents(); // reset the recency of the pieces
-								if (board->getPiece(newCol, newRow)->getRep() == "p")
-								{
-									if (newRow - oldRow == 2)
-									{ // if it's a pawn that moved 2 pieces, set it's recency
-										board->getPiece(newCol, newRow)->setRecent();
-									}
-								}
-								// store the Normal in history
-								history.emplace_back(unique_ptr<Normal>{new Normal{oldCol, oldRow, newCol, newRow}});
-							}
-							else if (status.first == 2)
-							{ // move is a capture
-								resetRecents(); // reset the recency of the pieces
-								// store the Capture in history
-								history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
-							}
-							else if (status.first == 3)
-							{ // move is a castle
-								resetRecents(); // reset the recency of the pieces
-								// store the Castle in history
-								history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
-							}
-							else if (status.first == 4)
-							{ // move is a promotion w/o capture
-								string promoType;
-								linestream >> promoType; // read the promotion type
-								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
-								{ // check if valid type
-									resetRecents(); // reset the recency of the pieces
-									// store the Promotion in history
-									history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
-									board->insertP(promoType, to); // insert the promotype piece into board
-									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								}
-								else
-								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
-								}
-							}
-							else if (status.first == 5)
-							{ // move is a promotion w/ capture
-								string promoType;
-								linestream >> promoType; // read the promotion type
-								if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
-								{ // check if valid type
-									resetRecents(); // reset the recency of the pieces
-									// store the PromotionCapture in history
-									history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
-									board->insertP(promoType, to); // insert the promotype piece into board
-									p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								}
-								else
-								{
-									throw runtime_error{"Illegal promotion type attempted. Please try another."};
-								}
-							}
-							else if (status.first == 6)
-							{ // move is enpassant
-								resetRecents(); // reset the recency of the pieces
-								// store the EnPassant in history
-								history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
-							}
-						}
-						else
-						{ 
-							throw runtime_error{"Unrecognized move. Please re-enter."};
-						}
-					}
-					else
-					{ // computer case
-						int oldCol = 0;
-						int oldRow = 0;
-						int newCol = 0;
-						int newRow = 0;
+						int oldCol = from[0] - 'a';
+						int oldRow = '8' - from[1];
+						int newCol = to[0] - 'a';
+						int newRow = '8' - to[1];
 						std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
-						// determine what kind of move it is, and move it if it is valid, update oldCol, oldRow, newCol, newRow
+						// determine what kind of move it is, and move it if it is valid
 						if (status.first == 0)
-						{ // invalid move
+						{ // if it's invalid
 							throw runtime_error{"Illegal move attempted. Please try another."};
 						}
 						else if (status.first == 1)
-						{ // basic move
+						{					// basic move
 							resetRecents(); // reset the recency of the pieces
 							if (board->getPiece(newCol, newRow)->getRep() == "p")
 							{
@@ -886,132 +805,215 @@ void Game::handleEvents()
 							history.emplace_back(unique_ptr<Normal>{new Normal{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 2)
-						{ // move is a capture
+						{					// move is a capture
 							resetRecents(); // reset the recency of the pieces
 							// store the Capture in history
 							history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
 						}
 						else if (status.first == 3)
-						{ // move is a castle
+						{					// move is a castle
 							resetRecents(); // reset the recency of the pieces
 							// store the Castle in history
 							history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
 						}
 						else if (status.first == 4)
 						{ // move is a promotion w/o capture
-							int i = rand() % 4;
-							// randomize which type to promote to
-							if (i == 0)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
+							string promoType;
+							linestream >> promoType; // read the promotion type
+							if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
+							{					// check if valid type
 								resetRecents(); // reset the recency of the pieces
-								board->insertP("r", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "r"}});
+								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
+								board->insertP(promoType, to);						// insert the promotype piece into board
+								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
 							}
-							else if (i == 1)
+							else
 							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("n", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "n"}});
-							}
-							else if (i == 2)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("b", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "b"}});
-							}
-							else if (i == 3)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("q", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "q"}});
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
 							}
 						}
 						else if (status.first == 5)
 						{ // move is a promotion w/ capture
-							int i = rand() % 4;
-							// randomize which type to promote to
-							if (i == 0)
-							{
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
+							string promoType;
+							linestream >> promoType; // read the promotion type
+							if (promoType == "r" || promoType == "n" || promoType == "b" || promoType == "q")
+							{					// check if valid type
 								resetRecents(); // reset the recency of the pieces
-								board->insertP("r", strPos); // insert the promotype piece into board
+								// store the PromotionCapture in history
+								history.emplace_back(unique_ptr<PromotionCapture>{new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
+								board->insertP(promoType, to);						// insert the promotype piece into board
 								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second}});
 							}
-							else if (i == 1)
+							else
 							{
-
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("n", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second}});
-							}
-							else if (i == 2)
-							{
-
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("b", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second}});
-							}
-							else if (i == 3)
-							{
-
-								string xStr = string(1, newCol + 'a');
-								string yStr = to_string(8 - newRow);
-								string strPos = xStr + yStr;
-								resetRecents(); // reset the recency of the pieces
-								board->insertP("q", strPos); // insert the promotype piece into board
-								p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
-								// store the Promotion in history
-								history.emplace_back(unique_ptr<PromotionCapture>{
-									new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second}});
+								throw runtime_error{"Illegal promotion type attempted. Please try another."};
 							}
 						}
 						else if (status.first == 6)
-						{ // move is enpassant
+						{					// move is enpassant
 							resetRecents(); // reset the recency of the pieces
 							// store the EnPassant in history
 							history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
 						}
 					}
-					// white now moves
-					whitemoves = true;
+					else
+					{
+						throw runtime_error{"Unrecognized move. Please re-enter."};
+					}
 				}
+				else
+				{ // computer case
+					int oldCol = 0;
+					int oldRow = 0;
+					int newCol = 0;
+					int newRow = 0;
+					std::pair<int, std::string> status = p2->move(oldCol, oldRow, newCol, newRow);
+					// determine what kind of move it is, and move it if it is valid, update oldCol, oldRow, newCol, newRow
+					if (status.first == 0)
+					{ // invalid move
+						throw runtime_error{"Illegal move attempted. Please try another."};
+					}
+					else if (status.first == 1)
+					{					// basic move
+						resetRecents(); // reset the recency of the pieces
+						if (board->getPiece(newCol, newRow)->getRep() == "p")
+						{
+							if (newRow - oldRow == 2)
+							{ // if it's a pawn that moved 2 pieces, set it's recency
+								board->getPiece(newCol, newRow)->setRecent();
+							}
+						}
+						// store the Normal in history
+						history.emplace_back(unique_ptr<Normal>{new Normal{oldCol, oldRow, newCol, newRow}});
+					}
+					else if (status.first == 2)
+					{					// move is a capture
+						resetRecents(); // reset the recency of the pieces
+						// store the Capture in history
+						history.emplace_back(unique_ptr<Capture>{new Capture{oldCol, oldRow, newCol, newRow, status.second}});
+					}
+					else if (status.first == 3)
+					{					// move is a castle
+						resetRecents(); // reset the recency of the pieces
+						// store the Castle in history
+						history.emplace_back(unique_ptr<Castle>{new Castle{oldCol, oldRow, newCol, newRow}});
+					}
+					else if (status.first == 4)
+					{ // move is a promotion w/o capture
+						int i = rand() % 4;
+						// randomize which type to promote to
+						if (i == 0)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("r", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "r"}});
+						}
+						else if (i == 1)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("n", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "n"}});
+						}
+						else if (i == 2)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("b", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "b"}});
+						}
+						else if (i == 3)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("q", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<Promotion>{new Promotion{oldCol, oldRow, newCol, newRow, "q"}});
+						}
+					}
+					else if (status.first == 5)
+					{ // move is a promotion w/ capture
+						int i = rand() % 4;
+						// randomize which type to promote to
+						if (i == 0)
+						{
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("r", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second}});
+						}
+						else if (i == 1)
+						{
+
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("n", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second}});
+						}
+						else if (i == 2)
+						{
+
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("b", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second}});
+						}
+						else if (i == 3)
+						{
+
+							string xStr = string(1, newCol + 'a');
+							string yStr = to_string(8 - newRow);
+							string strPos = xStr + yStr;
+							resetRecents();										// reset the recency of the pieces
+							board->insertP("q", strPos);						// insert the promotype piece into board
+							p1->addToPieces(board->sharePiece(newCol, newRow)); // add it to the player
+							// store the Promotion in history
+							history.emplace_back(unique_ptr<PromotionCapture>{
+								new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second}});
+						}
+					}
+					else if (status.first == 6)
+					{					// move is enpassant
+						resetRecents(); // reset the recency of the pieces
+						// store the EnPassant in history
+						history.emplace_back(unique_ptr<EnPassant>{new EnPassant{oldCol, oldRow, newCol, newRow}});
+					}
+				}
+				// white now moves
+				whitemoves = true;
+			}
 			int end = updateSt();
 			if (end == 1)
 			{
@@ -1041,24 +1043,25 @@ void Game::handleEvents()
 				displayStalemate();
 				reset(); // reset the board
 				return;
-			} else if (end == 3)
+			}
+			else if (end == 3)
 			{
 				displayCheck(whitemoves);
 			}
 		}
 		else if (command == "setup")
-		{ 
+		{
 			throw runtime_error{"ERROR: setup can only be called before a game has started."};
 		}
 		else
-		{ 
+		{
 			throw runtime_error{"ERROR: Invalid game command."};
 		}
 	}
 	else if (mode == "setup")
-	{ 
+	{
 		cout << "Current Board Configuration:" << endl;
-		//this->update(); // update the graphics and text display DEBUG
+		// this->update(); // update the graphics and text display DEBUG
 		if (command == "+")
 		{ // if command is +
 			string piece;
@@ -1066,36 +1069,37 @@ void Game::handleEvents()
 			if (linestream >> piece >> position) // read piece and position
 				;
 			if (isValidPiece(piece) && isValidPosition(position))
-			{ // if piece and position are valid
-				board->insertP(piece, position); // insert it on board
+			{															// if piece and position are valid
+				board->insertP(piece, position);						// insert it on board
 				drawPiece(piece, position[0] - 'a', '8' - position[1]); // draw it on board
 				cout << "Inserted piece at: " << position << endl;
 				return;
 			}
 			else
-			{ 
+			{
 				throw runtime_error{"ERROR: Invalid. Must be [a-h][1-8] and piece r, n, b, q, k, p, R, N, B, Q, K, P"};
 			}
 		}
 		else if (command == "-")
-		{ 
+		{
 			string position;
-			if (linestream >> position);
+			if (linestream >> position)
+				;
 			if (isValidPosition(position))
-			{ // if position is valid
-				board->removeP(position); // remove it on board
+			{												// if position is valid
+				board->removeP(position);					// remove it on board
 				fill(position[0] - 'a', '8' - position[1]); // remove it on board graphic
 				cout << "Removed piece at: " << position << endl;
 				return;
 			}
 			else
-			{ 
+			{
 				throw runtime_error{"ERROR: Invalid position. Must be [a-h][1-8]"};
 			}
 		}
 		else if (command == "=")
-		{ 
-		  // set starting mover to color
+		{
+			// set starting mover to color
 			string color;
 			if (linestream >> color)
 				;
@@ -1115,7 +1119,7 @@ void Game::handleEvents()
 			}
 		}
 		else if (command == "done")
-		{ 
+		{
 			// verify the board
 			if (board->verify())
 			{ // if setup is OK return to menu
@@ -1124,7 +1128,7 @@ void Game::handleEvents()
 				return;
 			}
 			else
-			{ 
+			{
 				throw runtime_error{"ERROR: Setup conditions are not satisfied.\nPlease continue set-up"};
 			}
 		}
@@ -1169,8 +1173,9 @@ void Game::resetRecents()
 	}
 }
 
-// return the move status: 0: next player can move, 1: checkmate, 2: draw 
-int Game::updateSt() {
+// return the move status: 0: next player can move, 1: checkmate, 2: draw
+int Game::updateSt()
+{
 	int end;
 	p1->unsetStatus(); // unset the status fields of each piece
 	p2->unsetStatus();
@@ -1184,4 +1189,3 @@ int Game::updateSt() {
 	}
 	return end;
 }
-
