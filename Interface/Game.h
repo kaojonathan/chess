@@ -45,6 +45,8 @@ class Game
     void displayStalemate();
     // display a win on the graphic window (isWhite -> white and vice versa)
     void displayWin(bool isWhite);
+    // update status of all pieces, return movability
+    int updateSt();
 
 public:
     Game();          // constructor

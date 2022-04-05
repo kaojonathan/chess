@@ -9,27 +9,20 @@ class Player;
 
 class Piece {
     protected:
-
-        std::vector<std::pair<int,int>> castle;
-
-
-
         // need to decide if x is a column or a row, now x is col
-        int x;
-        int y;
-        int side; // 0 for white and 1 for black
-        int value;  // the value of the Piece
-        int updateStatus; // 0: not update, 1: normal update, 2: forced update
-
-        bool recent; // moved recently
-
+        int x;                                              // col
+        int y;                                              // row
+        int side;                                           // 0 for white and 1 for black
+        int value;                                          // the value of the Piece
+        int updateStatus;                                   // 0: not update, 1: normal update, 2: forced update
+        bool recent;                                        // moved recently
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
         std::vector<std::pair<int,int>> targets;            // a list of position of enemy that the piece can capture.
         std::vector<std::pair<int,int>> protects;           // a list of position of allies that the piece protects 
-        // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
+        std::vector<std::pair<int,int>> castle;             // a list of valid castle move
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
-        int numMoves;                                       // can't think of a name yet, but different in each type pieces. for castle, en passant etc.
+        int numMoves;                                       // 
         std::string representation;
         Board* gameBoard;
         Player* opponent;
