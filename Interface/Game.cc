@@ -588,13 +588,14 @@ void Game::handleEvents()
 								{
 									string pType;
 									while (true) {
+										string line;
 										if (!getline(cin, line))
 											{
 												// crtl+D to quit program
 												isRunning = false;
 												return;
 											}
-											stringstream linestream(line);
+										stringstream linestream(line);
 										cout << "Illegal promotion type attempted. Please type a valid piece." << endl;
 										if (cin >> pType) {
 											if (pType == "R" || pType == "N" || pType == "B" || pType == "Q") break;
