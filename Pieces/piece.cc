@@ -548,20 +548,6 @@ void Piece::statusUpdate()
 {
 	if (updateStatus == 0)
 		nUpdate();
-	// for DEBUG
-	cout << "Piece " << representation << " at position "
-		 << "(" << x << "," << y << ")"
-		 << " can move to position:" << endl;
-	for (auto pos : moves)
-	{
-		cout << "(" << pos.first << "," << pos.second << ")   ";
-	}
-	cout << ";" << endl;
-	cout << "it can attack piece(s) in position(s):" << endl;
-	for (auto pos : targets)
-	{
-		cout << "(" << pos.first << "," << pos.second << "), " << endl;
-	}
 }
 
 // update moves and targets field of a piece that is forced by enemyPiece
