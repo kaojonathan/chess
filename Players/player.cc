@@ -122,15 +122,7 @@ vector<Piece *> Player::canAttack(pair<int, int> pos)
         if (piece->canAttack(pos))  // if a piece is updated and can attack
             res.emplace_back(piece.get()); // emplace it into res
     }
-    // DEBUG
-    /*
-    cout << "canAttack() run on (" << pos.first << " " << pos.second << ")" << endl;
-    for (auto p : res) {
-        cout << " " << p->getRep();
-    }
-    cout << endl;
-    // END DEBUG
-    */
+
     return res; // return res
 
 }
@@ -146,19 +138,6 @@ bool Player::canMove()
     if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0))
         return true;
     return false;
-}
-
-// print players fields DEBUG
-void Player::print()
-{
-    cout << king->getRep() << " at position (" << king->getX() << "," << king->getY()  << ")" << endl;
-    for (auto &&piece : pieces)
-    {
-        if (!piece)
-            cout << "something is wrong in Player::claimPieces()" << endl;
-        else
-            cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << ")" << endl;
-    }
 }
 
 // adds a piece to the player's pieces

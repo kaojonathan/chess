@@ -46,7 +46,6 @@ public:
     {
         return playerMove(oldCol, oldRow, newCol, newRow);
     }
-    void print(); // print players fields DEBUG
     int getType()
     { // returns the type of the player
         return type;

@@ -486,10 +486,6 @@ void Game::handleEvents()
 			p2->init(board.get(), p1.get());
 			p1->claimPieces(); // make the players obtain their pieces (shared ownership)
 			p2->claimPieces();
-			/*
-			p1->print(); // DEBUG
-			p2->print();
-			*/
 			updateSt();
 			cout << "Started new game!" << endl;
 			return; // return
@@ -1123,7 +1119,6 @@ void Game::handleEvents()
 	else if (mode == "setup")
 	{ 
 		cout << "Current Board Configuration:" << endl;
-		//this->update(); // update the graphics and text display DEBUG
 		if (command == "+")
 		{ // if command is +
 			string piece;
