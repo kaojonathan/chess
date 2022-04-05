@@ -1,7 +1,7 @@
 #include "board.h"
 
-Board::Board() {}
+Board::Board() {} // constructor
 
-Board::~Board() {}
+Board::~Board() {} // destructor
 
-bool Board::checkPos(int x, int y) { return validPos(x, y); }
+bool Board::checkPos(int x, int y) { return validPos(x, y); } // checks if the position at (x, y) is valid

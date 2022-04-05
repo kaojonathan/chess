@@ -11,7 +11,6 @@ Bishop::Bishop(int side, int x, int y, Board * board) : Piece{ side, x, y, board
 	representation = (side == 0) ? "B" : "b";
 }
 
-
 // normal status update, assuming it is not forced
 void Bishop::nUpdate() {
 	updateStatus = 1;

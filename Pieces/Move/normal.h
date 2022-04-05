@@ -8,13 +8,12 @@
 #include <string>
 #include <vector>
 
-
-class Normal : public Move {
-    public:
-        Normal(int x1, int y1, int x2, int y2);
-        std::string getCapType() override {return "no";}
-        std::string getPromoType() override {return "no";}
-
+class Normal : public Move
+{ // the normal class (a type of Move)
+public:
+    Normal(int x1, int y1, int x2, int y2); // constructor
+    std::string getCapType() override { return "no"; } // gets the capture type
+    std::string getPromoType() override { return "no"; } // gets the promotion type
 };
 
 #endif

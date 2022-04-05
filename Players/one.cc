@@ -3,8 +3,11 @@
 #include <iostream>
 using namespace std;
 
+// constructor
 One::One(int side, int level) : Computer{side, level} {}
 
+// moves a piece from (oldCol, oldRow) to (newCol, newRow), and updates them if computer moves (since random).
+// returns a pair (int, string) where int is type of move and string is piece captured (if necessary)
 std::pair<int, std::string> One::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 

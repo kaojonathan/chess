@@ -5,24 +5,20 @@
 class Piece;
 
 
-class twoPlayerBoard : public Board {
-	std::shared_ptr<Piece> board[8][8]; // array of piece pointers
-	void insertNewPiece(std::string validpiece, std::string position) override;
-	void removePiece(std::string position) override;
-	std::shared_ptr<Piece> shareP(int x, int y) override; // sharer for players
-	Piece* getP(int x, int y) override; // used for general getter
-	void movePiece(int x, int y, int newx, int newy) override; // setter
-	bool verifySetup() override;
-	void origSetup() override;
-
-	void capturePiece(int newx, int newy) override;
-
-	void castle(int col, int row) override;
-
-
+class twoPlayerBoard : public Board { // the concrete chess game board class. essentially the main controller of the entire game.
+	std::shared_ptr<Piece> board[8][8]; // array of piece pointers (board implementation)
+	void insertNewPiece(std::string validpiece, std::string position) override; // inserts a new valid piece at position
+	void removePiece(std::string position) override; // removes a piece at position
+	std::shared_ptr<Piece> shareP(int x, int y) override; // returns a shared pointer of the piece at pos (x, y)
+	Piece* getP(int x, int y) override; // returns a raw pointer of the piece at pos (x, y)
+	void movePiece(int x, int y, int newx, int newy) override; // moves a piece at position (x, y) to (newx, newy)
+	bool verifySetup() override; // verifies if the setup of the chess pieces is valid according to the assignment guidelines
+	void origSetup() override; // sets up the board with pieces like an original chess game
+	void capturePiece(int newx, int newy) override; // captures the piece at pos (x, y)
+	void castle(int col, int row) override; // performs castle at pos (col, row)
 public:
-	twoPlayerBoard();
-	bool validPos(int, int) override; // basic method, returns false if the position is out of the board
+	twoPlayerBoard(); // constructor
+	bool validPos(int, int) override; // checks if (x, y) is a valid position on the board
 };
 
 #endif

@@ -6,23 +6,22 @@
 #include "../Players/player.h"
 using namespace std;
 
-Piece::Piece(int side, int x, int y, Board *board) : 
-	castle{vector<pair<int, int>>{}}, 
-	x{x}, 
-	y{y}, 
-	side{side}, 
-	updateStatus{0}, 
-	recent{false},
-	moves{vector<pair<int, int>>{}}, 
-	targets{vector<pair<int, int>>{}}, 
-	numMoves{0}, 
-	gameBoard{board}
-{
-	// board->setPiece(x, y, this);
-}
+// constructor
+Piece::Piece(int side, int x, int y, Board *board) : castle{vector<pair<int, int>>{}},
+													 x{x},
+													 y{y},
+													 side{side},
+													 updateStatus{0},
+													 recent{false},
+													 moves{vector<pair<int, int>>{}},
+													 targets{vector<pair<int, int>>{}},
+													 numMoves{0},
+													 gameBoard{board} {}
 
+// destructor
 Piece::~Piece() {}
 
+// 
 void Piece::setPos(int col, int row)
 {
 	x = col;
@@ -138,7 +137,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type)
 			if (dir.at(j) > 0)
 			{
 				Piece *target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
-				if (target) 
+				if (target)
 				{ // if there is a piece
 					if (target->getSide() != side)
 					{ // put the enemy piece into attackables
@@ -276,7 +275,6 @@ int Piece::move(int col, int row)
 		}
 	}
 
-
 	// castling condition
 	if (this->getRep() == "K")
 	{
@@ -305,7 +303,7 @@ int Piece::move(int col, int row)
 
 											if (!potentialAttacker->canAttack(pair<int, int>{4, 7}) && !potentialAttacker->canAttack(pair<int, int>{5, 7}) && !potentialAttacker->canAttack(pair<int, int>{6, 7}))
 											{ // king not in check in between
-											return 3;
+												return 3;
 											}
 										}
 									}
@@ -339,7 +337,7 @@ int Piece::move(int col, int row)
 
 											if (!potentialAttacker->canAttack(pair<int, int>{2, 7}) && !potentialAttacker->canAttack(pair<int, int>{3, 7}) && !potentialAttacker->canAttack(pair<int, int>{4, 7}))
 											{ // king not in check in between
-											return 3;
+												return 3;
 											}
 										}
 									}
@@ -379,7 +377,7 @@ int Piece::move(int col, int row)
 
 											if (!potentialAttacker->canAttack(pair<int, int>{4, 0}) && !potentialAttacker->canAttack(pair<int, int>{5, 0}) && !potentialAttacker->canAttack(pair<int, int>{6, 0}))
 											{ // king not in check in between
-											return 3;
+												return 3;
 											}
 										}
 									}
@@ -412,7 +410,7 @@ int Piece::move(int col, int row)
 
 											if (!potentialAttacker->canAttack(pair<int, int>{2, 0}) && !potentialAttacker->canAttack(pair<int, int>{3, 0}) && !potentialAttacker->canAttack(pair<int, int>{4, 0}))
 											{ // king not in check in between
-											return 3;
+												return 3;
 											}
 										}
 									}
@@ -520,6 +518,7 @@ int Piece::getNumMoves()
 	return numMoves;
 }
 
+// ++numMoves
 void Piece::incNumMoves()
 {
 	++numMoves;
@@ -573,10 +572,6 @@ void Piece::forcedBy(Piece *enemyPiece, bool check)
 		fUpdate(enemyPiece);
 }
 
-// return true if this piece is checking the enemy king
-/*bool Piece::kingCheck() {
-	return checkRoute.size() != 0;
-}*/
 
 // return true if this Piece can attack the enemy piece in position (col, row) (regardness the existence of the piece)
 bool Piece::canAttack(pair<int, int> pos)
