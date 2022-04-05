@@ -63,7 +63,7 @@ void King::nUpdate() {
 	}
 
 
-	/*
+	/* DEBUG
 	// idk if this right
 	// check castle
 	if (numMoves == 0){
@@ -97,4 +97,4 @@ void King::nUpdate() {
 }
 
 
-/* pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */
+/* DEBUG pair<int, int> King::getCheckCoords() { return pair<int,int>{};} */

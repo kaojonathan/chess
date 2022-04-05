@@ -4,7 +4,7 @@
 #include <vector>
 class Queen : public Piece {
     // seems like we don't need the field anymore
-/*
+/* DEBUG
     // vectors extend from center of the piece
     std::vector<Piece*> upperLeftDiag; // positions that the piece can move to (null means empty square!)
     std::vector<Piece*> upperRightDiag; // positions that the piece can move to

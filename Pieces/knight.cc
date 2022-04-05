@@ -59,7 +59,7 @@ void Knight::nUpdate()  {
 	}
 }
 
-/*
+/* DEBUG
 pair<int, int> Knight::getCheckCoords() {
 
 	if (rightoneuptwo.size() == 1) {

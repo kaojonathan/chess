@@ -57,7 +57,7 @@ void Pawn::nUpdate() {
 
 
 
-/*
+/* DEBUG
 pair<int, int> Pawn::getCheckCoords() {
 
 	if (getSide() == 0) { // white case

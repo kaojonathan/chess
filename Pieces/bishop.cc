@@ -227,5 +227,5 @@ pair<int, int> Bishop::getCheckCoords() {
 	pair<int, int> coords = { -1, -1 };
 	return coords;
 
-}
-*/
+} DEBUG
+*/ 
