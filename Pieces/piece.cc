@@ -8,8 +8,7 @@
 using namespace std;
 
 // constructor
-Piece::Piece(int side, int x, int y, Board *board) : castle{vector<pair<int, int>>{}},
-													 x{x},
+Piece::Piece(int side, int x, int y, Board *board) : x{x},
 													 y{y},
 													 side{side},
 													 updateStatus{0},
@@ -17,25 +16,26 @@ Piece::Piece(int side, int x, int y, Board *board) : castle{vector<pair<int, int
 													 moves{vector<pair<int, int>>{}},
 													 targets{vector<pair<int, int>>{}},
 													 protects{vector<pair<int, int>>{}},
+													 castle{vector<pair<int, int>>{}},
 													 numMoves{0},
 													 gameBoard{board} {}
 
 // destructor
 Piece::~Piece() {}
 
-// 
+// set x, y fields
 void Piece::setPos(int col, int row)
 {
 	x = col;
 	y = row;
 }
 
+// field getters
 string Piece::getRep() { return representation; }
+int Piece::getSide() { return side; }
 
 void Piece::attach(Board *board) { gameBoard = board; }
 
-// 0: white, 1: black
-int Piece::getSide() { return side; }
 
 int Piece::getX() { return x; }
 

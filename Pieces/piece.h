@@ -9,79 +9,68 @@ class Player;
 
 class Piece {
     protected:
-
-        std::vector<std::pair<int,int>> castle;
-
-
-
-        // need to decide if x is a column or a row, now x is col
-        int x;
-        int y;
-        int side; // 0 for white and 1 for black
-        int value;  // the value of the Piece
-        int updateStatus; // 0: not update, 1: normal update, 2: forced update
-
-        bool recent; // moved recently
-
+    ///// fields: /////
+        int x;                                              // col
+        int y;                                              // row
+        int side;                                           // 0 for white and 1 for black
+        int value;                                          // the value of the Piece
+        int updateStatus;                                   // 0: not update, 1: normal update, 2: forced update
+        bool recent;                                        // moved recently
         std::vector<std::pair<int,int>> moves;              // moves contains vector of valid move position
         std::vector<std::pair<int,int>> targets;            // a list of position of enemy that the piece can capture.
         std::vector<std::pair<int,int>> protects;           // a list of position of allies that the piece protects 
-        // std::vector<std::pair<int,int>> protects;           // position of allies it is currently protecting
+        std::vector<std::pair<int,int>> castle;             // a list of valid castle move
         Piece * forced;                                     // the piece that cause this cannot move
         std::vector<std::pair<int,int>> checkRoute;         // the path that can be block
-        int numMoves;                                       // can't think of a name yet, but different in each type pieces. for castle, en passant etc.
-        std::string representation;
-        Board* gameBoard;
-        Player* opponent;
+        int numMoves;                                       // number of move
+        std::string representation;                         // representation of a piece
+        Board* gameBoard;                                   // the two players board
+        Player* opponent;                                   // opponent player
+
+    ///// virtual functions: /////
         // updates possible moves and attack targets, not consider if the piece is forced or not
         virtual void nUpdate() = 0;
-
         // updates possible moves and attack targets for a forced Piece
         virtual void fUpdate(Piece*);
-
-        // added this (vincent) /// for computer level 2/3 class
-
-        // returns the coordinate (x, y) that the piece can move to, 
-        // to check the king, or (-1, -1) if no move is found
-        // edit: may no more be useful
-
-        /* virtual std::pair<int, int> getCheckCoords() = 0; */
-
-        // return all attackable enemy piece if the piece is pos
+        // for computer level 2/3 class
+        // return a list of Piece that the piece can attack if it is in position at
         virtual std::vector<Piece *> attackable(std::pair<int, int> at) = 0;
-
          // return false if the position is the not valid one the piece can go
         bool validPos(std::pair<int,int>);
-
-
+    
     public:
+    ///// Public methods /////
+        // constructor and destructor
         Piece(int side, int x, int y, Board *);
         virtual ~Piece();
+        // getter of fields
         int getX();
         int getY();
         int getSide();
-        void setRecent();
-        void resetRecent();
         bool getRecent();
+        int getVal();
+        std::string getRep();
         std::vector<std::pair<int,int>> getMoves();
         std::vector<std::pair<int,int>> getTargets();
         std::vector<std::pair<int,int>> getProtects();
+        std::vector<std::pair<int, int>> getCheckRoute();
+        // set recent to true
+        void setRecent();
+        // set recent to false
+        void resetRecent();
+        // set x and y
         void setPos(int col, int row);  // make sure col first and row second
+        // set updateStatus to 0; set moves, targets, protects, castle and checkRoute to empty
         void needsUpdate();
+        // set gameBoard
         void attach(Board* board);
         // determine if the Piece can move to position (x,y), 0: no, 1: move, 2: capture
         int move(int col, int row);
-        // true if the piece is checking the king  still use it?
-        // bool kingCheck();
-
-        std::vector<std::pair<int, int>> getCheckRoute(); // return the checkRoute field
-        int getVal();                   // return the value of a piece
-        std::string getRep();           // return the representation
-        // following: type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
-        //  Scan the each direction, return a list of attackable enemies, if any
+        //  Scan the each direction base on type, return a list of attackable enemies, if any
+        //  type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         std::vector<Piece *> dScan(std::pair<int,int>, int type);
-
         //  update moves, attacks and check route base on type (can be used by Bishop, Queen and Rook only)
+        //  type = 1: diagonal; 2: horizontal/vertical; 3: both diagonal and horizontal/vertical
         void dirScan(int type);
 
         bool isKing();                      //  true if the target is a king
