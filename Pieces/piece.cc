@@ -569,7 +569,6 @@ bool Piece::canAttack(pair<int, int> pos)
 	if (p) {
 		return (pos.first == x + 1 || pos.first == x - 1) && pos.second == y + p->frDir() && !forced;
 	}
-	cout << "piece: " << representation << endl;
 	for (auto pt : protects) {
 		if (pt.first == pos.first && pt.second == pos.second) 
 			return true;
