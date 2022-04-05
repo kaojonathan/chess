@@ -17,7 +17,7 @@ void nUpdate() override;
 public:
     Rook(int side, int x, int y, Board * board);
     // edit: show be implemented in player/board class, which contain the position of the king and the rook
-    /* void castling(); */ DEBUG
+    /* void castling(); DEBUG*/ 
     // for the computer level 2 and 3 class
     // edit: may not be useful anymore
     /* std::pair<int, int> getCheckCoords() override; */

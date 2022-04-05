@@ -11,13 +11,13 @@ Three::Three(int side, int level) : Computer{side, level} {}
 std::pair<int, std::string> Three::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 	// AVOIDING MOVES CONDITION
-	for (int i = 0; i < pieces.size(); ++i)
+	for (unsigned int i = 0; i < pieces.size(); ++i)
 	{
-		for (int j = 0; j < opponent->getPieces().size(); ++j)
+		for (unsigned int j = 0; j < opponent->getPieces().size(); ++j)
 		{
 			if (opponent->getPieces()[j]->canAttack(std::pair<int, int>{pieces[i]->getX(), pieces[i]->getY()}))
 			{ // check if there is an enemy piece that can attack one of your pieces
-				for (int k = 0; k < pieces[i]->getMoves().size(); ++k)
+				for (unsigned int k = 0; k < pieces[i]->getMoves().size(); ++k)
 				{ // iterate over that piece's possible moves
 					if (!opponent->getPieces()[j]->canAttack(pieces[i]->getMoves()[k]))
 					{ // if the same enemy piece can't attack that piece's possible move position, move it
@@ -96,11 +96,11 @@ std::pair<int, std::string> Three::move(int &oldCol, int &oldRow, int &newCol, i
 			}
 		}
 	}
-	for (int j = 0; j < opponent->getPieces().size(); ++j)
+	for (unsigned int j = 0; j < opponent->getPieces().size(); ++j)
 	{
 		if (opponent->getPieces()[j]->canAttack(std::pair<int, int>{king->getX(), king->getY()}))
 		{ // check if there is an enemy piece that can attack the king
-			for (int k = 0; k < king->getMoves().size(); ++k)
+			for (unsigned int k = 0; k < king->getMoves().size(); ++k)
 			{ // iterate over that piece's possible moves
 				if (!opponent->getPieces()[j]->canAttack(king->getMoves()[k]))
 				{ // if the same enemy piece can't attack that piece's possible move position, move it
@@ -160,7 +160,7 @@ std::pair<int, std::string> Three::move(int &oldCol, int &oldRow, int &newCol, i
 		}
 	}
 	// CAPTURE CONDITION
-	for (int i = 0; i < pieces.size(); ++i)
+	for (unsigned int i = 0; i < pieces.size(); ++i)
 	{
 		for (int j = 0; j < 8; ++j)
 		{
@@ -242,7 +242,7 @@ std::pair<int, std::string> Three::move(int &oldCol, int &oldRow, int &newCol, i
 		}
 	}
 	// CHECK CONDITION
-	for (int i = 0; i < pieces.size(); ++i)
+	for (unsigned int i = 0; i < pieces.size(); ++i)
 	{
 		for (int j = 0; j < 8; ++j)
 		{

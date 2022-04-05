@@ -11,7 +11,7 @@ Two::Two(int side, int level) : Computer{side, level} {}
 std::pair<int, std::string> Two::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 	// CAPTURE CONDITION
-	for (int i = 0; i < pieces.size(); ++i)
+	for (unsigned int i = 0; i < pieces.size(); ++i)
 	{
 		for (int j = 0; j < 8; ++j)
 		{
@@ -93,7 +93,7 @@ std::pair<int, std::string> Two::move(int &oldCol, int &oldRow, int &newCol, int
 		}
 	}
 	// CHECK CONDITION
-	for (int i = 0; i < pieces.size(); ++i)
+	for (unsigned int i = 0; i < pieces.size(); ++i)
 	{
 		for (int j = 0; j < 8; ++j)
 		{

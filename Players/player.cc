@@ -58,7 +58,7 @@ void Player::kingCheckedBy(Piece *enemy)
 
 void Player::removePiece(std::pair<int, int> pos)
 { // removes the piece in position (x, y) and places it in inactivePieces.
-    for (size_t i = 0; i < pieces.size(); ++i)
+    for (unsigned int i = 0; i < pieces.size(); ++i)
     {
         if ((pieces[i]->getX() == pos.first) && (pieces[i]->getY() == pos.second))
         {                                           // find the piece in pieces
@@ -71,7 +71,7 @@ void Player::removePiece(std::pair<int, int> pos)
 
 void Player::deletePiece(std::pair<int, int> pos)
 { // deletes the piece in position (x, y)
-    for (size_t i = 0; i < pieces.size(); ++i)
+    for (unsigned int i = 0; i < pieces.size(); ++i)
     {
         if ((pieces[i]->getX() == pos.first) && (pieces[i]->getY() == pos.second))
         { // find the piece in pieces

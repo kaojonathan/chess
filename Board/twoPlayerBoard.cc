@@ -225,15 +225,15 @@ bool twoPlayerBoard::verifySetup()
 			{
 				if (board[i][j])
 				{ // if a piece is at pos (i, j) on the board, get its attackable pieces.
-					std::vector<Piece *> attackablePieces = board[i][j]->getAttackable(std::pair<int, int>{board[i][j]->getX(), board[i][j]->getY()});
-					for (int i = 0; i < attackablePieces.size(); ++i)
+					vector<Piece *> attackablePieces = board[i][j]->getAttackable(pair<int, int>{board[i][j]->getX(), board[i][j]->getY()});
+					for (auto piece : attackablePieces)
 					{ // iterate over them
 					// if one of them is white king or black king, return false.
-						if (attackablePieces[i] == whiteKing)
+						if (piece == whiteKing)
 						{
 							return false;
 						}
-						else if (attackablePieces[i] == blackKing)
+						else if (piece == blackKing)
 						{
 							return false;
 						}
