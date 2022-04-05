@@ -21,8 +21,6 @@ public:
 
     std::vector<Piece *> attackable(std::pair<int, int> at) override;
 
-    // for the computer level 2 and 3 class
-    /*std::pair<int, int> getCheckCoords() override;*/
 
 };
 

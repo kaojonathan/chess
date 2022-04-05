@@ -5,13 +5,7 @@
 using namespace std;
 
 class Bishop : public Piece {
-    /*
-    // vectors extend from center of the piece
-    std::vector<Piece*> upperLeftDiag; // positions that the piece can move to (null means empty square!)
-    std::vector<Piece*> upperRightDiag; // positions that the piece can move to
-    std::vector<Piece*> lowerLeftDiag; // positions that the piece can move to
-    std::vector<Piece*> lowerRightDiag; // positions that the piece can move to
-    */
+
    void nUpdate() override;
 public:
     
