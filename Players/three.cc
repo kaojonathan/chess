@@ -8,7 +8,6 @@ Three::Three(int side, int level) : Computer{side, level} {}
 std::pair<int, std::string> Three::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 
-std::cerr << "three  playermove";
 	// AVOIDING MOVES CONDITION (this needs implement)
 
 	for (int i = 0; i < pieces.size(); ++i)

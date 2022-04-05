@@ -7,7 +7,7 @@ One::One(int side, int level) : Computer{side, level} {}
 
 std::pair<int, std::string> One::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
-std::cerr << "one playermove";
+
 
 	int moveKing = rand() % pieces.size();
 

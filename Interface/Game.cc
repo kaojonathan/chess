@@ -29,7 +29,6 @@
 #include "../Players/one.h"
 #include "../Players/two.h"
 #include "../Players/three.h"
-#include "../Players/four.h"
 #include "../score.h"
 #include "../Players/human.h"
 #include "../Players/computer.h"
@@ -405,7 +404,8 @@ void Game::reset()
 	board = unique_ptr<twoPlayerBoard> {new twoPlayerBoard};
 	board->oSetup();
 	displayOrigSetup();
-	cout << "Board reset. Please enter set-up or start a new game!" << endl;
+	cout << "Board reset. Please enter set-up mode, start a new game, ";
+	cout << "or press Crtl + D to quit." << endl;
 }
 
 // handles a single command at a time
@@ -437,7 +437,6 @@ void Game::handleEvents()
 			// check player types
 			int whiteLevel = isComputer(white);
 			int blackLevel = isComputer(black);
-			cerr << whiteLevel << blackLevel;
 
 			if ((white == "human" || whiteLevel) && (black == "human" || blackLevel))
 			{
@@ -455,13 +454,9 @@ void Game::handleEvents()
 					{
 						p1 = unique_ptr<Two> {new Two{0, whiteLevel}};
 					}
-					else if (whiteLevel == 3)
+					else //(whiteLevel == 3)
 					{
 						p1 = unique_ptr<Three> {new Three{0, whiteLevel}};
-					}
-					else
-					{
-						p1 = unique_ptr<Four> {new Four{0, whiteLevel}};
 					}
 				}
 				if (black == "human")
@@ -478,13 +473,9 @@ void Game::handleEvents()
 					{
 						p2 = unique_ptr<Two> {new Two{1, blackLevel}};
 					}
-					else if (blackLevel == 3)
+					else // if (blackLevel == 3)
 					{
 						p2 = unique_ptr<Three> {new Three{1, blackLevel}};
-					}
-					else
-					{
-						p2 = unique_ptr<Four> {new Four{1, blackLevel}};
 					}
 				}
 			}
@@ -641,7 +632,7 @@ void Game::handleEvents()
 									history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, promoType}});
 
 									board->insertP(promoType, to);
-									p1->addToPieces(board->getPiece(newCol, newRow));
+									p1->addToPieces(board->sharePiece(newCol, newRow));
 									
 								}
 								else
@@ -660,7 +651,7 @@ void Game::handleEvents()
 									resetRecents();
 									history.emplace_back(unique_ptr<PromotionCapture>{ new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
 									board->insertP(promoType, to);
-									p1->addToPieces(board->getPiece(newCol, newRow));
+									p1->addToPieces(board->sharePiece(newCol, newRow));
 								}
 								else
 								{
@@ -734,7 +725,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("R", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "R"}});
 							}
@@ -747,7 +738,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("N", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "N"}});
 							}
@@ -762,7 +753,7 @@ void Game::handleEvents()
 
 								
 								board->insertP("B", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "B"}});
 							}
@@ -775,7 +766,7 @@ void Game::handleEvents()
 								resetRecents();
 
 								board->insertP("Q", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "Q"}});
 							}
@@ -793,7 +784,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("R", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "R", status.second}});
@@ -807,7 +798,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("N", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "N", status.second}});
@@ -821,7 +812,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("B", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "B", status.second}});
@@ -835,7 +826,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("Q", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "Q", status.second}});
@@ -908,7 +899,7 @@ void Game::handleEvents()
 									resetRecents();
 									history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, promoType}});	
 									board->insertP(promoType, to);
-									p1->addToPieces(board->getPiece(newCol, newRow));							}
+									p1->addToPieces(board->sharePiece(newCol, newRow));							}
 								else
 								{
 									throw runtime_error{"Illegal promotion type attempted. Please try another."};
@@ -925,7 +916,7 @@ void Game::handleEvents()
 												resetRecents();
 									history.emplace_back(unique_ptr<PromotionCapture>{ new PromotionCapture{oldCol, oldRow, newCol, newRow, promoType, status.second}});
 									board->insertP(promoType, to);
-									p1->addToPieces(board->getPiece(newCol, newRow));								}
+									p1->addToPieces(board->sharePiece(newCol, newRow));								}
 								else
 								{
 									throw runtime_error{"Illegal promotion type attempted. Please try another."};
@@ -995,7 +986,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("r", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "r"}});
 							}
@@ -1008,7 +999,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("n", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "n"}});
 							}
@@ -1021,7 +1012,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("b", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "b"}});
 							}
@@ -1034,7 +1025,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("q", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<Promotion>{ new Promotion{oldCol, oldRow, newCol, newRow, "q"}});
 							}
@@ -1053,7 +1044,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("r", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "r", status.second}});
@@ -1067,7 +1058,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("n", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "n", status.second}});
@@ -1081,7 +1072,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("b", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "b", status.second}});
@@ -1095,7 +1086,7 @@ void Game::handleEvents()
 								resetRecents();
 								
 								board->insertP("q", strPos);
-								p1->addToPieces(board->getPiece(newCol, newRow));
+								p1->addToPieces(board->sharePiece(newCol, newRow));
 
 								history.emplace_back(unique_ptr<PromotionCapture>{ 
 									new PromotionCapture{oldCol, oldRow, newCol, newRow, "q", status.second}});

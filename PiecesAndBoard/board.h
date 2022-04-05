@@ -2,15 +2,16 @@
 #define BOARD_H_
 #include "piece.h"
 #include <string>
+#include <memory>
 
 class Board {
 	protected:
 		virtual void insertNewPiece(std::string validpiece, std::string position) = 0;
 		virtual void removePiece(std::string position)= 0;
+		virtual std::shared_ptr<Piece> shareP(int, int) = 0;
 		virtual Piece* getP(int, int) = 0;
-		virtual void movePiece(int x, int y, int newx, int newy) = 0; // setter
+		virtual void movePiece(int x, int y, int newx, int newy) = 0; 
 		virtual bool validPos (int, int) = 0;
-		virtual void set(int x, int y, Piece * p) = 0;
 
 		virtual bool verifySetup() = 0;
 		virtual void origSetup() = 0;
@@ -22,6 +23,9 @@ class Board {
 		Board();
 		virtual ~Board() = 0;
 		bool checkPos(int, int);
+		std::shared_ptr<Piece> sharePiece(int x , int y) {
+			return shareP(x, y);
+		}
 		Piece* getPiece(int x , int y) {
 			return getP(x, y);
 		}
@@ -33,9 +37,6 @@ class Board {
 		}
 		void insertP(std::string p, std::string pos) {
 			insertNewPiece(p, pos);
-		}
-		void setPiece(int x, int y, Piece * p) {
-			set(x,y,p);
 		}
 		bool verify() {
 			return verifySetup();

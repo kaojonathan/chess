@@ -16,14 +16,13 @@ class Computer : public Player {
         virtual ~Computer();
         // asks computer player to make a move
         /*
-# return 0 if ask for different move (move failed) (NEVER GONNA HAPPEN)
-# return 1 if move was successful (ask for next move)
-# return 2 if capture was sucessful (ask for next move)
-*/
+        # return 0 if ask for different move (move failed) (NEVER GONNA HAPPEN)
+        # return 1 if move was successful (ask for next move)
+        # return 2 if capture was sucessful (ask for next move)
+        */
         
-std::pair<int, std::string> playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow) override { 
-std::cerr << "computer playermove";
-return move(oldCol, oldRow, newCol, newRow);
+        std::pair<int, std::string> playerMove(int &oldCol, int &oldRow, int &newCol, int &newRow) override { 
+                return move(oldCol, oldRow, newCol, newRow);
         }
 };
 

@@ -10,13 +10,12 @@
 #include <utility>
 #include <iostream>
 #include <memory>
-
 using namespace std;
 
 Player::Player(int side, int type) : side{side}, type{type} {} 
 
 
-// initial player, use only when there is no setup
+// initialize player fields once setup is complete
 void Player::init(Board * board, Player *player){
     gameBoard = board;
     opponent = player;
@@ -26,13 +25,12 @@ void Player::init(Board * board, Player *player){
 void Player::claimPieces(){
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            Piece *pc = gameBoard->getPiece(i, j);
+            auto pc = gameBoard->sharePiece(i, j);
             if (pc) {
                 if (side == pc->getSide()) {
-                    unique_ptr<Piece> upc{pc};
-                    upc.get()->setOpponent(opponent);
-                    if (pc->isKing()) king = std::move(upc);
-                    else pieces.emplace_back(std::move(upc));
+                    pc->setOpponent(opponent);
+                    if (pc->isKing()) king = pc;
+                    else pieces.emplace_back(pc);
                 } 
             }
         }
@@ -46,7 +44,7 @@ void Player::kingCheckedBy(Piece *enemy)
 {
     opponentCheck = enemy;
     for (auto&& piece : pieces)
-        piece.get()->forcedBy(enemy, true);
+        piece->forcedBy(enemy, true);
 }
 
 void Player::removePiece(std::pair<int, int> pos)
@@ -56,7 +54,7 @@ void Player::removePiece(std::pair<int, int> pos)
     {
         if ((pieces[i]->getX() == pos.first) && (pieces[i]->getY() == pos.second))
         {
-            inactivePieces.emplace_back(std::move(pieces[i])); // emplace
+            inactivePieces.emplace_back(pieces[i]); // emplace
             auto it = pieces.begin() + i;
             it = pieces.erase(it); // remove
         }
@@ -81,9 +79,9 @@ void Player::deletePiece(std::pair<int, int> pos)
 int Player::checkStatus()
 {
     for (auto&& piece : opponent->getPieces())
-        piece.get()->statusUpdate();
+        piece->statusUpdate();
     for (auto&& piece : pieces)
-        piece.get()->statusUpdate();
+        piece->statusUpdate();
     king->statusUpdate();
     if (canMove())
         return 0; // the player can move a piece
@@ -96,7 +94,7 @@ int Player::checkStatus()
 void Player::unsetStatus()
 {
     for (auto&& piece : pieces)
-        piece.get()->needsUpdate();
+        piece->needsUpdate();
     king->needsUpdate();
 }
 
@@ -108,7 +106,7 @@ vector<Piece *> Player::canAttack(pair<int, int> pos)
         res.emplace_back(king.get());
     for (auto&& piece : pieces)
     {
-        if (piece.get()->canAttack(pos))
+        if (piece->canAttack(pos))
             res.emplace_back(piece.get());
     }
     return res;
@@ -119,7 +117,7 @@ bool Player::canMove()
 {
     for (auto&& piece : pieces)
     {
-        if ((piece.get()->getMoves().size() != 0) || (piece.get()->getTargets().size() != 0))
+        if ((piece->getMoves().size() != 0) || (piece->getTargets().size() != 0))
             return true;
     }
     if ((king->getMoves().size() != 0) || (king->getTargets().size() != 0))
@@ -132,11 +130,10 @@ void Player::print(){
     cout << king->getRep() << " at position (" << king->getX() << "," << king->getY() << endl; 
     for (auto&& piece : pieces) {
         if (!piece) cout << "something is wrong in Player::claimPieces()" << endl; 
-        else cout << piece.get()->getRep() << " at position (" << piece.get()->getX() << "," << piece.get()->getY() << endl; 
+        else cout << piece->getRep() << " at position (" << piece->getX() << "," << piece->getY() << endl; 
     }
 }
 
-void Player::addToPieces(Piece *p) {
-    unique_ptr<Piece> upc{p};
-    pieces.emplace_back(std::move(upc));
+void Player::addToPieces(std::shared_ptr<Piece> p) {
+    pieces.emplace_back(p);
 }

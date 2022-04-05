@@ -8,7 +8,6 @@ Two::Two(int side, int level) : Computer{side, level} {}
 std::pair<int, std::string> Two::move(int &oldCol, int &oldRow, int &newCol, int &newRow)
 {
 
-std::cerr << "two  playermove";
 
 	// CAPTURE CONDITION
 	for (int i = 0; i < pieces.size(); ++i)

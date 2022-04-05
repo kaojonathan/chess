@@ -32,7 +32,7 @@ vector<pair<int,int>> King::getPos(int col, int row){
 vector<Piece *> King::attackable(pair<int, int> at){
 	vector<pair<int, int>> possibleMoves = getPos(at.first, at.second);	// all spaces around it
 	vector<Piece *> res {};
-	for (auto pos : possibleMoves){
+	for (auto pos : possibleMoves){ 
 		Piece *target = gameBoard->getPiece(pos.first, pos.second);
 		if (target && side != target->getSide()) {
 			res.emplace_back(target);

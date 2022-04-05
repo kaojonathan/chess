@@ -138,7 +138,7 @@ vector<Piece *> Piece::dScan(pair<int, int> at, int type)
 			if (dir.at(j) > 0)
 			{
 				Piece *target = gameBoard->getPiece(pos.at(j).first, pos.at(j).second); // piece on the next position
-				if (target)
+				if (target) 
 				{ // if there is a piece
 					if (target->getSide() != side)
 					{ // put the enemy piece into attackables

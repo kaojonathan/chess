@@ -1,18 +1,17 @@
 #ifndef TWOBOARD_H_
 #define TWOBOARD_H_
 #include "board.h"
+#include <memory>
 class Piece;
 
 
 class twoPlayerBoard : public Board {
-	Piece* board[8][8]; // array of piece pointers
+	std::shared_ptr<Piece> board[8][8]; // array of piece pointers
 	void insertNewPiece(std::string validpiece, std::string position) override;
 	void removePiece(std::string position) override;
-	Piece* getP(int x, int y) override; // getter
+	std::shared_ptr<Piece> shareP(int x, int y) override; // sharer for players
+	Piece* getP(int x, int y) override; // used for general getter
 	void movePiece(int x, int y, int newx, int newy) override; // setter
-	// setter
-	void set(int x, int y, Piece * p) override;
-
 	bool verifySetup() override;
 	void origSetup() override;
 

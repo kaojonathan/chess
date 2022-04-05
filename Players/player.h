@@ -12,12 +12,12 @@ class Player {
     protected:
         int side; // 0 for white and 1 for black
         Board* gameBoard;
-        std::unique_ptr<Piece> king;            // may change type to King
+        std::shared_ptr<Piece> king;            // may change type to King
         // PLAYER OWNS THE PIECES
         // the player's pieces
-        std::vector<std::unique_ptr<Piece>> pieces; 
+        std::vector<std::shared_ptr<Piece>> pieces; 
         // the pieces not on the board
-        std::vector<std::unique_ptr<Piece>> inactivePieces; 
+        std::vector<std::shared_ptr<Piece>> inactivePieces; 
         // the opponent
         Player *opponent;
         Piece *opponentCheck;
@@ -36,11 +36,11 @@ class Player {
         int getType() {
             return type;
         }
-        std::vector<std::unique_ptr<Piece>> const& getPieces() {
+        std::vector<std::shared_ptr<Piece>> const& getPieces() {
             return pieces;
         }
 
-        void addToPieces(Piece *p);
+        void addToPieces(std::shared_ptr<Piece>);
 
         void removePiece(std::pair<int,int>); // removes the piece in position (x, y) and places it in inactivePieces.
 
